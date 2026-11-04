@@ -83,5 +83,63 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
  }
  update();setInterval(update,300000);
 })();
+
+<script>
+async function loadCAD() {
+  const feed = document.getElementById("cad-feed");
+  const status = document.getElementById("cad-status");
+
+  try {
+    const response = await fetch(
+      "public-cad.json?t=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      throw new Error("Feed unavailable");
+    }
+
+    const data = await response.json();
+    const incidents = data.incidents || [];
+
+    feed.replaceChildren();
+
+    if (incidents.length === 0) {
+      feed.textContent = "No public updates yet.";
+    } else {
+      incidents.forEach(incident => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.marginBottom = "12px";
+
+        const title = document.createElement("h3");
+        title.textContent = incident.type || "Update";
+
+        const details = document.createElement("p");
+        details.textContent = [
+          incident.area,
+          incident.time,
+          incident.status
+        ].filter(Boolean).join(" | ");
+
+        card.append(title, details);
+        feed.appendChild(card);
+      });
+    }
+
+    status.textContent = "Public feed updated.";
+
+  } catch (error) {
+    status.textContent = "Unable to load public feed.";
+    console.error(error);
+  }
+}
+
+loadCAD();
+setInterval(loadCAD, 60000);
+</script>
+</body>
+</html>
+
 </script>
 </body></html>
