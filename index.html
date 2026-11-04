@@ -1,83 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#111214">
-<meta name="description" content="WNY 3rd Alarm Fire Buffs — fire apparatus photography and public-safety appreciation across Western New York.">
-<title>WNY 3rd Alarm Fire Buffs | Western New York</title>
+<meta name="theme-color" content="#111111">
+<meta name="description" content="WNY 3RD ALARM FIRE BUFFS — fire photography and community events across Western New York.">
+<title>WNY 3RD ALARM | FIRE BUFFS</title>
 <style>
-:root{--red:#e3262e;--red2:#a90f19;--ink:#101113;--panel:#191b1f;--muted:#b9bdc4;--white:#f5f5f3}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ink);color:var(--white);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}.wrap{width:min(1120px,92%);margin:auto}
-header{position:sticky;top:0;z-index:5;background:rgba(13,14,16,.94);backdrop-filter:blur(10px);border-bottom:1px solid #333}
-nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{font-weight:900;letter-spacing:1px;font-size:1.05rem}.brand span{color:var(--red)}
-.links{display:flex;gap:22px;flex-wrap:wrap;font-size:.92rem;color:#ddd}.links a:hover{color:#ff666b}
-.hero{position:relative;overflow:hidden;padding:100px 0 88px;background:radial-gradient(ellipse at 80% 20%,#6d171d 0,transparent 38%),linear-gradient(120deg,#111214 35%,#241316 100%)}
-.hero:after{content:"";position:absolute;inset:auto -10% -170px 45%;height:330px;border-radius:50%;background:#e3262e;filter:blur(100px);opacity:.15}
-.kicker{color:#ff7378;text-transform:uppercase;letter-spacing:4px;font-weight:800;font-size:.8rem}
-h1{font-size:clamp(2.7rem,7vw,5.8rem);line-height:.98;margin:18px 0;max-width:850px;font-weight:950;letter-spacing:-2px}
-h1 span{color:var(--red)}.hero p{max-width:650px;color:#d0d0d0;font-size:1.12rem}
-.actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-block;padding:13px 20px;border-radius:5px;font-weight:800;background:var(--red);border:1px solid var(--red)}.btn.secondary{background:transparent;border-color:#777}
-section{padding:76px 0}.section-kicker{color:#ff7378;text-transform:uppercase;letter-spacing:3px;font-size:.78rem;font-weight:800}
-h2{font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin:10px 0 18px}.intro{max-width:720px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
-.card{background:var(--panel);border:1px solid #303238;border-radius:9px;padding:25px}
-.card .icon{font-size:2rem}.card h3{margin:10px 0 8px}.card p{margin:0;color:var(--muted)}
-.band{background:linear-gradient(110deg,#7f1119,#c51c26);padding:54px 0}.band h2{margin-top:0}.band p{max-width:720px;color:#f4dfe0}
-.gallery{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px;margin-top:30px}
-.photo{min-height:210px;border-radius:8px;border:1px solid #444;background:linear-gradient(145deg,#303238,#17181b);display:flex;align-items:end;padding:18px;color:#eee;font-weight:800;position:relative;overflow:hidden}
-.photo:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,.8))}
-.photo span{position:relative}.photo.large{min-height:290px;background:linear-gradient(140deg,#4b2023,#18191c 60%,#5b2528)}
-.notice{border-left:4px solid var(--red);padding:18px 22px;background:#1b1c20;color:#d5d5d5;margin-top:28px}
-.contact{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-.contact a{color:#ff7378;text-decoration:underline;text-underline-offset:3px}
-footer{border-top:1px solid #333;padding:28px 0;color:#aeb1b7;font-size:.88rem}
-footer .foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
-@media(max-width:760px){nav{align-items:flex-start;padding:17px 0;flex-direction:column}.links{gap:13px}.hero{padding:72px 0}.grid,.gallery,.contact{grid-template-columns:1fr}.photo.large{min-height:220px}section{padding:58px 0}}
+:root{--bg:#0b0b0d;--panel:#151518;--red:#c51f2b;--red2:#ed3440;--silver:#c7c7cc;--muted:#a4a4ab;--line:#303036}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f5f5f6;font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+a{color:inherit}.wrap{width:min(1100px,92%);margin:auto}.top{background:#080809;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:900;letter-spacing:1px;text-decoration:none;line-height:1.1}.brand span{color:var(--red2)}.brand small{display:block;color:var(--silver);font-size:10px;letter-spacing:3px;margin-top:5px}
+nav{display:flex;gap:18px;flex-wrap:wrap}nav a{text-decoration:none;color:#ddd;font-size:13px;font-weight:700}nav a:hover{color:var(--red2)}
+.hero{padding:100px 0 90px;background:linear-gradient(100deg,rgba(0,0,0,.96),rgba(0,0,0,.72)),repeating-linear-gradient(135deg,#19191d 0 2px,#101013 2px 12px);border-bottom:4px solid var(--red)}
+.kicker{color:var(--red2);font-size:12px;font-weight:900;letter-spacing:4px;text-transform:uppercase}.hero h1{font-size:clamp(42px,8vw,78px);line-height:.98;margin:16px 0;font-weight:900;letter-spacing:-2px}.hero h1 span{color:var(--red2)}.hero p{max-width:620px;color:#d0d0d4;font-size:18px}.btn{display:inline-block;background:var(--red);padding:12px 20px;text-decoration:none;font-weight:800;border:1px solid var(--red);margin:12px 8px 0 0}.btn.alt{background:transparent;border-color:#777}.btn:hover{background:var(--red2)}
+section{padding:65px 0;border-bottom:1px solid var(--line)}.eyebrow{color:var(--red2);font-size:11px;letter-spacing:3px;font-weight:900;text-transform:uppercase}h2{font-size:clamp(28px,5vw,40px);margin:5px 0 12px;line-height:1.1}.intro{color:var(--muted);max-width:700px;margin:0 0 28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--panel);border:1px solid var(--line);padding:22px}.card h3{margin:0 0 8px}.card p{color:var(--muted);margin:0}.photo{min-height:175px;background:linear-gradient(145deg,#29292f,#111);border:1px dashed #666;display:grid;place-items:center;text-align:center;color:#bdbdc3;padding:20px;font-weight:700}.photo small{display:block;color:#888;font-weight:400}
+.person{border-top:3px solid var(--red)}.role{color:var(--red2);font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase}.date{color:var(--red2);font-weight:900;font-size:12px;letter-spacing:1px}.event{border-left:3px solid var(--red);margin:12px 0;padding:4px 0 4px 16px}
+form{display:grid;gap:12px;max-width:650px}label{font-size:13px;font-weight:700;color:#ddd}input,textarea,select{width:100%;padding:12px;background:#0c0c0e;border:1px solid #45454d;color:white;font:inherit;border-radius:2px}textarea{min-height:120px;resize:vertical}button{cursor:pointer;color:white;font-weight:900;background:var(--red);border:0;padding:13px 18px;font-size:14px}button:hover{background:var(--red2)}.note{font-size:12px;color:#999}
+footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:760px){.nav{align-items:flex-start;padding:16px 0;flex-direction:column}nav{gap:10px 14px}.grid{grid-template-columns:1fr 1fr}.hero{padding:75px 0}.hero p{font-size:16px}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.hero h1{letter-spacing:-1px}}
 </style>
 </head>
 <body>
-<header><nav class="wrap">
-  <a class="brand" href="#home">WNY <span>3RD ALARM</span> FIRE BUFFS</a>
-  <div class="links"><a href="#about">About</a><a href="#mission">Our Mission</a><a href="#photography">Photography</a><a href="#safety">Safety</a><a href="#contact">Contact</a></div>
-</nav></header>
+<header class="top"><div class="wrap nav">
+<a class="brand" href="#home">WNY <span>3RD ALARM</span><small>FIRE BUFFS</small></a>
+<nav aria-label="Main navigation">
+<a href="#about">ABOUT</a><a href="#gallery">GALLERY</a><a href="#team">TEAM</a><a href="#news">NEWS</a><a href="#events">EVENTS</a><a href="#join">JOIN</a><a href="#contact">CONTACT</a>
+</nav></div></header>
 <main>
 <section class="hero" id="home"><div class="wrap">
-  <div class="kicker">Western New York</div>
-  <h1>CAPTURING THE CALL.<br><span>PRESERVING THE TRADITION.</span></h1>
-  <p>A Western New York fire-buffing community focused on photographing fire apparatus, appreciating the fire service, and sharing the people and equipment that serve our communities.</p>
-  <div class="actions"><a class="btn" href="#photography">Explore our work</a><a class="btn secondary" href="#contact">Get in touch</a></div>
+<div class="kicker">Western New York</div>
+<h1>WNY <span>3RD ALARM</span><br>FIRE BUFFS</h1>
+<p>Capturing the Call. Preserving the Tradition. Sharing fire apparatus photography and celebrating the emergency-services community across Western New York.</p>
+<a class="btn" href="#gallery">VIEW GALLERY</a><a class="btn alt" href="#about">ABOUT OUR GROUP</a>
 </div></section>
-<section id="about"><div class="wrap">
-  <div class="section-kicker">Who we are</div><h2>About WNY 3rd Alarm</h2>
-  <p class="intro">WNY 3rd Alarm Fire Buffs is a Western New York-based group brought together by an interest in fire apparatus, emergency-service photography, and the traditions of the fire service. We aim to share respectful, responsible coverage and celebrate the work of local emergency services.</p>
-  <div class="grid">
-    <article class="card"><div class="icon">📸</div><h3>Fire photography</h3><p>Capturing apparatus, department events, parades, and public displays.</p></article>
-    <article class="card"><div class="icon">🚒</div><h3>Fire service appreciation</h3><p>Recognizing the equipment, history, and community service of local departments.</p></article>
-    <article class="card"><div class="icon">📍</div><h3>Western New York</h3><p>A community built around the fire service and public-safety interest across WNY.</p></article>
-  </div>
-</div></section>
-<div class="band" id="mission"><div class="wrap"><div class="section-kicker">Our mission</div><h2>Respect the service. Respect the scene.</h2><p>We share fire-service photography and public information responsibly, with respect for responders, residents, and the communities they serve.</p></div></div>
-<section id="photography"><div class="wrap">
-  <div class="section-kicker">Through the lens</div><h2>Photography & coverage</h2>
-  <p class="intro">Our photography focuses on apparatus and fire-service activities. This sample gallery is a placeholder—replace these panels with your own photographs when you're ready.</p>
-  <div class="gallery">
-    <div class="photo large"><span>Fire apparatus photography</span></div>
-    <div class="photo"><span>Community events</span></div>
-    <div class="photo"><span>Department traditions</span></div>
-  </div>
-</div></section>
-<section id="safety"><div class="wrap">
-  <div class="section-kicker">Our standards</div><h2>Safety comes first</h2>
-  <p class="intro">We are observers and photographers—not emergency responders. We do not self-dispatch into incidents or enter restricted areas.</p>
-  <div class="notice">We photograph only from lawful public locations or where we have explicit permission. We follow instructions from emergency personnel, never obstruct operations, never trespass, and never drive distracted. We do not publish private, identifying, or unverified incident information.</div>
-</div></section>
-<section id="contact"><div class="wrap contact">
-  <div><div class="section-kicker">Connect with us</div><h2>Stay in touch.</h2><p class="intro">Questions, community collaborations, or photography inquiries? Reach out through our official contact channels.</p></div>
-  <div class="card"><h3>WNY 3rd Alarm Fire Buffs</h3><p><strong>Email</strong><br><a href="mailto:wny3rdalarm716@gmail.com">wny3rdalarm716@gmail.com</a></p><p><strong>TikTok</strong><br><a href="https://www.tiktok.com/@wnyfirebuffs716" target="_blank" rel="noopener">@wnyfirebuffs716</a></p><p><strong>Location</strong><br>Western New York</p></div>
+<section id="about"><div class="wrap"><div class="eyebrow">Who we are</div><h2>About WNY 3RD ALARM</h2>
+<p class="intro">WNY 3RD ALARM FIRE BUFFS is a Western New York-based fire-buffing and photography group. We document fire apparatus, public events, and the people and traditions of the fire service from appropriate public locations.</p>
+<div class="grid"><article class="card"><h3>Our Mission</h3><p>Preserve moments, share photography, and show appreciation for the emergency-services community.</p></article><article class="card"><h3>Our Approach</h3><p>Respect departments, responders, residents, privacy, and all scene restrictions.</p></article><article class="card"><h3>Our Coverage</h3><p>Western New York, with activities and photography shared when appropriate.</p></article></div></div></section>
+<section id="gallery"><div class="wrap"><div class="eyebrow">On camera</div><h2>Photo Gallery</h2><p class="intro">Our fire apparatus photography. More photos coming soon.</p>
+<figure style="margin:0;max-width:850px"><img src="images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 photographed at sunset" style="display:block;width:100%;height:auto;border-radius:8px" loading="lazy"><figcaption style="padding:12px 0;color:var(--muted)">Scranton Fire-Rescue — Rescue 7 | Photo: @wnyfirebuff</figcaption></figure></div></section>
+<section id="team"><div class="wrap"><div class="eyebrow">The people behind the camera</div><h2>Meet the Team</h2><p class="intro">Meet the WNY 3RD ALARM team.</p>
+<div class="grid"><article class="card person"><div class="role">Admin for Technology</div><h3>Tony</h3><p>Website, technology, and digital systems.</p></article><article class="card person"><div class="role">Founder</div><h3>Lily</h3><p>Group coordination and member support.</p></article><article class="card person"><div class="role">Admin</div><h3>Quinn</h3><p>Photography and group participation.</p></article></div><p class="note">Only share member details that each person has agreed to make public.</p></div></section>
+<section id="news"><div class="wrap"><div class="eyebrow">What's happening</div><h2>Latest News</h2><p class="intro">Official group updates will appear here. Add a date and short update whenever you have news to share.</p>
+<div class="card"><div class="date">GROUP UPDATE</div><h3>Welcome to WNY 3RD ALARM</h3><p>Our website is live. Check back for photography, community-event updates, and announcements from the group.</p></div></div></section>
+<section id="events"><div class="wrap"><div class="eyebrow">Out in the community</div><h2>Events Calendar</h2><p class="intro">Public events and appearances may be listed here once confirmed. No live incident responses or real-time member movements are published.</p>
+<div class="card"><h3>Upcoming Events</h3><div class="event"><div class="date">TO BE ANNOUNCED</div><strong>Community events and public apparatus displays</strong><p class="note">Check back for confirmed dates and details.</p></div></div></div></section>
+<section id="join"><div class="wrap"><div class="eyebrow">Interested in the group?</div><h2>Join Our Group</h2><p class="intro">We welcome interest from people in Western New York who share an appreciation for fire apparatus photography and the fire-service community. Membership is subject to group review and expectations.</p>
+<div class="grid"><article class="card"><h3>What we value</h3><p>Respect, responsibility, safe conduct, privacy, and a genuine interest in photography and community events.</p></article><article class="card"><h3>Safety comes first</h3><p>Members do not self-dispatch, enter emergency scenes, interfere with responders, or use restricted access. Follow all official instructions.</p></article><article class="card"><h3>Apply to Join</h3><p>Fill out our official membership application to be considered for WNY 3RD ALARM FIRE BUFFS.</p><p style="margin-top:18px"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeqiCS5AikqgerVpWIJvykKUWVPQ3TylJPDcVdXrD9cLMCrcA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">FILL OUT APPLICATION</a></p></article></div></div></section>
+<section id="contact"><div class="wrap"><div class="eyebrow">Get in touch</div><h2>Contact Us</h2><p class="intro">For general questions, photography inquiries, community-event information, or membership interest, send us a message.</p>
+<form action="mailto:wny3rdalarm716@gmail.com" method="post" enctype="text/plain">
+<div><label for="name">Your name</label><input id="name" name="Name" required autocomplete="name"></div>
+<div><label for="email">Your email</label><input id="email" name="Email" type="email" required autocomplete="email"></div>
+<div><label for="topic">Message topic</label><select id="topic" name="Topic"><option>General question</option><option>Membership inquiry</option><option>Photography inquiry</option><option>Community event</option></select></div>
+<div><label for="message">Message</label><textarea id="message" name="Message" required></textarea></div>
+<button type="submit">SEND MESSAGE</button>
+<p class="note">This form opens your email app to send the message. It does not store submissions on this website.</p>
+</form>
+<p style="margin-top:24px"><strong>Email:</strong> <a href="mailto:wny3rdalarm716@gmail.com">wny3rdalarm716@gmail.com</a><br><strong>TikTok:</strong> <a href="https://www.tiktok.com/@wnyfirebuff" target="_blank" rel="noopener">@wnyfirebuff</a></p>
 </div></section>
 </main>
-<footer><div class="wrap foot"><span>© <span id="year">2026</span> WNY 3rd Alarm Fire Buffs</span><span>Capturing the Call. Preserving the Tradition.</span></div></footer>
+<footer><div class="wrap foot"><span>© <span id="year">2026</span> WNY 3RD ALARM FIRE BUFFS</span><span>Capturing the Call. Preserving the Tradition.</span></div></footer>
 </body></html>
