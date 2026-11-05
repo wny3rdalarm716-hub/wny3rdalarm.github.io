@@ -27,7 +27,7 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
 <header class="top"><div class="wrap nav">
 <a class="brand" href="#home">WNY <span>3RD ALARM</span><small>FIRE BUFFS</small></a>
 <nav aria-label="Main navigation">
-<a href="#about">ABOUT</a><a href="#gallery">GALLERY</a><a href="#cad">CAD</a><a href="#team">TEAM</a><a href="#news">NEWS</a><a href="#events">EVENTS</a><a href="#join">JOIN</a><a href="#contact">CONTACT</a>
+<a href="#about">ABOUT</a><a href="#gallery">GALLERY</a><a href="#cad">CAD</a><a href="#weather">WEATHER</a><a href="#team">TEAM</a><a href="#news">NEWS</a><a href="#events">EVENTS</a><a href="#join">JOIN</a><a href="#contact">CONTACT</a>
 </nav></div></header>
 <main>
 <section class="hero" id="home"><div class="wrap">
@@ -133,6 +133,191 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
 
   
 </div></section>
+
+<section id="weather" style="padding:30px 16px;color:white">
+  <div style="max-width:900px;margin:auto">
+
+    <p style="color:#ef4444;font-weight:bold">
+      WNY 3RD ALARM WEATHER OPERATIONS
+    </p>
+    <h2>🌩️ WNY WEATHER CENTER</h2>
+    <p>Official National Weather Service information for Western New York.</p>
+
+    <div style="background:#161b22;padding:20px;border-radius:12px;margin:18px 0;border:1px solid #b91c1c">
+      <h3>🚨 ACTIVE WEATHER ALERTS</h3>
+      <p id="weather-alerts">Loading official alerts...</p>
+    </div>
+
+    <div style="background:#161b22;padding:20px;border-radius:12px;margin:18px 0">
+      <h3>🌡️ BUFFALO WEATHER</h3>
+      <p id="weather-temp">Loading latest observation...</p>
+      <p id="weather-condition"></p>
+      <small id="weather-observed"></small>
+    </div>
+
+    <div style="background:#161b22;padding:20px;border-radius:12px;margin:18px 0">
+      <h3>🌤️ UPCOMING FORECAST</h3>
+      <div id="weather-forecast">Loading forecast...</div>
+    </div>
+
+    <div style="background:#161b22;padding:20px;border-radius:12px;margin:18px 0">
+      <h3>📡 WEATHER RESOURCES</h3>
+      <p><a href="https://radar.weather.gov/" target="_blank" rel="noopener noreferrer">🌧️ Official NWS Radar</a></p>
+      <p><a href="https://www.weather.gov/buf/" target="_blank" rel="noopener noreferrer">🌩️ NWS Buffalo Forecast Office</a></p>
+      <p><a href="https://www.spc.noaa.gov/" target="_blank" rel="noopener noreferrer">⚡ Storm Prediction Center</a></p>
+    </div>
+
+    <p id="weather-status" style="color:#aaa;font-size:12px">
+      Weather information provided by NOAA/NWS.
+    </p>
+    <p style="color:#aaa;font-size:12px">
+      For safety-critical decisions, verify alerts directly with the National Weather Service.
+    </p>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  const API = "https://api.weather.gov";
+
+  async function getJSON(url) {
+    const response = await fetch(url, {
+      headers: { "Accept": "application/geo+json" }
+    });
+    if (!response.ok) throw new Error("NWS service unavailable");
+    return response.json();
+  }
+
+  function showText(id, value) {
+    document.getElementById(id).textContent = value;
+  }
+
+  async function loadAlerts() {
+    const box = document.getElementById("weather-alerts");
+    try {
+      // Erie County, NY — includes county and associated zone alerts.
+      const data = await getJSON(
+        API + "/alerts/active?zone=NYC029"
+      );
+      const alerts = data.features || [];
+      box.replaceChildren();
+
+      if (!alerts.length) {
+        box.textContent = "No active NWS alerts reported for Erie County.";
+        return;
+      }
+
+      alerts.slice(0, 12).forEach(item => {
+        const p = item.properties || {};
+        const card = document.createElement("div");
+        card.style.cssText =
+          "border-left:4px solid #ef4444;padding:12px;margin:10px 0;background:#25252b;border-radius:6px";
+
+        const heading = document.createElement("strong");
+        heading.textContent = p.event || "Weather Alert";
+        card.appendChild(heading);
+
+        const detail = document.createElement("p");
+        detail.textContent = p.headline || p.description || "";
+        card.appendChild(detail);
+
+        if (p.web) {
+          const link = document.createElement("a");
+          link.href = p.web;
+          link.textContent = "View official alert";
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          card.appendChild(link);
+        }
+
+        box.appendChild(card);
+      });
+    } catch (error) {
+      box.textContent = "Alerts could not be loaded. Check weather.gov for official updates.";
+    }
+  }
+
+  async function loadConditions() {
+    try {
+      const data = await getJSON(
+        API + "/stations/KBUF/observations/latest"
+      );
+      const p = data.properties || {};
+      const c = p.temperature && p.temperature.value;
+
+      showText(
+        "weather-temp",
+        Number.isFinite(c)
+          ? Math.round(c * 9 / 5 + 32) + "°F"
+          : "Temperature unavailable"
+      );
+
+      showText(
+        "weather-condition",
+        p.textDescription || "Condition unavailable"
+      );
+
+      showText(
+        "weather-observed",
+        p.timestamp
+          ? "Observed: " + new Date(p.timestamp).toLocaleString()
+          : "Observation time unavailable"
+      );
+    } catch (error) {
+      showText("weather-temp", "Current observation unavailable");
+      showText("weather-condition", "Check NWS Buffalo for current conditions.");
+    }
+  }
+
+  async function loadForecast() {
+    const box = document.getElementById("weather-forecast");
+    try {
+      // Approximate downtown Buffalo location.
+      const point = await getJSON(
+        API + "/points/42.8864,-78.8784"
+      );
+      const forecastURL = point.properties.forecast;
+      const data = await getJSON(forecastURL);
+
+      box.replaceChildren();
+      (data.properties.periods || []).slice(0, 4).forEach(p => {
+        const item = document.createElement("div");
+        item.style.cssText =
+          "padding:12px 0;border-bottom:1px solid #333";
+
+        const name = document.createElement("strong");
+        name.textContent = p.name + " — " + p.temperature + "°" + p.temperatureUnit;
+
+        const description = document.createElement("p");
+        description.textContent = p.shortForecast;
+
+        item.append(name, description);
+        box.appendChild(item);
+      });
+    } catch (error) {
+      box.textContent = "Forecast unavailable. Visit weather.gov/buf.";
+    }
+  }
+
+  async function refreshWeather() {
+    showText("weather-status", "Checking National Weather Service...");
+    await Promise.all([
+      loadAlerts(),
+      loadConditions(),
+      loadForecast()
+    ]);
+    showText(
+      "weather-status",
+      "Last checked: " + new Date().toLocaleTimeString()
+      + " • NOAA/NWS"
+    );
+  }
+
+  refreshWeather();
+  setInterval(refreshWeather, 300000);
+})();
+</script>
 
 <section id="cad"><div class="wrap"><div class="eyebrow">Public group updates</div><h2>CAD Activity</h2><p class="intro">Publicly approved, general incident summaries. Exact addresses, personal information, and responder locations are not displayed.</p>
 <div id="cad-feed" aria-live="polite"><div class="card" style="border-left:4px solid var(--red)"><div class="date">PUBLIC FEED STATUS</div><h3>Awaiting approved updates</h3><p>No approved public updates have been posted.</p></div></div>
