@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,137 +7,353 @@
 <meta name="theme-color" content="#111111">
 <meta name="description" content="WNY 3RD ALARM FIRE BUFFS — fire photography and community events across Western New York.">
 <title>WNY 3RD ALARM | FIRE BUFFS</title>
+
 <style>
-:root{--bg:#0b0b0d;--panel:#151518;--red:#c51f2b;--red2:#ed3440;--silver:#c7c7cc;--muted:#a4a4ab;--line:#303036}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f5f5f6;font-family:Arial,Helvetica,sans-serif;line-height:1.6}
-a{color:inherit}.wrap{width:min(1100px,92%);margin:auto}.top{background:#080809;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:900;letter-spacing:1px;text-decoration:none;line-height:1.1}.brand span{color:var(--red2)}.brand small{display:block;color:var(--silver);font-size:10px;letter-spacing:3px;margin-top:5px}
-nav{display:flex;gap:18px;flex-wrap:wrap}nav a{text-decoration:none;color:#ddd;font-size:13px;font-weight:700}nav a:hover{color:var(--red2)}
-.hero{padding:100px 0 90px;background:linear-gradient(100deg,rgba(0,0,0,.96),rgba(0,0,0,.72)),repeating-linear-gradient(135deg,#19191d 0 2px,#101013 2px 12px);border-bottom:4px solid var(--red)}
-.kicker{color:var(--red2);font-size:12px;font-weight:900;letter-spacing:4px;text-transform:uppercase}.hero h1{font-size:clamp(42px,8vw,78px);line-height:.98;margin:16px 0;font-weight:900;letter-spacing:-2px}.hero h1 span{color:var(--red2)}.hero p{max-width:620px;color:#d0d0d4;font-size:18px}.btn{display:inline-block;background:var(--red);padding:12px 20px;text-decoration:none;font-weight:800;border:1px solid var(--red);margin:12px 8px 0 0}.btn.alt{background:transparent;border-color:#777}.btn:hover{background:var(--red2)}
-section{padding:65px 0;border-bottom:1px solid var(--line)}.eyebrow{color:var(--red2);font-size:11px;letter-spacing:3px;font-weight:900;text-transform:uppercase}h2{font-size:clamp(28px,5vw,40px);margin:5px 0 12px;line-height:1.1}.intro{color:var(--muted);max-width:700px;margin:0 0 28px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--panel);border:1px solid var(--line);padding:22px}.card h3{margin:0 0 8px}.card p{color:var(--muted);margin:0}.photo{min-height:175px;background:linear-gradient(145deg,#29292f,#111);border:1px dashed #666;display:grid;place-items:center;text-align:center;color:#bdbdc3;padding:20px;font-weight:700}.photo small{display:block;color:#888;font-weight:400}
-.person{border-top:3px solid var(--red)}.role{color:var(--red2);font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase}.date{color:var(--red2);font-weight:900;font-size:12px;letter-spacing:1px}.event{border-left:3px solid var(--red);margin:12px 0;padding:4px 0 4px 16px}
-form{display:grid;gap:12px;max-width:650px}label{font-size:13px;font-weight:700;color:#ddd}input,textarea,select{width:100%;padding:12px;background:#0c0c0e;border:1px solid #45454d;color:white;font:inherit;border-radius:2px}textarea{min-height:120px;resize:vertical}button{cursor:pointer;color:white;font-weight:900;background:var(--red);border:0;padding:13px 18px;font-size:14px}button:hover{background:var(--red2)}.note{font-size:12px;color:#999}
-footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
-@media(max-width:760px){.nav{align-items:flex-start;padding:16px 0;flex-direction:column}nav{gap:10px 14px}.grid{grid-template-columns:1fr 1fr}.hero{padding:75px 0}.hero p{font-size:16px}}
-@media(max-width:480px){.grid{grid-template-columns:1fr}.hero h1{letter-spacing:-1px}}
+:root {
+  --bg:#0b0b0d;
+  --panel:#151518;
+  --red:#c51f2b;
+  --red2:#ed3440;
+  --silver:#c7c7cc;
+  --muted:#a4a4ab;
+  --line:#303036;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:#f5f5f6;
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6;
+}
+a { color:inherit; }
+.wrap { width:min(1100px,92%); margin:auto; }
+.top {
+  background:#080809;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.nav {
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand {
+  font-weight:900;
+  letter-spacing:1px;
+  text-decoration:none;
+  line-height:1.1;
+}
+.brand span { color:var(--red2); }
+.brand small {
+  display:block;
+  color:var(--silver);
+  font-size:10px;
+  letter-spacing:3px;
+  margin-top:5px;
+}
+nav { display:flex; gap:18px; flex-wrap:wrap; }
+nav a {
+  text-decoration:none;
+  color:#ddd;
+  font-size:13px;
+  font-weight:700;
+}
+nav a:hover { color:var(--red2); }
+.hero {
+  padding:100px 0 90px;
+  background:
+    linear-gradient(100deg,rgba(0,0,0,.96),rgba(0,0,0,.72)),
+    repeating-linear-gradient(135deg,#19191d 0 2px,#101013 2px 12px);
+  border-bottom:4px solid var(--red);
+}
+.kicker {
+  color:var(--red2);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:4px;
+  text-transform:uppercase;
+}
+.hero h1 {
+  font-size:clamp(42px,8vw,78px);
+  line-height:.98;
+  margin:16px 0;
+  font-weight:900;
+  letter-spacing:-2px;
+}
+.hero h1 span { color:var(--red2); }
+.hero p {
+  max-width:620px;
+  color:#d0d0d4;
+  font-size:18px;
+}
+.btn {
+  display:inline-block;
+  background:var(--red);
+  padding:12px 20px;
+  text-decoration:none;
+  font-weight:800;
+  border:1px solid var(--red);
+  margin:12px 8px 0 0;
+}
+.btn.alt { background:transparent; border-color:#777; }
+.btn:hover { background:var(--red2); }
+section { padding:65px 0; border-bottom:1px solid var(--line); }
+.eyebrow {
+  color:var(--red2);
+  font-size:11px;
+  letter-spacing:3px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+h2 {
+  font-size:clamp(28px,5vw,40px);
+  margin:5px 0 12px;
+  line-height:1.1;
+}
+.intro {
+  color:var(--muted);
+  max-width:700px;
+  margin:0 0 28px;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:22px;
+}
+.card h3 { margin:0 0 8px; }
+.card p { color:var(--muted); margin:0; }
+.person { border-top:3px solid var(--red); }
+.role {
+  color:var(--red2);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.date {
+  color:var(--red2);
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:1px;
+}
+.event {
+  border-left:3px solid var(--red);
+  margin:12px 0;
+  padding:4px 0 4px 16px;
+}
+form { display:grid; gap:12px; max-width:650px; }
+label { font-size:13px; font-weight:700; color:#ddd; }
+input,textarea,select {
+  width:100%;
+  padding:12px;
+  background:#0c0c0e;
+  border:1px solid #45454d;
+  color:white;
+  font:inherit;
+  border-radius:2px;
+}
+textarea { min-height:120px; resize:vertical; }
+button {
+  cursor:pointer;
+  color:white;
+  font-weight:900;
+  background:var(--red);
+  border:0;
+  padding:13px 18px;
+  font-size:14px;
+}
+button:hover { background:var(--red2); }
+.note { font-size:12px; color:#999; }
+footer {
+  padding:28px 0;
+  color:#999;
+  font-size:12px;
+  background:#080809;
+}
+.foot {
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+@media(max-width:760px) {
+  .nav { align-items:flex-start; padding:16px 0; flex-direction:column; }
+  nav { gap:10px 14px; }
+  .grid { grid-template-columns:1fr 1fr; }
+  .hero { padding:75px 0; }
+  .hero p { font-size:16px; }
+}
+@media(max-width:480px) {
+  .grid { grid-template-columns:1fr; }
+  .hero h1 { letter-spacing:-1px; }
+}
 </style>
 </head>
+
 <body>
-<header class="top"><div class="wrap nav">
-<a class="brand" href="#home">WNY <span>3RD ALARM</span><small>FIRE BUFFS</small></a>
-<nav aria-label="Main navigation">
-<a href="#about">ABOUT</a><a href="#gallery">GALLERY</a><a href="#cad">CAD</a><a href="#weather">WEATHER</a><a href="#team">TEAM</a><a href="#news">NEWS</a><a href="#events">EVENTS</a><a href="#join">JOIN</a><a href="#contact">CONTACT</a>
-</nav></div></header>
+
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="#home">
+      WNY <span>3RD ALARM</span>
+      <small>FIRE BUFFS</small>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#about">ABOUT</a>
+      <a href="#gallery">GALLERY</a>
+      <a href="#cad">CAD</a>
+      <a href="#weather">WEATHER</a>
+      <a href="#team">TEAM</a>
+      <a href="#news">NEWS</a>
+      <a href="#events">EVENTS</a>
+      <a href="#join">JOIN</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </div>
+</header>
+
 <main>
-<section class="hero" id="home"><div class="wrap">
-<div class="kicker">Western New York</div>
-<h1>WNY <span>3RD ALARM</span><br>FIRE BUFFS</h1>
-<p>Capturing the Call. Preserving the Tradition. Sharing fire apparatus photography and celebrating the emergency-services community across Western New York.</p>
-<a class="btn" href="#gallery">VIEW GALLERY</a><a class="btn alt" href="#about">ABOUT OUR GROUP</a>
-</div></section>
-<section id="about"><div class="wrap"><div class="eyebrow">Who we are</div><h2>About WNY 3RD ALARM</h2>
-<p class="intro">WNY 3RD ALARM FIRE BUFFS is a Western New York-based fire-buffing and photography group. We document fire apparatus, public events, and the people and traditions of the fire service from appropriate public locations.</p>
-<div class="grid"><article class="card"><h3>Our Mission</h3><p>Preserve moments, share photography, and show appreciation for the emergency-services community.</p></article><article class="card"><h3>Our Approach</h3><p>Respect departments, responders, residents, privacy, and all scene restrictions.</p></article><article class="card"><h3>Our Coverage</h3><p>Western New York, with activities and photography shared when appropriate.</p></article></div></div></section>
 
-<section id="photo-of-the-week">
-  <h2>📸 PHOTO OF THE WEEK</h2>
-
-  <div style="background:#161b22;
-              padding:20px;
-              border:1px solid #b91c1c;
-              border-radius:12px;
-              max-width:850px;
-              margin:auto;">
-
-    <img
-      src="images/quinn-emergency-night.jpg"
-      alt="Featured fire apparatus photo"
-      style="width:100%;
-             height:auto;
-             border-radius:8px;">
-
-    <h3 style="color:#ef4444;">
-      🚒 Featured Apparatus Photography
-    </h3>
-
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="kicker">Western New York</div>
+    <h1>WNY <span>3RD ALARM</span><br>FIRE BUFFS</h1>
     <p>
-      📸 Photographer: Quinn 
+      Capturing the Call. Preserving the Tradition.
+      Sharing fire apparatus photography and celebrating
+      the emergency-services community across Western New York.
     </p>
-
-    <p style="color:#aaa;">
-      WNY 3RD ALARM | Weekly Photo Spotlight
-    </p>
-
+    <a class="btn" href="#gallery">VIEW GALLERY</a>
+    <a class="btn alt" href="#about">ABOUT OUR GROUP</a>
   </div>
 </section>
 
-<section id="gallery"><div class="wrap"><div class="eyebrow">On camera</div><h2>Photo Gallery</h2><p class="intro">Our fire apparatus photography. More photos coming soon.</p
-<figure style="margin:0;max-width:850px"><img src="images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 photographed at sunset" style="display:block;width:100%;height:auto;border-radius:8px" loading="lazy"><figcaption style="padding:12px 0;color:var(--muted)">Scranton Fire-Rescue — Rescue 7 | Photo: @wnyfirebuff </figure>
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">Who we are</div>
+    <h2>About WNY 3RD ALARM</h2>
+    <p class="intro">
+      WNY 3RD ALARM FIRE BUFFS is a Western New York-based
+      fire-buffing and photography group. We document fire
+      apparatus, public events, and the people and traditions
+      of the fire service from appropriate public locations.
+    </p>
+    <div class="grid">
+      <article class="card">
+        <h3>Our Mission</h3>
+        <p>Preserve moments, share photography, and show appreciation for the emergency-services community.</p>
+      </article>
+      <article class="card">
+        <h3>Our Approach</h3>
+        <p>Respect departments, responders, residents, privacy, and all scene restrictions.</p>
+      </article>
+      <article class="card">
+        <h3>Our Coverage</h3>
+        <p>Western New York, with activities and photography shared when appropriate.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-</figure>
+<section id="photo-of-the-week">
+  <div class="wrap">
+    <h2>📸 PHOTO OF THE WEEK</h2>
+    <div style="background:#161b22;padding:20px;border:1px solid #b91c1c;border-radius:12px;max-width:850px;margin:auto;">
+      <img
+        src="images/quinn-emergency-night.jpg"
+        alt="Featured fire apparatus photo"
+        style="width:100%;height:auto;border-radius:8px;"
+      >
+      <h3 style="color:#ef4444;">🚒 Featured Apparatus Photography</h3>
+      <p>📸 Photographer: Quinn</p>
+      <p style="color:#aaa;">WNY 3RD ALARM | Weekly Photo Spotlight</p>
+    </div>
+  </div>
+</section>
 
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/incident-scene-01.jpg"
-    alt="Emergency response scene photographed by Quinn"
-    loading="lazy"
-    style="width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Emergency Response Scene | Photo: Quinn
-    | WNY 3RD ALARM
-  </figcaption>
-</figure>
+<section id="gallery">
+  <div class="wrap">
+    <div class="eyebrow">On camera</div>
+    <h2>Photo Gallery</h2>
+    <p class="intro">
+      Our fire apparatus photography. More photos coming soon.
+    </p>
 
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/fire-station-night.jpg"
-    alt="Fire station illuminated at night"
-    loading="lazy"
-    style="width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Fire Station at Night |
-    Photo: @wnyfirebuff |
-    WNY 3RD ALARM
-  </figcaption>
-</figure>
+    <figure style="margin:0;max-width:850px">
+      <img
+        src="images/scranton-rescue-7.jpg"
+        alt="Scranton Fire-Rescue Rescue 7 photographed at sunset"
+        style="display:block;width:100%;height:auto;border-radius:8px"
+        loading="lazy"
+      >
+      <figcaption style="padding:12px 0;color:var(--muted)">
+        Scranton Fire-Rescue — Rescue 7 | Photo: @wnyfirebuff
+      </figcaption>
+    </figure>
 
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/rescue-truck-night.jpg"
-    alt="Fire rescue truck at night"
-    loading="lazy"
-    style="width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Fire Rescue at Night |
-    Photo: @wnyfirebuff |
-    WNY 3RD ALARM
-  </figcaption>
-</figure>
+    <figure style="margin:24px 0;max-width:850px">
+      <img
+        src="images/incident-scene-01.jpg"
+        alt="Emergency response scene photographed by Quinn"
+        loading="lazy"
+        style="width:100%;height:auto;border-radius:8px"
+      >
+      <figcaption style="padding:12px 0;color:var(--muted)">
+        Emergency Response Scene | Photo: Quinn | WNY 3RD ALARM
+      </figcaption>
+    </figure>
 
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/quinn-emergency-night.jpg"
-    alt="Emergency vehicle with flashing lights at night"
-    loading="lazy"
-    style="width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Emergency Response at Night |
-    Photo: Quinn | WNY 3RD ALARM
-  </figcaption>
-</figure>
+    <figure style="margin:24px 0;max-width:850px">
+      <img
+        src="images/fire-station-night.jpg"
+        alt="Fire station illuminated at night"
+        loading="lazy"
+        style="width:100%;height:auto;border-radius:8px"
+      >
+      <figcaption style="padding:12px 0;color:var(--muted)">
+        Fire Station at Night | Photo: @wnyfirebuff | WNY 3RD ALARM
+      </figcaption>
+    </figure>
 
-  
-</div></section>
+    <figure style="margin:24px 0;max-width:850px">
+      <img
+        src="images/rescue-truck-night.jpg"
+        alt="Fire rescue truck at night"
+        loading="lazy"
+        style="width:100%;height:auto;border-radius:8px"
+      >
+      <figcaption style="padding:12px 0;color:var(--muted)">
+        Fire Rescue at Night | Photo: @wnyfirebuff | WNY 3RD ALARM
+      </figcaption>
+    </figure>
+
+    <figure style="margin:24px 0;max-width:850px">
+      <img
+        src="images/quinn-emergency-night.jpg"
+        alt="Emergency vehicle with flashing lights at night"
+        loading="lazy"
+        style="width:100%;height:auto;border-radius:8px"
+      >
+      <figcaption style="padding:12px 0;color:var(--muted)">
+        Emergency Response at Night | Photo: Quinn | WNY 3RD ALARM
+      </figcaption>
+    </figure>
+  </div>
+</section>
 
 <section id="weather" style="padding:30px 16px;color:white">
   <div style="max-width:900px;margin:auto">
-
     <p style="color:#ef4444;font-weight:bold">
       WNY 3RD ALARM WEATHER OPERATIONS
     </p>
@@ -173,7 +390,6 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
     <p style="color:#aaa;font-size:12px">
       For safety-critical decisions, verify alerts directly with the National Weather Service.
     </p>
-
   </div>
 </section>
 
@@ -195,11 +411,9 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
 
   async function loadAlerts() {
     const box = document.getElementById("weather-alerts");
+
     try {
-      // Erie County, NY — includes county and associated zone alerts.
-      const data = await getJSON(
-        API + "/alerts/active?zone=NYC029"
-      );
+      const data = await getJSON(API + "/alerts/active?zone=NYC029");
       const alerts = data.features || [];
       box.replaceChildren();
 
@@ -211,6 +425,7 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
       alerts.slice(0, 12).forEach(item => {
         const p = item.properties || {};
         const card = document.createElement("div");
+
         card.style.cssText =
           "border-left:4px solid #ef4444;padding:12px;margin:10px 0;background:#25252b;border-radius:6px";
 
@@ -233,8 +448,10 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
 
         box.appendChild(card);
       });
+
     } catch (error) {
-      box.textContent = "Alerts could not be loaded. Check weather.gov for official updates.";
+      box.textContent =
+        "Alerts could not be loaded. Check weather.gov for official updates.";
     }
   }
 
@@ -243,6 +460,7 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
       const data = await getJSON(
         API + "/stations/KBUF/observations/latest"
       );
+
       const p = data.properties || {};
       const c = p.temperature && p.temperature.value;
 
@@ -264,6 +482,7 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
           ? "Observed: " + new Date(p.timestamp).toLocaleString()
           : "Observation time unavailable"
       );
+
     } catch (error) {
       showText("weather-temp", "Current observation unavailable");
       showText("weather-condition", "Check NWS Buffalo for current conditions.");
@@ -272,22 +491,26 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
 
   async function loadForecast() {
     const box = document.getElementById("weather-forecast");
+
     try {
-      // Approximate downtown Buffalo location.
       const point = await getJSON(
         API + "/points/42.8864,-78.8784"
       );
+
       const forecastURL = point.properties.forecast;
       const data = await getJSON(forecastURL);
 
       box.replaceChildren();
+
       (data.properties.periods || []).slice(0, 4).forEach(p => {
         const item = document.createElement("div");
+
         item.style.cssText =
           "padding:12px 0;border-bottom:1px solid #333";
 
         const name = document.createElement("strong");
-        name.textContent = p.name + " — " + p.temperature + "°" + p.temperatureUnit;
+        name.textContent =
+          p.name + " — " + p.temperature + "°" + p.temperatureUnit;
 
         const description = document.createElement("p");
         description.textContent = p.shortForecast;
@@ -295,6 +518,7 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
         item.append(name, description);
         box.appendChild(item);
       });
+
     } catch (error) {
       box.textContent = "Forecast unavailable. Visit weather.gov/buf.";
     }
@@ -302,15 +526,16 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
 
   async function refreshWeather() {
     showText("weather-status", "Checking National Weather Service...");
+
     await Promise.all([
       loadAlerts(),
       loadConditions(),
       loadForecast()
     ]);
+
     showText(
       "weather-status",
-      "Last checked: " + new Date().toLocaleTimeString()
-      + " • NOAA/NWS"
+      "Last checked: " + new Date().toLocaleTimeString() + " • NOAA/NWS"
     );
   }
 
@@ -319,108 +544,331 @@ footer{padding:28px 0;color:#999;font-size:12px;background:#080809}.foot{display
 })();
 </script>
 
-<section id="cad"><div class="wrap"><div class="eyebrow">Public group updates</div><h2>CAD Activity</h2><p class="intro">Publicly approved, general incident summaries. Exact addresses, personal information, and responder locations are not displayed.</p>
-<div id="cad-feed" aria-live="polite"><div class="card" style="border-left:4px solid var(--red)"><div class="date">PUBLIC FEED STATUS</div><h3>Awaiting approved updates</h3><p>No approved public updates have been posted.</p></div></div>
-<p class="note" id="cad-status" style="margin-top:16px">Checking public updates…</p><p class="note">This is not a live dispatch feed or an emergency alert service. Call 911 for emergencies. Active911 is not connected. Only public, approved summaries belong in the feed file.</p></div></section>
-<section id="team"><div class="wrap"><div class="eyebrow">The people behind the camera</div><h2>Meet the Team</h2><p class="intro">Meet the WNY 3RD ALARM team.</p>
-<div class="grid"><article class="card person"><div class="role">Admin for Technology</div><h3>Tony</h3><p>Website, technology, and digital systems.</p></article><article class="card person"><div class="role">Founder</div><h3>Lily</h3><p>Group coordination and member support.</p></article><article class="card person"><div class="role">Admin</div><h3>Quinn</h3><p>Photography and group participation.</p></article></div><p class="note">Only share member details that each person has agreed to make public.</p></div></section>
-<section id="news"><div class="wrap"><div class="eyebrow">What's happening</div><h2>Latest News</h2><p class="intro">Official group updates will appear here. Add a date and short update whenever you have news to share.</p>
-<div class="card"><div class="date">GROUP UPDATE</div><h3>Welcome to WNY 3RD ALARM</h3><p>Our website is live. Check back for photography, community-event updates, and announcements from the group.</p></div></div></section>
-<section id="events"><div class="wrap"><div class="eyebrow">Out in the community</div><h2>Events Calendar</h2><p class="intro">Public events and appearances may be listed here once confirmed. No live incident responses or real-time member movements are published.</p>
-<div class="card"><h3>Upcoming Events</h3><div class="event"><div class="date">TO BE ANNOUNCED</div><strong>Community events and public apparatus displays</strong><p class="note">Check back for confirmed dates and details.</p></div></div></div></section>
-<section id="join"><div class="wrap"><div class="eyebrow">Interested in the group?</div><h2>Join Our Group</h2><p class="intro">We welcome interest from people in Western New York who share an appreciation for fire apparatus photography and the fire-service community. Membership is subject to group review and expectations.</p>
-<div class="grid"><article class="card"><h3>What we value</h3><p>Respect, responsibility, safe conduct, privacy, and a genuine interest in photography and community events.</p></article><article class="card"><h3>Safety comes first</h3><p>Members do not self-dispatch, enter emergency scenes, interfere with responders, or use restricted access. Follow all official instructions.</p></article><article class="card"><h3>Apply to Join</h3><p>Fill out our official membership application to be considered for WNY 3RD ALARM FIRE BUFFS.</p><p style="margin-top:18px"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeqiCS5AikqgerVpWIJvykKUWVPQ3TylJPDcVdXrD9cLMCrcA/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">FILL OUT APPLICATION</a></p></article></div></div></section>
-<section id="contact"><div class="wrap"><div class="eyebrow">Get in touch</div><h2>Contact Us</h2><p class="intro">For general questions, photography inquiries, community-event information, or membership interest, send us a message.</p>
-<form action="mailto:wny3rdalarm716@gmail.com" method="post" enctype="text/plain">
-<div><label for="name">Your name</label><input id="name" name="Name" required autocomplete="name"></div>
-<div><label for="email">Your email</label><input id="email" name="Email" type="email" required autocomplete="email"></div>
-<div><label for="topic">Message topic</label><select id="topic" name="Topic"><option>General question</option><option>Membership inquiry</option><option>Photography inquiry</option><option>Community event</option></select></div>
-<div><label for="message">Message</label><textarea id="message" name="Message" required></textarea></div>
-<button type="submit">SEND MESSAGE</button>
-<p class="note">This form opens your email app to send the message. It does not store submissions on this website.</p>
-</form>
-<p style="margin-top:24px"><strong>Email:</strong> <a href="mailto:wny3rdalarm716@gmail.com">wny3rdalarm716@gmail.com</a><br><strong>TikTok:</strong> 
-<a href="https://www.tiktok.com/@wnyfirebuffs716"
-   target="_blank"
-   rel="noopener noreferrer">
-  Follow Us on TikTok
-</a>
-</p>
-</div></section>
+<section id="cad">
+  <div class="wrap">
+    <div class="eyebrow">Public group updates</div>
+    <h2>CAD Activity</h2>
+    <p class="intro">
+      Publicly approved, general incident summaries.
+      Exact addresses, personal information, and responder locations
+      are not displayed.
+    </p>
+
+    <div id="cad-feed" aria-live="polite">
+      <div class="card" style="border-left:4px solid var(--red)">
+        <div class="date">PUBLIC FEED STATUS</div>
+        <h3>Awaiting approved updates</h3>
+        <p>No approved public updates have been posted.</p>
+      </div>
+    </div>
+
+    <p class="note" id="cad-status" style="margin-top:16px">
+      Checking public updates…
+    </p>
+
+    <p class="note">
+      This is not a live dispatch feed or an emergency alert service.
+      Call 911 for emergencies. Active911 is not connected.
+      Only public, approved summaries belong in the feed file.
+    </p>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <div class="eyebrow">The people behind the camera</div>
+    <h2>Meet the Team</h2>
+    <p class="intro">Meet the WNY 3RD ALARM team.</p>
+
+    <div class="grid">
+      <article class="card person">
+        <div class="role">Admin for Technology</div>
+        <h3>Tony</h3>
+        <p>Website, technology, and digital systems.</p>
+      </article>
+
+      <article class="card person">
+        <div class="role">Founder</div>
+        <h3>Lily</h3>
+        <p>Group coordination and member support.</p>
+      </article>
+
+      <article class="card person">
+        <div class="role">Admin</div>
+        <h3>Quinn</h3>
+        <p>Photography and group participation.</p>
+      </article>
+    </div>
+
+    <p class="note">
+      Only share member details that each person has agreed to make public.
+    </p>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="eyebrow">What's happening</div>
+    <h2>Latest News</h2>
+    <p class="intro">
+      Official group updates will appear here.
+      Add a date and short update whenever you have news to share.
+    </p>
+
+    <div class="card">
+      <div class="date">GROUP UPDATE</div>
+      <h3>Welcome to WNY 3RD ALARM</h3>
+      <p>
+        Our website is live. Check back for photography,
+        community-event updates, and announcements from the group.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="events">
+  <div class="wrap">
+    <div class="eyebrow">Out in the community</div>
+    <h2>Events Calendar</h2>
+    <p class="intro">
+      Public events and appearances may be listed here once confirmed.
+      No live incident responses or real-time member movements are published.
+    </p>
+
+    <div class="card">
+      <h3>Upcoming Events</h3>
+      <div class="event">
+        <div class="date">TO BE ANNOUNCED</div>
+        <strong>Community events and public apparatus displays</strong>
+        <p class="note">Check back for confirmed dates and details.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <div class="eyebrow">Interested in the group?</div>
+    <h2>Join Our Group</h2>
+    <p class="intro">
+      We welcome interest from people in Western New York who share
+      an appreciation for fire apparatus photography and the fire-service
+      community. Membership is subject to group review and expectations.
+    </p>
+
+    <div class="grid">
+      <article class="card">
+        <h3>What we value</h3>
+        <p>
+          Respect, responsibility, safe conduct, privacy,
+          and a genuine interest in photography and community events.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Safety comes first</h3>
+        <p>
+          Members do not self-dispatch, enter emergency scenes,
+          interfere with responders, or use restricted access.
+          Follow all official instructions.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Apply to Join</h3>
+        <p>
+          Fill out our official membership application
+          to be considered for WNY 3RD ALARM FIRE BUFFS.
+        </p>
+        <p style="margin-top:18px">
+          <a
+            class="btn"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeqiCS5AikqgerVpWIJvykKUWVPQ3TylJPDcVdXrD9cLMCrcA/viewform?usp=dialog"
+            target="_blank"
+            rel="noopener noreferrer"
+          >FILL OUT APPLICATION</a>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Contact Us</h2>
+    <p class="intro">
+      For general questions, photography inquiries,
+      community-event information, or membership interest,
+      send us a message.
+    </p>
+
+    <form
+      action="mailto:wny3rdalarm716@gmail.com"
+      method="post"
+      enctype="text/plain"
+    >
+      <div>
+        <label for="name">Your name</label>
+        <input id="name" name="Name" required autocomplete="name">
+      </div>
+
+      <div>
+        <label for="email">Your email</label>
+        <input id="email" name="Email" type="email" required autocomplete="email">
+      </div>
+
+      <div>
+        <label for="topic">Message topic</label>
+        <select id="topic" name="Topic">
+          <option>General question</option>
+          <option>Membership inquiry</option>
+          <option>Photography inquiry</option>
+          <option>Community event</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" name="Message" required></textarea>
+      </div>
+
+      <button type="submit">SEND MESSAGE</button>
+
+      <p class="note">
+        This form opens your email app to send the message.
+        It does not store submissions on this website.
+      </p>
+    </form>
+
+    <p style="margin-top:24px">
+      <strong>Email:</strong>
+      <a href="mailto:wny3rdalarm716@gmail.com">
+        wny3rdalarm716@gmail.com
+      </a>
+      <br>
+      <strong>TikTok:</strong>
+      <a
+        href="https://www.tiktok.com/@wnyfirebuffs716"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Follow Us on TikTok</a>
+    </p>
+  </div>
+</section>
+
 </main>
-<footer><div class="wrap foot"><span>© <span id="year">2026</span> WNY 3RD ALARM FIRE BUFFS</span><span>Capturing the Call. Preserving the Tradition.</span></div></footer>
-<script>
-(function(){
- const target=document.getElementById('cad-feed'),status=document.getElementById('cad-status');
- function el(tag,cls,value){const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;}
- async function update(){
-  try{
-   const res=await fetch('public-cad.json?t='+Date.now(),{cache:'no-store'});
-   if(!res.ok)throw new Error('feed unavailable');
-   const data=await res.json();if(!Array.isArray(data))throw new Error('invalid feed');
-   target.replaceChildren();
-   const entries=data.slice(0,15).filter(x=>x && typeof x==='object');
-   if(!entries.length){const c=el('div','card');c.style.borderLeft='4px solid var(--red)';c.append(el('div','date','PUBLIC FEED STATUS'),el('h3','', 'Awaiting approved updates'),el('p','','No approved public updates have been posted.'));target.append(c);}
-   for(const x of entries){const c=el('article','card');c.style.marginBottom='12px';c.style.borderLeft='4px solid var(--red)';c.append(el('div','date',String(x.time||'').slice(0,40)),el('h3','',String(x.type||'Group update').slice(0,80)),el('p','',String(x.area||'Western New York').slice(0,80)));target.append(c);}
-   status.textContent='Public feed checked. Updates refresh approximately every 5 minutes while this page is open.';
-  }catch(e){status.textContent='Public updates are temporarily unavailable.';}
- }
- update();setInterval(update,300000);
-})();
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="year">2026</span> WNY 3RD ALARM FIRE BUFFS</span>
+    <span>Capturing the Call. Preserving the Tradition.</span>
+  </div>
+</footer>
 
 <script>
-async function loadCAD() {
+(function () {
   const feed = document.getElementById("cad-feed");
   const status = document.getElementById("cad-status");
 
-  try {
-    const response = await fetch(
-      "public-cad.json?t=" + Date.now(),
-      { cache: "no-store" }
-    );
+  if (!feed || !status) return;
 
-    if (!response.ok) {
-      throw new Error("Feed unavailable");
+  function make(tag, className, value) {
+    const element = document.createElement(tag);
+
+    if (className) {
+      element.className = className;
     }
 
-    const data = await response.json();
-    const incidents = data.incidents || [];
-
-    feed.replaceChildren();
-
-    if (incidents.length === 0) {
-      feed.textContent = "No public updates yet.";
-    } else {
-      incidents.forEach(incident => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.style.marginBottom = "12px";
-
-        const title = document.createElement("h3");
-        title.textContent = incident.type || "Update";
-
-        const details = document.createElement("p");
-        details.textContent = [
-          incident.area,
-          incident.time,
-          incident.status
-        ].filter(Boolean).join(" | ");
-
-        card.append(title, details);
-        feed.appendChild(card);
-      });
+    if (value !== undefined) {
+      element.textContent = value;
     }
 
-    status.textContent = "Public feed updated.";
-
-  } catch (error) {
-    status.textContent = "Unable to load public feed.";
-    console.error(error);
+    return element;
   }
-}
 
-loadCAD();
-setInterval(loadCAD, 60000);
+  async function loadCAD() {
+    try {
+      const response = await fetch(
+        "public-cad.json?t=" + Date.now(),
+        { cache: "no-store" }
+      );
+
+      if (!response.ok) {
+        throw new Error("Public feed unavailable");
+      }
+
+      const data = await response.json();
+
+      if (!data || !Array.isArray(data.incidents)) {
+        throw new Error("Invalid public CAD feed format");
+      }
+
+      feed.replaceChildren();
+
+      const incidents = data.incidents
+        .slice(0, 15)
+        .filter(item => item && typeof item === "object");
+
+      if (incidents.length === 0) {
+        const card = make("div", "card");
+        card.style.borderLeft = "4px solid var(--red)";
+
+        card.append(
+          make("div", "date", "PUBLIC FEED STATUS"),
+          make("h3", "", "Awaiting approved updates"),
+          make("p", "", "No approved public updates have been posted.")
+        );
+
+        feed.appendChild(card);
+      }
+
+      for (const incident of incidents) {
+        const card = make("article", "card");
+
+        card.style.marginBottom = "12px";
+        card.style.borderLeft = "4px solid var(--red)";
+
+        const details = [
+          incident.area,
+          incident.status
+        ]
+          .filter(Boolean)
+          .map(value => String(value).slice(0, 100))
+          .join(" | ");
+
+        card.append(
+          make(
+            "div",
+            "date",
+            String(incident.time || "").slice(0, 40)
+          ),
+          make(
+            "h3",
+            "",
+            String(incident.type || "Group update").slice(0, 80)
+          ),
+          make("p", "", details)
+        );
+
+        feed.appendChild(card);
+      }
+
+      status.textContent =
+        "Public feed checked. Updates refresh approximately every 5 minutes while this page is open.";
+
+    } catch (error) {
+      status.textContent =
+        "Public updates are temporarily unavailable.";
+
+      console.error("Public CAD feed:", error);
+    }
+  }
+
+  loadCAD();
+  setInterval(loadCAD, 300000);
+})();
 </script>
+
 </body>
 </html>
