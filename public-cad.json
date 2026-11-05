@@ -2,10 +2,10 @@
 {
   "incidents": [
     {
-      "type": "SYSTEM TEST",
-      "area": "Western New York",
-      "time": "Test alert",
-      "status": "Test notification"
+      "type": "EMS",
+      "area": "Hamburg",
+      "time": "15:34",
+      "status": "Ems call for Big Tree"
     }
   ]
 }
