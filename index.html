@@ -232,6 +232,14 @@ footer {
 .gallery-lightbox p{color:#fff;text-align:center;margin:0;max-width:900px}
 .gallery-lightbox-close{position:absolute;top:12px;right:18px;border:1px solid #777;border-radius:8px;background:#222}
 @media(max-width:480px){.gallery-photo img{height:245px}}
+
+/* Public group statistics */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:15px}
+.stats-card{background:linear-gradient(150deg,#1e1e22,#111114);border:1px solid #34343b;border-top:3px solid var(--red);border-radius:12px;padding:24px 16px;text-align:center}
+.stats-icon{font-size:26px;line-height:1.2;margin-bottom:9px}
+.stats-value{font-size:clamp(32px,4vw,48px);font-weight:900;color:#ff4b55;line-height:1.15;font-variant-numeric:tabular-nums}
+.stats-label{color:var(--silver);font-size:13px;font-weight:700;margin-top:8px}
+.stats-footnote{color:var(--muted);font-size:12px;margin:18px 0 0}
 </style>
 </head>
 
@@ -246,6 +254,7 @@ footer {
     <nav aria-label="Main navigation">
       <a href="#about">ABOUT</a>
       <a href="#gallery">GALLERY</a>
+      <a href="#stats">STATS</a>
       <a href="#cad">CAD</a>
       <a href="#weather">WEATHER</a>
       <a href="#team">TEAM</a>
@@ -394,6 +403,22 @@ footer {
     Photo: Lily | WNY 3RD ALARM</figcaption>
       </figure>
     </div>
+  </div>
+</section>
+
+<section id="stats" aria-labelledby="stats-heading">
+  <div class="wrap">
+    <div class="eyebrow">Our work in numbers</div>
+    <h2 id="stats-heading">📊 WNY 3RD ALARM Statistics</h2>
+    <p class="intro">A snapshot of the photography currently published on our website.</p>
+    <div class="stats-grid" aria-live="off">
+      <div class="stats-card"><div class="stats-icon" aria-hidden="true">📸</div><div class="stats-value" id="stat-photos">—</div><div class="stats-label">Published Photos</div></div>
+      <div class="stats-card"><div class="stats-icon" aria-hidden="true">👥</div><div class="stats-value" id="stat-photographers">—</div><div class="stats-label">Featured Photographers</div></div>
+      <div class="stats-card"><div class="stats-icon" aria-hidden="true">🚒</div><div class="stats-value" id="stat-fire">—</div><div class="stats-label">Fire Apparatus Photos</div></div>
+      <div class="stats-card"><div class="stats-icon" aria-hidden="true">🚓</div><div class="stats-value" id="stat-police">—</div><div class="stats-label">Police Photos</div></div>
+      <div class="stats-card"><div class="stats-icon" aria-hidden="true">🚨</div><div class="stats-value" id="stat-scene">—</div><div class="stats-label">Emergency Scene Photos</div></div>
+    </div>
+    <p class="stats-footnote">Counts reflect photos and photographer profiles displayed on this website, not total group membership or live incident activity.</p>
   </div>
 </section>
 
@@ -1137,6 +1162,19 @@ footer {
     if (event.key === 'Tab') { event.preventDefault(); close.focus(); }
   });
   updateGallery();
+})();
+</script>
+
+<script>
+// Count published gallery entries and photographer profiles automatically.
+(() => {
+  const photos = [...document.querySelectorAll('#photo-grid .gallery-card')];
+  const set = (id, count) => { const el = document.getElementById(id); if (el) el.textContent = count; };
+  set('stat-photos', photos.length);
+  set('stat-photographers', document.querySelectorAll('#photographers article.person').length);
+  ['fire', 'police', 'scene'].forEach(category => {
+    set('stat-' + category, photos.filter(photo => photo.dataset.category === category).length);
+  });
 })();
 </script>
 </body>
