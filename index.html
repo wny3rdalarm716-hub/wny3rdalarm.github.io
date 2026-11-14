@@ -233,6 +233,15 @@ footer {
 .gallery-lightbox-close{position:absolute;top:12px;right:18px;border:1px solid #777;border-radius:8px;background:#222}
 @media(max-width:480px){.gallery-photo img{height:245px}}
 
+/* Photo search */
+.gallery-search-row{display:flex;gap:10px;align-items:center;margin:0 0 18px;max-width:650px}
+.gallery-search-row input{flex:1;min-width:0;border-radius:8px;background:#17171b;border:1px solid #55555d;padding:13px 15px}
+.gallery-search-row input:focus{outline:2px solid var(--red2);outline-offset:2px}
+.gallery-search-row button{border-radius:8px;padding:13px 17px;white-space:nowrap}
+.gallery-empty{color:var(--silver);padding:24px;border:1px dashed #55555d;border-radius:10px;margin:0 0 18px}
+.gallery-empty[hidden]{display:none!important}
+@media(max-width:480px){.gallery-search-row{gap:7px}.gallery-search-row button{padding:13px 12px}}
+
 /* Public group statistics */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:15px}
 .stats-card{background:linear-gradient(150deg,#1e1e22,#111114);border:1px solid #34343b;border-top:3px solid var(--red);border-radius:12px;padding:24px 16px;text-align:center}
@@ -330,7 +339,11 @@ footer {
   <div class="wrap">
     <div class="eyebrow">Behind the Lens</div>
     <h2>📸 Photo Gallery</h2>
-    <p class="intro">Explore WNY 3RD ALARM photography. Filter by category or photographer and click any photo to view it fullscreen.</p>
+    <p class="intro">Explore WNY 3RD ALARM photography. Search by department, apparatus, or photographer. You can also filter by category and click any photo to view it fullscreen.</p>
+    <div class="gallery-search-row" role="search" aria-label="Search gallery photos">
+      <input type="search" id="gallery-search" placeholder="Search Engine 4, Buffalo Police, Lily..." aria-label="Search photos by department, apparatus, or photographer" autocomplete="off">
+      <button type="button" id="gallery-search-clear" aria-label="Clear photo search">Clear</button>
+    </div>
     <div class="gallery-controls">
       <div class="gallery-filters" aria-label="Photo categories">
         <button type="button" class="active" data-category="all" aria-pressed="true">All Photos</button>
@@ -345,6 +358,7 @@ footer {
       </label>
     </div>
     <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+    <p class="gallery-empty" id="gallery-empty" role="status" hidden>No matching photos. Try a different search or change your filters.</p>
     <div class="grid gallery-grid" id="photo-grid">
       <figure class="card gallery-card" data-category="fire" data-photographer="tony">
         <button type="button" class="gallery-photo" aria-label="View Scranton Fire-Rescue Rescue 7 photographed at sunset fullscreen">
@@ -1111,6 +1125,9 @@ footer {
   const filters = [...document.querySelectorAll('.gallery-filters button')];
   const photographer = document.getElementById('gallery-photographer');
   const count = document.getElementById('gallery-count');
+  const search = document.getElementById('gallery-search');
+  const clearSearch = document.getElementById('gallery-search-clear');
+  const empty = document.getElementById('gallery-empty');
   const viewer = document.getElementById('gallery-lightbox');
   const large = document.getElementById('gallery-large');
   const caption = document.getElementById('gallery-caption');
@@ -1118,13 +1135,22 @@ footer {
   let category = 'all', previousFocus = null;
   function updateGallery() {
     let shown = 0;
-    grid.querySelectorAll('figure').forEach(figure => {
-      const visible = (category === 'all' || figure.dataset.category === category) &&
+    const query = search.value.trim().toLocaleLowerCase();
+    grid.querySelectorAll('figure.gallery-card').forEach(figure => {
+      const searchable = [figure.textContent, figure.querySelector('img')?.alt || '',
+        figure.dataset.category || '', figure.dataset.photographer || '',
+        figure.querySelector('.gallery-photo')?.getAttribute('aria-label') || '']
+        .join(' ').toLocaleLowerCase();
+      const matchesSearch = !query || query.split(/\s+/).every(term => searchable.includes(term));
+      const visible = matchesSearch &&
+        (category === 'all' || figure.dataset.category === category) &&
         (photographer.value === 'all' || figure.dataset.photographer === photographer.value);
       figure.hidden = !visible;
       if (visible) shown++;
     });
     count.textContent = shown + (shown === 1 ? ' photo' : ' photos') + ' shown';
+    empty.hidden = shown !== 0;
+    clearSearch.disabled = !search.value;
   }
   filters.forEach(button => button.addEventListener('click', () => {
     category = button.dataset.category;
@@ -1136,6 +1162,8 @@ footer {
     updateGallery();
   }));
   photographer.addEventListener('change', updateGallery);
+  search.addEventListener('input', updateGallery);
+  clearSearch.addEventListener('click', () => { search.value = ''; search.focus(); updateGallery(); });
   grid.querySelectorAll('.gallery-photo').forEach(button => button.addEventListener('click', () => {
     const img = button.querySelector('img');
     previousFocus = document.activeElement;
