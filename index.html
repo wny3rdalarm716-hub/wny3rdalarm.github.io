@@ -210,6 +210,28 @@ footer {
   .grid { grid-template-columns:1fr; }
   .hero h1 { letter-spacing:-1px; }
 }
+
+/* WNY 3RD ALARM interactive photo gallery */
+.gallery-controls{display:flex;align-items:end;justify-content:space-between;flex-wrap:wrap;gap:14px;margin:0 0 12px}
+.gallery-filters{display:flex;flex-wrap:wrap;gap:8px}
+.gallery-filters button{padding:10px 13px;border:1px solid var(--line);border-radius:7px;background:#242428;font-size:13px}
+.gallery-filters button:hover,.gallery-filters button.active{background:var(--red);border-color:var(--red);color:#fff}
+.gallery-photographer-label{display:flex;flex-direction:column;gap:5px}
+.gallery-photographer-label select{min-width:165px;padding:9px}
+.gallery-count{color:var(--muted);font-size:13px;margin:0 0 14px}
+.gallery-card{margin:0;padding:12px;min-width:0;overflow:hidden;border-radius:10px}
+.gallery-card[hidden]{display:none!important}
+.gallery-photo{display:block;width:100%;padding:0;background:transparent;border:0;overflow:hidden;border-radius:7px;cursor:zoom-in}
+.gallery-photo:hover{background:transparent}
+.gallery-photo img{display:block;width:100%;height:215px;object-fit:cover;transition:transform .25s}
+.gallery-photo:hover img{transform:scale(1.035)}
+.gallery-card figcaption{color:var(--silver);font-size:13px;padding:12px 2px 3px}
+.gallery-lightbox{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(0,0,0,.96);padding:60px 16px 24px}
+.gallery-lightbox.open{display:flex}
+.gallery-lightbox img{display:block;max-width:96vw;max-height:76vh;object-fit:contain}
+.gallery-lightbox p{color:#fff;text-align:center;margin:0;max-width:900px}
+.gallery-lightbox-close{position:absolute;top:12px;right:18px;border:1px solid #777;border-radius:8px;background:#222}
+@media(max-width:480px){.gallery-photo img{height:245px}}
 </style>
 </head>
 
@@ -297,120 +319,81 @@ footer {
 
 <section id="gallery">
   <div class="wrap">
-    <div class="eyebrow">On camera</div>
-    <h2>Photo Gallery</h2>
-    <p class="intro">
-      Our fire apparatus photography. More photos coming soon.
-    </p>
-
-    <figure style="margin:0;max-width:850px">
-      <img
-        src="images/scranton-rescue-7.jpg"
-        alt="Scranton Fire-Rescue Rescue 7 photographed at sunset"
-        style="display:block;width:100%;height:auto;border-radius:8px"
-        loading="lazy"
-      >
-      <figcaption style="padding:12px 0;color:var(--muted)">
-        Scranton Fire-Rescue — Rescue 7 | Photo: @wnyfirebuff
-      </figcaption>
-    </figure>
-
-    <figure style="margin:24px 0;max-width:850px">
-      <img
-        src="images/incident-scene-01.jpg"
-        alt="Emergency response scene photographed by Quinn"
-        loading="lazy"
-        style="width:100%;height:auto;border-radius:8px"
-      >
-      <figcaption style="padding:12px 0;color:var(--muted)">
-        Emergency Response Scene | Photo: Quinn | WNY 3RD ALARM
-      </figcaption>
-    </figure>
-
-    <figure style="margin:24px 0;max-width:850px">
-      <img
-        src="images/fire-station-night.jpg"
-        alt="Fire station illuminated at night"
-        loading="lazy"
-        style="width:100%;height:auto;border-radius:8px"
-      >
-      <figcaption style="padding:12px 0;color:var(--muted)">
-        Fire Station at Night | Photo: @wnyfirebuff | WNY 3RD ALARM
-      </figcaption>
-    </figure>
-
-    <figure style="margin:24px 0;max-width:850px">
-      <img
-        src="images/rescue-truck-night.jpg"
-        alt="Fire rescue truck at night"
-        loading="lazy"
-        style="width:100%;height:auto;border-radius:8px"
-      >
-      <figcaption style="padding:12px 0;color:var(--muted)">
-        Fire Rescue at Night | Photo: @wnyfirebuff | WNY 3RD ALARM
-      </figcaption>
-    </figure>
-
-    <figure style="margin:24px 0;max-width:850px">
-      <img
-        src="images/quinn-emergency-night.jpg"
-        alt="Emergency vehicle with flashing lights at night"
-        loading="lazy"
-        style="width:100%;height:auto;border-radius:8px"
-      >
-      <figcaption style="padding:12px 0;color:var(--muted)">
-        Emergency Response at Night | Photo: Quinn | WNY 3RD ALARM
-      </figcaption>
-    </figure>
-    
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/lily-engine-4.jpg"
-    alt="Engine 4 with red emergency lights at sunset"
-    loading="lazy"
-    style="display:block;width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Engine 4 at Sunset | Photo: Lily | WNY 3RD ALARM
-  </figcaption>
-</figure>
-
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/police-units.jpg"
-    alt="Police vehicles parked along a Western New York street"
-    loading="lazy"
-    style="width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Police Units | Photo: @wnyfirebuff | WNY 3RD ALARM
-  </figcaption>
-</figure>
-
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/lily-buffalo-police.jpg"
-    alt="Buffalo Police Department patrol SUV photographed by Lily"
-    loading="lazy"
-    style="width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Buffalo Police Department — SRO 112  |
-    Photo: Lily | WNY 3RD ALARM
-  </figcaption>
-</figure>
-<figure style="margin:24px 0;max-width:850px">
-  <img
-    src="images/lily-buffalo-police-back-left.jpg"
-    alt="Buffalo Police Department patrol SUV photographed by Lily"
-    loading="lazy"
-    style="width:100%;height:auto;border-radius:8px"
-  >
-  <figcaption style="padding:12px 0;color:var(--muted)">
-    Buffalo Police Department — SRO 112 back left |
-    Photo: Lily | WNY 3RD ALARM
-  </figcaption>
-</figure>
+    <div class="eyebrow">Behind the Lens</div>
+    <h2>📸 Photo Gallery</h2>
+    <p class="intro">Explore WNY 3RD ALARM photography. Filter by category or photographer and click any photo to view it fullscreen.</p>
+    <div class="gallery-controls">
+      <div class="gallery-filters" aria-label="Photo categories">
+        <button type="button" class="active" data-category="all" aria-pressed="true">All Photos</button>
+        <button type="button" data-category="fire" aria-pressed="false">🚒 Fire Apparatus</button>
+        <button type="button" data-category="police" aria-pressed="false">🚓 Police</button>
+        <button type="button" data-category="scene" aria-pressed="false">🚨 Emergency Scenes</button>
+      </div>
+      <label class="gallery-photographer-label" for="gallery-photographer">Photographer
+        <select id="gallery-photographer">
+          <option value="all">Everyone</option><option value="tony">Tony</option><option value="lily">Lily</option><option value="quinn">Quinn</option>
+        </select>
+      </label>
+    </div>
+    <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+    <div class="grid gallery-grid" id="photo-grid">
+      <figure class="card gallery-card" data-category="fire" data-photographer="tony">
+        <button type="button" class="gallery-photo" aria-label="View Scranton Fire-Rescue Rescue 7 photographed at sunset fullscreen">
+          <img src="images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 photographed at sunset" loading="lazy">
+        </button>
+        <figcaption>Scranton Fire-Rescue — Rescue 7 | Photo: @wnyfirebuff</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="scene" data-photographer="quinn">
+        <button type="button" class="gallery-photo" aria-label="View Emergency response scene photographed by Quinn fullscreen">
+          <img src="images/incident-scene-01.jpg" alt="Emergency response scene photographed by Quinn" loading="lazy">
+        </button>
+        <figcaption>Emergency Response Scene | Photo: Quinn | WNY 3RD ALARM</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="fire" data-photographer="tony">
+        <button type="button" class="gallery-photo" aria-label="View Fire station illuminated at night fullscreen">
+          <img src="images/fire-station-night.jpg" alt="Fire station illuminated at night" loading="lazy">
+        </button>
+        <figcaption>Fire Station at Night | Photo: @wnyfirebuff | WNY 3RD ALARM</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="fire" data-photographer="tony">
+        <button type="button" class="gallery-photo" aria-label="View Fire rescue truck at night fullscreen">
+          <img src="images/rescue-truck-night.jpg" alt="Fire rescue truck at night" loading="lazy">
+        </button>
+        <figcaption>Fire Rescue at Night | Photo: @wnyfirebuff | WNY 3RD ALARM</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="scene" data-photographer="quinn">
+        <button type="button" class="gallery-photo" aria-label="View Emergency vehicle with flashing lights at night fullscreen">
+          <img src="images/quinn-emergency-night.jpg" alt="Emergency vehicle with flashing lights at night" loading="lazy">
+        </button>
+        <figcaption>Emergency Response at Night | Photo: Quinn | WNY 3RD ALARM</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="fire" data-photographer="lily">
+        <button type="button" class="gallery-photo" aria-label="View Engine 4 with red emergency lights at sunset fullscreen">
+          <img src="images/lily-engine-4.jpg" alt="Engine 4 with red emergency lights at sunset" loading="lazy">
+        </button>
+        <figcaption>Engine 4 at Sunset | Photo: Lily | WNY 3RD ALARM</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="police" data-photographer="tony">
+        <button type="button" class="gallery-photo" aria-label="View Police vehicles parked along a Western New York street fullscreen">
+          <img src="images/police-units.jpg" alt="Police vehicles parked along a Western New York street" loading="lazy">
+        </button>
+        <figcaption>Police Units | Photo: @wnyfirebuff | WNY 3RD ALARM</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="police" data-photographer="lily">
+        <button type="button" class="gallery-photo" aria-label="View Buffalo Police Department patrol SUV photographed by Lily fullscreen">
+          <img src="images/lily-buffalo-police.jpg" alt="Buffalo Police Department patrol SUV photographed by Lily" loading="lazy">
+        </button>
+        <figcaption>Buffalo Police Department — SRO 112  |
+    Photo: Lily | WNY 3RD ALARM</figcaption>
+      </figure>
+      <figure class="card gallery-card" data-category="police" data-photographer="lily">
+        <button type="button" class="gallery-photo" aria-label="View Buffalo Police Department patrol SUV photographed by Lily fullscreen">
+          <img src="images/lily-buffalo-police-back-left.jpg" alt="Buffalo Police Department patrol SUV photographed by Lily" loading="lazy">
+        </button>
+        <figcaption>Buffalo Police Department — SRO 112 back left |
+    Photo: Lily | WNY 3RD ALARM</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -1090,5 +1073,71 @@ footer {
 })();
 </script>
 
+
+<!-- Photo gallery fullscreen viewer -->
+<div id="gallery-lightbox" class="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+  <button type="button" id="gallery-close" class="gallery-lightbox-close" aria-label="Close photo viewer">✕ Close</button>
+  <img id="gallery-large" alt="">
+  <p id="gallery-caption"></p>
+</div>
+<script>
+(() => {
+  const grid = document.getElementById('photo-grid');
+  const filters = [...document.querySelectorAll('.gallery-filters button')];
+  const photographer = document.getElementById('gallery-photographer');
+  const count = document.getElementById('gallery-count');
+  const viewer = document.getElementById('gallery-lightbox');
+  const large = document.getElementById('gallery-large');
+  const caption = document.getElementById('gallery-caption');
+  const close = document.getElementById('gallery-close');
+  let category = 'all', previousFocus = null;
+  function updateGallery() {
+    let shown = 0;
+    grid.querySelectorAll('figure').forEach(figure => {
+      const visible = (category === 'all' || figure.dataset.category === category) &&
+        (photographer.value === 'all' || figure.dataset.photographer === photographer.value);
+      figure.hidden = !visible;
+      if (visible) shown++;
+    });
+    count.textContent = shown + (shown === 1 ? ' photo' : ' photos') + ' shown';
+  }
+  filters.forEach(button => button.addEventListener('click', () => {
+    category = button.dataset.category;
+    filters.forEach(item => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+    updateGallery();
+  }));
+  photographer.addEventListener('change', updateGallery);
+  grid.querySelectorAll('.gallery-photo').forEach(button => button.addEventListener('click', () => {
+    const img = button.querySelector('img');
+    previousFocus = document.activeElement;
+    large.src = img.src;
+    large.alt = img.alt;
+    caption.textContent = button.closest('figure').querySelector('figcaption').textContent.trim();
+    viewer.classList.add('open');
+    viewer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    close.focus();
+  }));
+  function closeViewer() {
+    viewer.classList.remove('open');
+    viewer.setAttribute('aria-hidden', 'true');
+    large.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (previousFocus) previousFocus.focus();
+  }
+  close.addEventListener('click', closeViewer);
+  viewer.addEventListener('click', event => { if (event.target === viewer) closeViewer(); });
+  document.addEventListener('keydown', event => {
+    if (!viewer.classList.contains('open')) return;
+    if (event.key === 'Escape') closeViewer();
+    if (event.key === 'Tab') { event.preventDefault(); close.focus(); }
+  });
+  updateGallery();
+})();
+</script>
 </body>
 </html>
