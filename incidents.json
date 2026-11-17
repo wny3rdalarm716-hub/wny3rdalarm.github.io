@@ -1,5 +1,15 @@
 [
   {
+    "type": "Possible Structure Fire",
+    "area": "Western New York",
+    "time": "2026-11-17T17:09:03-05:00"
+  },
+  {
+    "type": "Head injury",
+    "area": "Western New York",
+    "time": "2026-11-17T16:28:13-05:00"
+  },
+  {
     "type": "Male ill",
     "area": "Western New York",
     "time": "2026-11-17T16:22:06-05:00"
@@ -13,15 +23,5 @@
     "type": "Female Unresponsive",
     "area": "Western New York",
     "time": "2026-11-17T15:07:52-05:00"
-  },
-  {
-    "type": "Head Injury",
-    "area": "Western New York",
-    "time": "2026-11-17T14:55:04-05:00"
-  },
-  {
-    "type": "Motor Vehicle Accident",
-    "area": "Western New York",
-    "time": "2026-11-17T14:36:30-05:00"
   }
 ]
