@@ -1,5 +1,10 @@
 [
   {
+    "type": "FALL",
+    "area": "Western New York",
+    "time": "2026-11-17T02:58:26-05:00"
+  },
+  {
     "type": "Test alert for the website cad. having issues",
     "area": "Western New York",
     "time": "2026-11-17T01:05:16-05:00"
@@ -18,10 +23,5 @@
     "type": "FALL",
     "area": "Western New York",
     "time": "2026-11-16T23:55:34-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-16T21:32:02-05:00"
   }
 ]
