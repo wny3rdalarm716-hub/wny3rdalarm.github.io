@@ -1,5 +1,15 @@
 [
   {
+    "type": "Male ill",
+    "area": "Western New York",
+    "time": "2026-11-17T16:22:06-05:00"
+  },
+  {
+    "type": "Male Struck By a Vehicle",
+    "area": "Western New York",
+    "time": "2026-11-17T16:11:38-05:00"
+  },
+  {
     "type": "Female Unresponsive",
     "area": "Western New York",
     "time": "2026-11-17T15:07:52-05:00"
@@ -13,15 +23,5 @@
     "type": "Motor Vehicle Accident",
     "area": "Western New York",
     "time": "2026-11-17T14:36:30-05:00"
-  },
-  {
-    "type": "AUTO ACCIDENT WAS INJURIES",
-    "area": "Western New York",
-    "time": "2026-11-17T14:36:19-05:00"
-  },
-  {
-    "type": "Back Pain",
-    "area": "Western New York",
-    "time": "2026-11-17T14:28:40-05:00"
   }
 ]
