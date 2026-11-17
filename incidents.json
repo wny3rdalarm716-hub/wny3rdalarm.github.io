@@ -1,5 +1,15 @@
 [
   {
+    "type": "Head Injury",
+    "area": "Western New York",
+    "time": "2026-11-17T17:41:16-05:00"
+  },
+  {
+    "type": "Incident",
+    "area": "Western New York",
+    "time": "2026-11-17T17:32:28-05:00"
+  },
+  {
     "type": "Possible Structure Fire",
     "area": "Western New York",
     "time": "2026-11-17T17:09:03-05:00"
@@ -13,15 +23,5 @@
     "type": "Male ill",
     "area": "Western New York",
     "time": "2026-11-17T16:22:06-05:00"
-  },
-  {
-    "type": "Male Struck By a Vehicle",
-    "area": "Western New York",
-    "time": "2026-11-17T16:11:38-05:00"
-  },
-  {
-    "type": "Female Unresponsive",
-    "area": "Western New York",
-    "time": "2026-11-17T15:07:52-05:00"
   }
 ]
