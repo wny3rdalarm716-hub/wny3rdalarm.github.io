@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Incidents | WNY 3RD ALARM</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #0b1019;
+  color: #f1f5f9;
+  font-family: Arial, sans-serif;
+}
+header {
+  padding: 22px 18px;
+  background: #151e2b;
+  border-bottom: 2px solid #ef4444;
+}
+h1 { margin: 0; font-size: 24px; }
+.subtitle { color: #94a3b8; margin-top: 8px; }
+main { max-width: 850px; margin: auto; padding: 18px; }
+.status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #86efac;
+  margin-bottom: 20px;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+.incident {
+  background: #182230;
+  border: 1px solid #334155;
+  border-left: 4px solid #ef4444;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 12px;
+}
+.incident h2 { font-size: 18px; margin: 0 0 12px; }
+.meta { color: #cbd5e1; font-size: 14px; line-height: 1.8; }
+.tag {
+  display: inline-block;
+  padding: 5px 9px;
+  background: #334155;
+  border-radius: 6px;
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+.notice {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+  margin: 30px 0;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🚨 WNY 3RD ALARM</h1>
+  <div class="subtitle">Live Incident Feed</div>
+</header>
+<main>
+  <div class="status">
+    <span class="dot"></span>
+    <span id="status">Checking incident feed...</span>
+  </div>
+  <div id="incidents"></div>
+  <div class="notice">
+    UNOFFICIAL INCIDENT FEED<br>
+    Not affiliated with emergency dispatch agencies.<br>
+    Do not use this feed for emergency response.
+  </div>
+</main>
+
+<script>
+const container = document.getElementById("incidents");
+const status = document.getElementById("status");
+
+function addText(parent, tag, value, className) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  element.textContent = value;
+  parent.appendChild(element);
+  return element;
+}
+
+function renderIncident(item) {
+  const card = document.createElement("article");
+  card.className = "incident";
+
+  addText(card, "span", "INCIDENT ALERT", "tag");
+  addText(card, "h2", item.type || "Incident");
+
+  const meta = document.createElement("div");
+  meta.className = "meta";
+
+  addText(meta, "div", "📍 " + (item.area || "WNY"));
+  const time = new Date(item.time);
+  addText(meta, "div", "🕒 " +
+    (Number.isNaN(time.getTime())
+      ? "Time unavailable"
+      : time.toLocaleString()));
+
+  card.appendChild(meta);
+  container.appendChild(card);
+}
+
+async function loadIncidents() {
+  try {
+    const response = await fetch(
+      "./incidents.json?t=" + Date.now(),
+      { cache: "no-store" }
+    );
+    if (!response.ok) throw new Error("Feed unavailable");
+
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error("Invalid feed");
+
+    container.replaceChildren();
+
+    data.sort((a, b) =>
+      new Date(b.time) - new Date(a.time)
+    ).slice(0, 30).forEach(renderIncident);
+
+    if (!data.length) {
+      addText(container, "p", "No incidents available.");
+    }
+
+    status.textContent = "Feed connected • Refreshes every 60 seconds";
+  } catch (error) {
+    status.textContent = "Incident feed unavailable";
+  }
+}
+
+loadIncidents();
+setInterval(loadIncidents, 60000);
+</script>
+</body>
+</html>
