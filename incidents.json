@@ -1,0 +1,27 @@
+[
+  {
+    "type": "Possible Stroke",
+    "area": "Western New York",
+    "time": "2026-11-16T20:40:36-05:00"
+  },
+  {
+    "type": "This is a test alert for the website",
+    "area": "Western New York",
+    "time": "2026-11-16T20:29:58-05:00"
+  },
+  {
+    "type": "Transport",
+    "area": "Western New York",
+    "time": "2026-11-16T19:04:44-05:00"
+  },
+  {
+    "type": "Mutual Aid Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-16T18:14:42-05:00"
+  },
+  {
+    "type": "Single Elisode",
+    "area": "Western New York",
+    "time": "2026-11-16T18:01:38-05:00"
+  }
+]
