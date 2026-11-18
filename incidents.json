@@ -1,5 +1,10 @@
 [
   {
+    "type": "Hip Dislocation",
+    "area": "Western New York",
+    "time": "2026-11-18T15:21:01-05:00"
+  },
+  {
     "type": "WORKING FIRE",
     "area": "Western New York",
     "time": "2026-11-18T00:07:53-05:00"
@@ -18,10 +23,5 @@
     "type": "FALL WITH HAND INJURY",
     "area": "Western New York",
     "time": "2026-11-17T21:19:06-05:00"
-  },
-  {
-    "type": "CHEST PAIN",
-    "area": "Western New York",
-    "time": "2026-11-17T21:18:02-05:00"
   }
 ]
