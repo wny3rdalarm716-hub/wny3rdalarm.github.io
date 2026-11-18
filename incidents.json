@@ -1,5 +1,10 @@
 [
   {
+    "type": "Fall",
+    "area": "Western New York",
+    "time": "2026-11-17T22:11:59-05:00"
+  },
+  {
     "type": "FALL WITH HAND INJURY",
     "area": "Western New York",
     "time": "2026-11-17T21:19:06-05:00"
@@ -18,10 +23,5 @@
     "type": "Fire Alarm",
     "area": "Western New York",
     "time": "2026-11-17T18:37:16-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-17T18:29:40-05:00"
   }
 ]
