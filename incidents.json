@@ -1,5 +1,10 @@
 [
   {
+    "type": "MVA",
+    "area": "Western New York",
+    "time": "2026-11-17T20:16:47-05:00"
+  },
+  {
     "type": "Fire Alarm",
     "area": "Western New York",
     "time": "2026-11-17T18:37:16-05:00"
@@ -18,10 +23,5 @@
     "type": "Incident",
     "area": "Western New York",
     "time": "2026-11-17T17:32:28-05:00"
-  },
-  {
-    "type": "Possible Structure Fire",
-    "area": "Western New York",
-    "time": "2026-11-17T17:09:03-05:00"
   }
 ]
