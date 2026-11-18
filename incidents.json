@@ -1,5 +1,10 @@
 [
   {
+    "type": "Infected Surgical Wound",
+    "area": "Western New York",
+    "time": "2026-11-18T17:43:38-05:00"
+  },
+  {
     "type": "Oder Of Gas",
     "area": "Western New York",
     "time": "2026-11-18T17:18:07-05:00"
@@ -18,10 +23,5 @@
     "type": "Hip Dislocation",
     "area": "Western New York",
     "time": "2026-11-18T15:21:01-05:00"
-  },
-  {
-    "type": "WORKING FIRE",
-    "area": "Western New York",
-    "time": "2026-11-18T00:07:53-05:00"
   }
 ]
