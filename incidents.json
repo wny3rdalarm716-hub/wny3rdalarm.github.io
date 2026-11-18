@@ -1,5 +1,15 @@
 [
   {
+    "type": "Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-17T18:37:16-05:00"
+  },
+  {
+    "type": "Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-17T18:29:40-05:00"
+  },
+  {
     "type": "Head Injury",
     "area": "Western New York",
     "time": "2026-11-17T17:41:16-05:00"
@@ -13,15 +23,5 @@
     "type": "Possible Structure Fire",
     "area": "Western New York",
     "time": "2026-11-17T17:09:03-05:00"
-  },
-  {
-    "type": "Head injury",
-    "area": "Western New York",
-    "time": "2026-11-17T16:28:13-05:00"
-  },
-  {
-    "type": "Male ill",
-    "area": "Western New York",
-    "time": "2026-11-17T16:22:06-05:00"
   }
 ]
