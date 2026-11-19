@@ -1,78 +1,64 @@
 
-name: Update Live Incidents
+name: Test Active911 API
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  update:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Fetch and filter Active911 incidents
+      - name: Test Active911 connection
         env:
-          RSS_URL: ${{ secrets.ACTIVE911_RSS_URL }}
+          ACTIVE911_REFRESH_TOKEN: ${{ secrets.ACTIVE911_REFRESH_TOKEN }}
         run: |
           python3 - <<'PY'
-          import os, json, re, urllib.request
-          import xml.etree.ElementTree as ET
-          from email.utils import parsedate_to_datetime
+          import os
+          import json
+          import urllib.parse
+          import urllib.request
 
-          url = os.environ["RSS_URL"]
-          req = urllib.request.Request(
-              url, headers={"User-Agent": "WNY3A-Feed/1.0"}
+          refresh_url = (
+              "https://console.active911.com"
+              "/interface/dev/api_access.php"
           )
-          with urllib.request.urlopen(req, timeout=20) as response:
-              xml = response.read()
 
-          root = ET.fromstring(xml)
-          incidents = []
+          data = urllib.parse.urlencode({
+              "refresh_token": os.environ["ACTIVE911_REFRESH_TOKEN"]
+          }).encode()
 
-          for item in root.findall("./channel/item")[:30]:
-              title = (item.findtext("title") or "").strip()
-              date = (item.findtext("pubDate") or "").strip()
+          req = urllib.request.Request(
+              refresh_url,
+              data=data,
+              method="POST"
+          )
 
-              if not title:
-                  continue
+          with urllib.request.urlopen(req, timeout=20) as r:
+              token_data = json.load(r)
 
-              # Do not publish addresses, patient information,
-              # or raw incident descriptions.
-              title = re.sub(
-                  r"\b\d{1,5}\s+\S+.*",
-                  "",
-                  title
-              ).strip()
+          access_token = token_data["access_token"]
 
-              if not title:
-                  title = "Incident"
+          api_url = (
+              "https://access.active911.com"
+              "/interface/open_api/api/"
+          )
 
-              try:
-                  timestamp = parsedate_to_datetime(date).isoformat()
-              except (ValueError, TypeError):
-                  continue
+          req = urllib.request.Request(
+              api_url,
+              headers={
+                  "Authorization": f"Bearer {access_token}"
+              }
+          )
 
-              incidents.append({
-                  "type": title[:80],
-                  "area": "Western New York",
-                  "time": timestamp
-              })
+          with urllib.request.urlopen(req, timeout=20) as r:
+              result = json.load(r)
 
-          with open("incidents.json", "w") as file:
-              json.dump(incidents, file, indent=2)
+          if result.get("result") == "success":
+              print("SUCCESS: Active911 API connected!")
+          else:
+              print("API connection was not successful.")
+              raise SystemExit(1)
           PY
-
-      - name: Publish updated incident data
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add incidents.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Update public incident feed"
-            git push
-          fi
