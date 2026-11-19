@@ -1,5 +1,15 @@
 [
   {
+    "type": "Swallowed Sticker",
+    "area": "Western New York",
+    "time": "2026-11-19T18:34:17-05:00"
+  },
+  {
+    "type": "Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-19T18:27:35-05:00"
+  },
+  {
     "type": "High Blood Pressure",
     "area": "Western New York",
     "time": "2026-11-19T18:03:18-05:00"
@@ -13,15 +23,5 @@
     "type": "Fire Alarm",
     "area": "Western New York",
     "time": "2026-11-19T17:52:57-05:00"
-  },
-  {
-    "type": "Difficulty Breathing",
-    "area": "Western New York",
-    "time": "2026-11-19T16:08:36-05:00"
-  },
-  {
-    "type": "Incident",
-    "area": "Western New York",
-    "time": "2026-11-19T16:02:26-05:00"
   }
 ]
