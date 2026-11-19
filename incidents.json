@@ -1,27 +1,27 @@
 [
   {
-    "type": "Medical Activation",
+    "type": "OUT OF SERVICE",
     "area": "Western New York",
-    "time": "2026-11-18T18:22:15-05:00"
+    "time": "2026-11-18T20:11:40-05:00"
   },
   {
-    "type": "Infected Surgical Wound",
+    "type": "Head Injury",
     "area": "Western New York",
-    "time": "2026-11-18T17:43:38-05:00"
+    "time": "2026-11-18T19:44:28-05:00"
   },
   {
-    "type": "Oder Of Gas",
+    "type": "Fire Alarm",
     "area": "Western New York",
-    "time": "2026-11-18T17:18:07-05:00"
+    "time": "2026-11-18T19:42:20-05:00"
   },
   {
-    "type": "Male Weak",
+    "type": "Finger Laceration",
     "area": "Western New York",
-    "time": "2026-11-18T15:47:06-05:00"
+    "time": "2026-11-18T19:35:06-05:00"
   },
   {
-    "type": "Medical Alarm",
+    "type": "Urinary Problem",
     "area": "Western New York",
-    "time": "2026-11-18T15:32:50-05:00"
+    "time": "2026-11-18T19:15:30-05:00"
   }
 ]
