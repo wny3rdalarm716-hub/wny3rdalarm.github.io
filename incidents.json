@@ -1,5 +1,15 @@
 [
   {
+    "type": "Leg Infection",
+    "area": "Western New York",
+    "time": "2026-11-19T14:54:05-05:00"
+  },
+  {
+    "type": "Dificulty Breathing",
+    "area": "Western New York",
+    "time": "2026-11-19T14:31:59-05:00"
+  },
+  {
     "type": "WNY 3RD ALARM API TEST",
     "area": "Western New York",
     "time": "2026-11-19T12:59:19-05:00"
@@ -13,15 +23,5 @@
     "type": "DIFF BREATHING",
     "area": "Western New York",
     "time": "2026-11-19T00:38:12-05:00"
-  },
-  {
-    "type": "MALE COLLAPSED",
-    "area": "Western New York",
-    "time": "2026-11-19T00:24:16-05:00"
-  },
-  {
-    "type": "UNKNOWN ALARM TYPE",
-    "area": "Western New York",
-    "time": "2026-11-19T00:19:19-05:00"
   }
 ]
