@@ -1,27 +1,27 @@
 [
   {
+    "type": "Flu",
+    "area": "Western New York",
+    "time": "2026-11-20T15:55:23-05:00"
+  },
+  {
+    "type": "Increased Weakness",
+    "area": "Western New York",
+    "time": "2026-11-20T15:45:25-05:00"
+  },
+  {
+    "type": "Possible Co Issue",
+    "area": "Western New York",
+    "time": "2026-11-20T15:38:25-05:00"
+  },
+  {
+    "type": "Dizzy",
+    "area": "Western New York",
+    "time": "2026-11-20T15:37:02-05:00"
+  },
+  {
     "type": "lift Assist",
     "area": "Western New York",
     "time": "2026-11-20T15:15:26-05:00"
-  },
-  {
-    "type": "Nose Bleed",
-    "area": "Western New York",
-    "time": "2026-11-20T14:31:12-05:00"
-  },
-  {
-    "type": "ALARM OF FIRE",
-    "area": "Western New York",
-    "time": "2026-11-20T00:14:02-05:00"
-  },
-  {
-    "type": "SEIZURE",
-    "area": "Western New York",
-    "time": "2026-11-19T23:32:00-05:00"
-  },
-  {
-    "type": "FIRE ALARM ACTIVATION",
-    "area": "Western New York",
-    "time": "2026-11-19T23:28:21-05:00"
   }
 ]
