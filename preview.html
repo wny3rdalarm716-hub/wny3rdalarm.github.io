@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#111111">
-<meta name="description" content="WNY 3RD ALARM FIRE BUFFS — fire photography and community events across Western New York.">
+<meta name="description" content="WNY 3RD ALARM FIRE BUFFS — fire photography and community coverage across Western New York.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="WNY 3RD ALARM | FIRE BUFFS">
 <meta property="og:description" content="Western New York fire photography and community coverage.">
@@ -87,11 +87,11 @@ linear-gradient(100deg,rgba(0,0,0,.96),rgba(0,0,0,.72)),
 repeating-linear-gradient(135deg,#19191d 0 2px,#101013 2px 12px);
 border-bottom:4px solid var(--red)
 }
-.kicker{
+.kicker,.eyebrow{
 color:var(--red2);
 font-size:12px;
 font-weight:900;
-letter-spacing:4px;
+letter-spacing:3px;
 text-transform:uppercase
 }
 .hero h1{
@@ -114,7 +114,8 @@ padding:12px 20px;
 text-decoration:none;
 font-weight:800;
 border:1px solid var(--red);
-margin:12px 8px 0 0
+margin:12px 8px 0 0;
+color:#fff
 }
 .btn.alt{background:transparent;border-color:#777}
 .btn:hover{background:var(--red2)}
@@ -122,13 +123,6 @@ section{
 padding:65px 0;
 border-bottom:1px solid var(--line);
 scroll-margin-top:90px
-}
-.eyebrow{
-color:var(--red2);
-font-size:11px;
-letter-spacing:3px;
-font-weight:900;
-text-transform:uppercase
 }
 h2{
 font-size:clamp(28px,5vw,40px);
@@ -180,7 +174,7 @@ background:#0c0c0e;
 border:1px solid #45454d;
 color:white;
 font:inherit;
-border-radius:2px
+border-radius:3px
 }
 textarea{min-height:120px;resize:vertical}
 button{
@@ -193,10 +187,7 @@ padding:13px 18px;
 font-size:14px
 }
 button:hover{background:var(--red2)}
-button:disabled{
-cursor:not-allowed;
-opacity:.55
-}
+button:disabled{cursor:not-allowed;opacity:.55}
 .note{font-size:12px;color:#999}
 footer{
 padding:28px 0;
@@ -211,16 +202,43 @@ gap:15px;
 flex-wrap:wrap
 }
 
-/* PHOTO GALLERY */
+/* MOBILE MENU */
+.mobile-menu-toggle{
+display:none;
+align-items:center;
+gap:10px;
+border:1px solid #595960;
+border-radius:9px;
+background:#1b1b20;
+padding:10px 14px
+}
+.menu-icon{
+width:21px;
+display:flex;
+flex-direction:column;
+gap:4px
+}
+.menu-icon span{
+height:2px;
+width:100%;
+background:white;
+border-radius:2px
+}
+
+/* GALLERY */
 .gallery-controls{
 display:flex;
 align-items:end;
 justify-content:space-between;
 flex-wrap:wrap;
 gap:14px;
-margin:0 0 12px
+margin-bottom:12px
 }
-.gallery-filters{display:flex;flex-wrap:wrap;gap:8px}
+.gallery-filters{
+display:flex;
+flex-wrap:wrap;
+gap:8px
+}
 .gallery-filters button{
 padding:10px 13px;
 border:1px solid var(--line);
@@ -228,26 +246,41 @@ border-radius:7px;
 background:#242428;
 font-size:13px
 }
-.gallery-filters button:hover,
-.gallery-filters button.active{
+.gallery-filters button.active,
+.gallery-filters button:hover{
 background:var(--red);
-border-color:var(--red);
-color:#fff
+border-color:var(--red)
 }
 .gallery-photographer-label{
 display:flex;
 flex-direction:column;
 gap:5px
 }
-.gallery-photographer-label select{
-min-width:165px;
-padding:9px
+.gallery-photographer-label select{min-width:165px}
+.gallery-search-row{
+display:flex;
+gap:10px;
+max-width:650px;
+margin-bottom:18px
 }
+.gallery-search-row input{
+flex:1;
+min-width:0;
+border-radius:8px
+}
+.gallery-search-row button{border-radius:8px}
 .gallery-count{
 color:var(--muted);
-font-size:13px;
-margin:0 0 14px
+font-size:13px
 }
+.gallery-empty{
+color:var(--silver);
+padding:24px;
+border:1px dashed #555;
+border-radius:10px
+}
+.gallery-empty[hidden],
+.gallery-card[hidden]{display:none!important}
 .gallery-card{
 margin:0;
 padding:12px;
@@ -255,7 +288,6 @@ min-width:0;
 overflow:hidden;
 border-radius:10px
 }
-.gallery-card[hidden]{display:none!important}
 .gallery-photo{
 display:block;
 width:100%;
@@ -294,17 +326,11 @@ padding:60px 16px 24px
 }
 .gallery-lightbox.open{display:flex}
 .gallery-lightbox img{
-display:block;
 max-width:96vw;
 max-height:76vh;
 object-fit:contain
 }
-.gallery-lightbox p{
-color:#fff;
-text-align:center;
-margin:0;
-max-width:900px
-}
+.gallery-lightbox p{text-align:center}
 .gallery-lightbox-close{
 position:absolute;
 top:12px;
@@ -313,38 +339,6 @@ border:1px solid #777;
 border-radius:8px;
 background:#222
 }
-.gallery-search-row{
-display:flex;
-gap:10px;
-align-items:center;
-margin:0 0 18px;
-max-width:650px
-}
-.gallery-search-row input{
-flex:1;
-min-width:0;
-border-radius:8px;
-background:#17171b;
-border:1px solid #55555d;
-padding:13px 15px
-}
-.gallery-search-row input:focus{
-outline:2px solid var(--red2);
-outline-offset:2px
-}
-.gallery-search-row button{
-border-radius:8px;
-padding:13px 17px;
-white-space:nowrap
-}
-.gallery-empty{
-color:var(--silver);
-padding:24px;
-border:1px dashed #55555d;
-border-radius:10px;
-margin:0 0 18px
-}
-.gallery-empty[hidden]{display:none!important}
 
 /* STATISTICS */
 .stats-grid{
@@ -360,67 +354,25 @@ border-radius:12px;
 padding:24px 16px;
 text-align:center
 }
-.stats-icon{
-font-size:26px;
-line-height:1.2;
-margin-bottom:9px
-}
+.stats-icon{font-size:26px}
 .stats-value{
 font-size:clamp(32px,4vw,48px);
 font-weight:900;
 color:#ff4b55;
-line-height:1.15;
 font-variant-numeric:tabular-nums
 }
 .stats-label{
 color:var(--silver);
 font-size:13px;
-font-weight:700;
-margin-top:8px
+font-weight:700
 }
 .stats-footnote{
 color:var(--muted);
 font-size:12px;
-margin:18px 0 0
+margin-top:18px
 }
 
-/* MOBILE NAVIGATION */
-.mobile-menu-toggle{
-display:none;
-align-items:center;
-gap:10px;
-border:1px solid #595960;
-border-radius:9px;
-background:#1b1b20;
-color:#fff;
-padding:10px 14px;
-font-size:13px;
-letter-spacing:1px
-}
-.menu-icon{
-width:21px;
-display:flex;
-flex-direction:column;
-gap:4px
-}
-.menu-icon span{
-height:2px;
-width:100%;
-background:#fff;
-border-radius:2px;
-transition:transform .2s,opacity .2s
-}
-.mobile-menu-toggle[aria-expanded=true] .menu-icon span:first-child{
-transform:translateY(6px) rotate(45deg)
-}
-.mobile-menu-toggle[aria-expanded=true] .menu-icon span:nth-child(2){
-opacity:0
-}
-.mobile-menu-toggle[aria-expanded=true] .menu-icon span:last-child{
-transform:translateY(-6px) rotate(-45deg)
-}
-
-/* PHOTO OF THE WEEK VOTING */
+/* PHOTO VOTING */
 #photo-of-the-week{
 background:linear-gradient(180deg,#111115,#0b0b0d)
 }
@@ -428,9 +380,7 @@ background:linear-gradient(180deg,#111115,#0b0b0d)
 text-align:center;
 margin-bottom:30px
 }
-.voting-header .intro{
-margin:12px auto
-}
+.voting-header .intro{margin:12px auto}
 .voting-grid{
 display:grid;
 grid-template-columns:repeat(3,minmax(0,1fr));
@@ -440,8 +390,7 @@ gap:18px
 background:#16161b;
 border:1px solid #393940;
 border-radius:12px;
-overflow:hidden;
-transition:border-color .2s
+overflow:hidden
 }
 .vote-card:hover{border-color:var(--red2)}
 .vote-card img{
@@ -460,15 +409,13 @@ font-size:13px
 font-size:30px;
 font-weight:900;
 color:#ff4b55;
-margin-top:15px;
-font-variant-numeric:tabular-nums
+margin-top:15px
 }
 .vote-percent{
 color:var(--silver);
 font-size:13px
 }
 .vote-track{
-width:100%;
 height:10px;
 background:#35353d;
 border-radius:20px;
@@ -479,7 +426,6 @@ margin:13px 0
 width:0;
 height:100%;
 background:linear-gradient(90deg,#b91c1c,#ff4b55);
-border-radius:20px;
 transition:width .4s
 }
 .vote-button{
@@ -528,13 +474,44 @@ padding:12px 0;
 border-bottom:1px solid #333
 }
 
+/* CAD */
+.cad-card{
+background:#161b22;
+border:1px solid #34343b;
+border-left:4px solid var(--red);
+border-radius:10px;
+padding:20px;
+margin:12px 0
+}
+.cad-card h3{margin:5px 0}
+.cad-meta{
+color:var(--silver);
+font-size:13px
+}
+.cad-time{
+color:var(--red2);
+font-weight:900;
+font-size:12px
+}
+
+/* ANNOUNCEMENT */
+.announcement{
+background:linear-gradient(135deg,#241013,#151519);
+border:2px solid var(--red);
+border-radius:14px;
+padding:28px;
+box-shadow:0 0 25px rgba(197,31,43,.12)
+}
+.announcement h3{
+font-size:clamp(22px,4vw,30px);
+margin:12px 0
+}
+.announcement p{color:#ddd}
+
 /* RESPONSIVE */
 @media(max-width:900px){
 .top .nav{
 position:relative;
-flex-direction:row;
-align-items:center;
-justify-content:space-between;
 flex-wrap:wrap;
 padding:12px 0;
 min-height:68px
@@ -548,7 +525,7 @@ flex-direction:column;
 gap:0;
 max-height:calc(100dvh - 95px);
 overflow-y:auto;
-padding:7px 0 9px;
+padding:7px 0;
 border-top:1px solid var(--line)
 }
 .top #main-nav.is-open{display:flex}
@@ -557,10 +534,6 @@ display:block;
 padding:12px 14px;
 border-radius:7px;
 font-size:14px
-}
-.top #main-nav a:hover{
-background:#2c2024;
-color:#ff626b
 }
 }
 @media(min-width:901px){
@@ -573,11 +546,9 @@ color:#ff626b
 }
 @media(max-width:550px){
 .grid,.voting-grid{grid-template-columns:1fr}
-.hero h1{letter-spacing:-1px}
 .gallery-photo img{height:245px}
-.gallery-search-row{gap:7px}
-.gallery-search-row button{padding:13px 12px}
 .vote-card img{height:260px}
+.gallery-search-row{gap:7px}
 }
 </style>
 </head>
@@ -586,6 +557,7 @@ color:#ff626b
 
 <header class="top">
 <div class="wrap nav">
+
 <a class="brand" href="#home">
 WNY <span>3RD ALARM</span>
 <small>FIRE BUFFS</small>
@@ -601,7 +573,7 @@ aria-expanded="false">
 <span class="menu-icon" aria-hidden="true">
 <span></span><span></span><span></span>
 </span>
-<span class="menu-label">MENU</span>
+MENU
 </button>
 
 <nav id="main-nav" aria-label="Main navigation">
@@ -618,6 +590,7 @@ aria-expanded="false">
 <a href="#contact">CONTACT</a>
 <a href="#photographers">PHOTOGRAPHERS</a>
 </nav>
+
 </div>
 </header>
 
@@ -633,9 +606,11 @@ Capturing the Call. Preserving the Tradition.
 Sharing fire apparatus photography and celebrating
 the emergency-services community across Western New York.
 </p>
+
 <a class="btn" href="#gallery">VIEW GALLERY</a>
 <a class="btn alt" href="#about">ABOUT OUR GROUP</a>
 <a class="btn alt" href="#photo-of-the-week">VOTE FOR PHOTO OF THE WEEK</a>
+<a class="btn alt" href="incidents.html">VIEW INCIDENT CALLS</a>
 </div>
 </section>
 
@@ -644,6 +619,7 @@ the emergency-services community across Western New York.
 <div class="wrap">
 <div class="eyebrow">Who we are</div>
 <h2>About WNY 3RD ALARM</h2>
+
 <p class="intro">
 WNY 3RD ALARM FIRE BUFFS is a Western New York-based
 fire-buffing and photography group. We document fire
@@ -717,11 +693,7 @@ Votes • <span id="percent-photo1">0%</span>
 <div class="vote-track">
 <div class="vote-fill" id="bar-photo1"></div>
 </div>
-<button
-type="button"
-class="vote-button"
-data-photo-id="photo1"
-disabled>
+<button type="button" class="vote-button" data-photo-id="photo1" disabled>
 VOTE FOR LILY
 </button>
 </div>
@@ -741,11 +713,7 @@ Votes • <span id="percent-photo2">0%</span>
 <div class="vote-track">
 <div class="vote-fill" id="bar-photo2"></div>
 </div>
-<button
-type="button"
-class="vote-button"
-data-photo-id="photo2"
-disabled>
+<button type="button" class="vote-button" data-photo-id="photo2" disabled>
 VOTE FOR TONY
 </button>
 </div>
@@ -765,11 +733,7 @@ Votes • <span id="percent-photo3">0%</span>
 <div class="vote-track">
 <div class="vote-fill" id="bar-photo3"></div>
 </div>
-<button
-type="button"
-class="vote-button"
-data-photo-id="photo3"
-disabled>
+<button type="button" class="vote-button" data-photo-id="photo3" disabled>
 VOTE FOR QUINN
 </button>
 </div>
@@ -783,8 +747,8 @@ Total votes: 0
 
 <p class="vote-disclaimer">
 Voting is limited to one vote per anonymous account.
-Clearing browser data or using another account may permit
-additional votes. Results update automatically.
+Using another browser or clearing browser data may allow additional votes.
+Results update automatically.
 </p>
 
 </div>
@@ -795,30 +759,25 @@ additional votes. Results update automatically.
 <div class="wrap">
 <div class="eyebrow">Behind the Lens</div>
 <h2>📸 Photo Gallery</h2>
+
 <p class="intro">
 Explore WNY 3RD ALARM photography.
 Search by department, apparatus, or photographer.
 Filter by category and click any photo to view it fullscreen.
 </p>
 
-<div
-class="gallery-search-row"
-role="search"
-aria-label="Search gallery photos">
+<div class="gallery-search-row" role="search">
 <input
 type="search"
 id="gallery-search"
 placeholder="Search Engine 4, Buffalo Police, Lily..."
 aria-label="Search photos"
 autocomplete="off">
-<button
-type="button"
-id="gallery-search-clear">
-Clear
-</button>
+<button type="button" id="gallery-search-clear">Clear</button>
 </div>
 
 <div class="gallery-controls">
+
 <div class="gallery-filters" aria-label="Photo categories">
 <button type="button" class="active" data-category="all" aria-pressed="true">
 All Photos
@@ -843,166 +802,77 @@ Photographer
 <option value="quinn">Quinn</option>
 </select>
 </label>
+
 </div>
 
-<p
-class="gallery-count"
-id="gallery-count"
-aria-live="polite">
-</p>
-
-<p
-class="gallery-empty"
-id="gallery-empty"
-role="status"
-hidden>
-No matching photos. Try a different search or filter.
+<p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+<p class="gallery-empty" id="gallery-empty" hidden>
+No matching photos. Try another search.
 </p>
 
 <div class="grid gallery-grid" id="photo-grid">
 
-<figure class="card gallery-card"
-data-category="fire"
-data-photographer="tony">
-<button type="button" class="gallery-photo"
-aria-label="View Scranton Fire-Rescue Rescue 7 fullscreen">
-<img
-src="images/scranton-rescue-7.jpg"
-alt="Scranton Fire-Rescue Rescue 7 photographed at sunset"
-loading="lazy">
+<figure class="card gallery-card" data-category="fire" data-photographer="tony">
+<button type="button" class="gallery-photo" aria-label="View Scranton Rescue 7 fullscreen">
+<img src="images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 photographed at sunset" loading="lazy">
 </button>
-<figcaption>
-Scranton Fire-Rescue — Rescue 7 |
-Photo: @wnyfirebuff
-</figcaption>
+<figcaption>Scranton Fire-Rescue — Rescue 7 | Photo: @wnyfirebuff</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="scene"
-data-photographer="quinn">
-<button type="button" class="gallery-photo"
-aria-label="View emergency response scene fullscreen">
-<img
-src="images/incident-scene-01.jpg"
-alt="Emergency response scene photographed by Quinn"
-loading="lazy">
+<figure class="card gallery-card" data-category="scene" data-photographer="quinn">
+<button type="button" class="gallery-photo" aria-label="View emergency response scene fullscreen">
+<img src="images/incident-scene-01.jpg" alt="Emergency response scene photographed by Quinn" loading="lazy">
 </button>
-<figcaption>
-Emergency Response Scene |
-Photo: Quinn | WNY 3RD ALARM
-</figcaption>
+<figcaption>Emergency Response Scene | Photo: Quinn | WNY 3RD ALARM</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="fire"
-data-photographer="tony">
-<button type="button" class="gallery-photo"
-aria-label="View fire station at night fullscreen">
-<img
-src="images/fire-station-night.jpg"
-alt="Fire station illuminated at night"
-loading="lazy">
+<figure class="card gallery-card" data-category="fire" data-photographer="tony">
+<button type="button" class="gallery-photo" aria-label="View fire station at night fullscreen">
+<img src="images/fire-station-night.jpg" alt="Fire station illuminated at night" loading="lazy">
 </button>
-<figcaption>
-Fire Station at Night |
-Photo: @wnyfirebuff | WNY 3RD ALARM
-</figcaption>
+<figcaption>Fire Station at Night | Photo: @wnyfirebuff | WNY 3RD ALARM</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="fire"
-data-photographer="tony">
-<button type="button" class="gallery-photo"
-aria-label="View rescue truck at night fullscreen">
-<img
-src="images/rescue-truck-night.jpg"
-alt="Fire rescue truck at night"
-loading="lazy">
+<figure class="card gallery-card" data-category="fire" data-photographer="tony">
+<button type="button" class="gallery-photo" aria-label="View rescue truck at night fullscreen">
+<img src="images/rescue-truck-night.jpg" alt="Fire rescue truck at night" loading="lazy">
 </button>
-<figcaption>
-Fire Rescue at Night |
-Photo: @wnyfirebuff | WNY 3RD ALARM
-</figcaption>
+<figcaption>Fire Rescue at Night | Photo: @wnyfirebuff | WNY 3RD ALARM</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="scene"
-data-photographer="quinn">
-<button type="button" class="gallery-photo"
-aria-label="View emergency response at night fullscreen">
-<img
-src="images/quinn-emergency-night.jpg"
-alt="Emergency vehicle with flashing lights at night"
-loading="lazy">
+<figure class="card gallery-card" data-category="scene" data-photographer="quinn">
+<button type="button" class="gallery-photo" aria-label="View emergency response at night fullscreen">
+<img src="images/quinn-emergency-night.jpg" alt="Emergency vehicle with flashing lights at night" loading="lazy">
 </button>
-<figcaption>
-Emergency Response at Night |
-Photo: Quinn | WNY 3RD ALARM
-</figcaption>
+<figcaption>Emergency Response at Night | Photo: Quinn | WNY 3RD ALARM</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="fire"
-data-photographer="lily">
-<button type="button" class="gallery-photo"
-aria-label="View Engine 4 at sunset fullscreen">
-<img
-src="images/lily-engine-4.jpg"
-alt="Engine 4 with red emergency lights at sunset"
-loading="lazy">
+<figure class="card gallery-card" data-category="fire" data-photographer="lily">
+<button type="button" class="gallery-photo" aria-label="View Engine 4 at sunset fullscreen">
+<img src="images/lily-engine-4.jpg" alt="Engine 4 with red emergency lights at sunset" loading="lazy">
 </button>
-<figcaption>
-Engine 4 at Sunset |
-Photo: Lily | WNY 3RD ALARM
-</figcaption>
+<figcaption>Engine 4 at Sunset | Photo: Lily | WNY 3RD ALARM</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="police"
-data-photographer="tony">
-<button type="button" class="gallery-photo"
-aria-label="View police units fullscreen">
-<img
-src="images/police-units.jpg"
-alt="Police vehicles parked along a Western New York street"
-loading="lazy">
+<figure class="card gallery-card" data-category="police" data-photographer="tony">
+<button type="button" class="gallery-photo" aria-label="View police units fullscreen">
+<img src="images/police-units.jpg" alt="Police vehicles parked along a Western New York street" loading="lazy">
 </button>
-<figcaption>
-Police Units |
-Photo: @wnyfirebuff | WNY 3RD ALARM
-</figcaption>
+<figcaption>Police Units | Photo: @wnyfirebuff | WNY 3RD ALARM</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="police"
-data-photographer="lily">
-<button type="button" class="gallery-photo"
-aria-label="View Buffalo Police SRO 112 fullscreen">
-<img
-src="images/lily-buffalo-police.jpg"
-alt="Buffalo Police Department patrol SUV photographed by Lily"
-loading="lazy">
+<figure class="card gallery-card" data-category="police" data-photographer="lily">
+<button type="button" class="gallery-photo" aria-label="View Buffalo Police SRO 112 fullscreen">
+<img src="images/lily-buffalo-police.jpg" alt="Buffalo Police Department patrol SUV photographed by Lily" loading="lazy">
 </button>
-<figcaption>
-Buffalo Police Department — SRO 112 |
-Photo: Lily | WNY 3RD ALARM
-</figcaption>
+<figcaption>Buffalo Police Department — SRO 112 | Photo: Lily | WNY 3RD ALARM</figcaption>
 </figure>
 
-<figure class="card gallery-card"
-data-category="police"
-data-photographer="lily">
-<button type="button" class="gallery-photo"
-aria-label="View Buffalo Police SRO 112 back left fullscreen">
-<img
-src="images/lily-buffalo-police-back-left.jpg"
-alt="Buffalo Police Department patrol SUV photographed by Lily"
-loading="lazy">
+<figure class="card gallery-card" data-category="police" data-photographer="lily">
+<button type="button" class="gallery-photo" aria-label="View Buffalo Police SRO 112 back left fullscreen">
+<img src="images/lily-buffalo-police-back-left.jpg" alt="Buffalo Police Department patrol SUV photographed by Lily" loading="lazy">
 </button>
-<figcaption>
-Buffalo Police Department — SRO 112 back left |
-Photo: Lily | WNY 3RD ALARM
-</figcaption>
+<figcaption>Buffalo Police Department — SRO 112 back left | Photo: Lily | WNY 3RD ALARM</figcaption>
 </figure>
 
 </div>
@@ -1010,19 +880,13 @@ Photo: Lily | WNY 3RD ALARM
 </section>
 
 <!-- STATS -->
-<section id="stats" aria-labelledby="stats-heading">
+<section id="stats">
 <div class="wrap">
 <div class="eyebrow">Our work in numbers</div>
-<h2 id="stats-heading">
-📊 WNY 3RD ALARM Statistics
-</h2>
-<p class="intro">
-A snapshot of the photography currently published
-on our website.
-</p>
+<h2>📊 WNY 3RD ALARM Statistics</h2>
+<p class="intro">A snapshot of the photography currently published on our website.</p>
 
 <div class="stats-grid">
-
 <div class="stats-card">
 <div class="stats-icon">📸</div>
 <div class="stats-value" id="stat-photos">—</div>
@@ -1052,12 +916,10 @@ on our website.
 <div class="stats-value" id="stat-scene">—</div>
 <div class="stats-label">Emergency Scene Photos</div>
 </div>
-
 </div>
 
 <p class="stats-footnote">
-Counts reflect photos and photographer profiles displayed
-on this website, not total group membership or live incident activity.
+Counts reflect photos and photographer profiles displayed on this website.
 </p>
 </div>
 </section>
@@ -1065,117 +927,80 @@ on this website, not total group membership or live incident activity.
 <!-- WEATHER CENTER -->
 <section id="weather">
 <div class="wrap">
-
-<div class="eyebrow">
-WNY 3RD ALARM WEATHER OPERATIONS
-</div>
-
+<div class="eyebrow">WNY 3RD ALARM WEATHER OPERATIONS</div>
 <h2>🌩️ WNY WEATHER CENTER</h2>
-
 <p class="intro">
-Official National Weather Service information
-for Western New York.
+Official National Weather Service information for Western New York.
 </p>
 
-<div class="weather-card"
-style="border-color:#b91c1c">
+<div class="weather-card" style="border-color:#b91c1c">
 <h3>🚨 ACTIVE WEATHER ALERTS</h3>
-<div id="weather-alerts">
-Loading official alerts...
-</div>
+<div id="weather-alerts">Loading official alerts...</div>
 </div>
 
 <div class="weather-card">
 <h3>🌡️ BUFFALO WEATHER</h3>
-<p id="weather-temp">
-Loading latest observation...
-</p>
+<p id="weather-temp">Loading latest observation...</p>
 <p id="weather-condition"></p>
 <small id="weather-observed"></small>
 </div>
 
 <div class="weather-card">
 <h3>🌤️ UPCOMING FORECAST</h3>
-<div id="weather-forecast">
-Loading forecast...
-</div>
+<div id="weather-forecast">Loading forecast...</div>
 </div>
 
 <div class="weather-card">
 <h3>📡 WEATHER RESOURCES</h3>
-
-<p>
-<a
-href="https://radar.weather.gov/"
-target="_blank"
-rel="noopener noreferrer">
-🌧️ Official NWS Radar
-</a>
-</p>
-
-<p>
-<a
-href="https://www.weather.gov/buf/"
-target="_blank"
-rel="noopener noreferrer">
-🌩️ NWS Buffalo Forecast Office
-</a>
-</p>
-
-<p>
-<a
-href="https://www.spc.noaa.gov/"
-target="_blank"
-rel="noopener noreferrer">
-⚡ Storm Prediction Center
-</a>
-</p>
+<p><a href="https://radar.weather.gov/" target="_blank" rel="noopener noreferrer">🌧️ Official NWS Radar</a></p>
+<p><a href="https://www.weather.gov/buf/" target="_blank" rel="noopener noreferrer">🌩️ NWS Buffalo Forecast Office</a></p>
+<p><a href="https://www.spc.noaa.gov/" target="_blank" rel="noopener noreferrer">⚡ Storm Prediction Center</a></p>
 </div>
 
 <p id="weather-status" class="note">
 Weather information provided by NOAA/NWS.
 </p>
-
 <p class="note">
-For safety-critical decisions, verify alerts directly
-with the National Weather Service.
+For safety-critical decisions, verify alerts directly with the National Weather Service.
 </p>
-
 </div>
 </section>
 
-<!-- CAD -->
+<!-- FIXED CAD SECTION -->
 <section id="cad">
 <div class="wrap">
-<div class="eyebrow">Public group updates</div>
-<h2>CAD Activity</h2>
+
+<div class="eyebrow">WNY 3RD ALARM Incident Information</div>
+<h2>🚨 CAD Activity</h2>
 
 <p class="intro">
-Publicly approved, general incident summaries.
-Exact addresses, personal information, and responder
-locations are not displayed.
+View the latest incident calls available through our
+public WNY 3RD ALARM incident feed.
+Updates refresh automatically.
 </p>
 
 <div id="cad-feed" aria-live="polite">
-<div class="card" style="border-left:4px solid var(--red)">
-<div class="date">PUBLIC FEED STATUS</div>
-<h3>Awaiting approved updates</h3>
-<p>No approved public updates have been posted.</p>
+<div class="cad-card">
+<h3>Connecting to incident feed...</h3>
+<p class="cad-meta">Loading calls from incidents.json</p>
 </div>
 </div>
 
-<p class="note" id="cad-status" style="margin-top:16px">
-Checking public updates...
+<p id="cad-status" class="note">
+Checking incident feed...
 </p>
 
-<a class="btn" href="incidents.html">
+<a
+class="btn"
+href="https://wny3rdalarm716-hub.github.io/wny3rdalarm.github.io/incidents.html?utm_source=chatgpt.com">
 TAKE ME TO CAD
 </a>
 
-<p class="note">
-This is not a live dispatch feed or an emergency
-alert service. Call 911 for emergencies.
-Only public, approved summaries belong in the feed.
+<p class="note" style="margin-top:20px">
+UNOFFICIAL INCIDENT FEED.
+Not affiliated with emergency dispatch agencies.
+Do not use this information for emergency response.
+Call 911 for emergencies.
 </p>
 
 </div>
@@ -1186,10 +1011,8 @@ Only public, approved summaries belong in the feed.
 <div class="wrap">
 <div class="eyebrow">Behind the Lens</div>
 <h2>📸 Our Photographers</h2>
-
 <p class="intro">
-Meet the photographers capturing fire apparatus
-and emergency-services moments across Western New York.
+Meet the photographers capturing fire apparatus and emergency-services moments across Western New York.
 </p>
 
 <div class="grid">
@@ -1200,18 +1023,10 @@ src="images/lily-engine-4.jpg"
 alt="Engine 4 photographed by Lily"
 loading="lazy"
 style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px">
-
-<div class="role">
-Founder / Photographer
-</div>
-
+<div class="role">Founder / Photographer</div>
 <h3>Lily</h3>
 <p>Fire apparatus and emergency-services photography.</p>
-
-<p style="margin-top:12px">
-📸 Featured: Engine 4 at Sunset
-</p>
-
+<p style="margin-top:12px">📸 Featured: Engine 4 at Sunset</p>
 <a class="btn" href="#gallery">VIEW PHOTOS</a>
 </article>
 
@@ -1221,22 +1036,13 @@ src="images/Quinns-headshot.jpg"
 alt="Quinn — WNY 3RD ALARM"
 loading="lazy"
 style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px">
-
-<div class="role">
-Dispatching Administrator / Photographer
-</div>
-
+<div class="role">Dispatching Administrator / Photographer</div>
 <h3>Quinn</h3>
-
-<p style="margin-top:12px">
-📸 Featured: Emergency Response Photography
-</p>
-
+<p style="margin-top:12px">📸 Featured: What he looks like</p>
 <a class="btn" href="#gallery">VIEW PHOTOS</a>
 </article>
 
 <article class="card person">
-
 <img
 src="images/tony-headshot.jpg"
 alt="Tony — WNY 3RD ALARM Photographer"
@@ -1249,23 +1055,11 @@ object-position:center 35%;
 border-radius:50%;
 border:4px solid #c51f2b;
 display:block;
-margin:0 auto 20px;
-">
-
-<div class="role">
-Technology Admin / Photographer
-</div>
-
+margin:0 auto 20px">
+<div class="role">Technology Admin / Photographer</div>
 <h3>Tony</h3>
-
-<p>
-Fire apparatus photography and website development.
-</p>
-
-<a class="btn" href="#gallery">
-VIEW PHOTOS
-</a>
-
+<p>Fire apparatus photography and website development.</p>
+<a class="btn" href="#gallery">VIEW PHOTOS</a>
 </article>
 
 </div>
@@ -1280,7 +1074,6 @@ VIEW PHOTOS
 <p class="intro">Meet the WNY 3RD ALARM team.</p>
 
 <div class="grid">
-
 <article class="card person">
 <div class="role">Admin for Technology</div>
 <h3>Tony</h3>
@@ -1294,46 +1087,63 @@ VIEW PHOTOS
 </article>
 
 <article class="card person">
-<div class="role">
-Dispatching Administrator / Photographer
-</div>
+<div class="role">Dispatching Administrator / Photographer</div>
 <h3>Quinn</h3>
 <p>Dispatching Administrator / Photographer</p>
 </article>
-
 </div>
 
 <p class="note">
-Only share member details that each person
-has agreed to make public.
+Only share member details that each person has agreed to make public.
 </p>
 </div>
 </section>
 
-<!-- NEWS -->
+<!-- RESTORED LATEST NEWS ANNOUNCEMENT -->
 <section id="news">
 <div class="wrap">
+
 <div class="eyebrow">What's happening</div>
-<h2>Latest News</h2>
+<h2>🚨 Latest News</h2>
 
 <p class="intro">
-Official group updates will appear here.
-Add a date and short update whenever
-you have news to share.
+Announcements and updates from WNY 3RD ALARM.
 </p>
 
-<div class="card">
-<div class="date">GROUP UPDATE</div>
-<h3>Welcome to WNY 3RD ALARM</h3>
-<p>
-Our website is live. Check back for photography,
-community-event updates, and announcements from the group.
-</p>
+<article class="announcement">
 
-<a class="btn" href="incidents.html">
-TAKE ME TO CAD
-</a>
+<div class="date">
+🚨 WNY 3RD ALARM ANNOUNCEMENT
 </div>
+
+<h3>
+Our Incident Feed Is Now Available!
+</h3>
+
+<p>
+You can now view incident calls reported by WNY 3RD ALARM
+directly through our website!
+</p>
+
+<p>
+Visit our CAD page to see the latest available incident
+updates across Western New York.
+The feed updates automatically as new public incident
+information becomes available.
+</p>
+
+<a
+class="btn"
+href="https://wny3rdalarm716-hub.github.io/wny3rdalarm.github.io/incidents.html?utm_source=chatgpt.com">
+🚨 TAKE ME TO CAD
+</a>
+
+<p class="note" style="margin-top:18px">
+This is an unofficial incident feed and is not intended
+for emergency response or dispatch purposes.
+</p>
+
+</article>
 
 </div>
 </section>
@@ -1343,24 +1153,17 @@ TAKE ME TO CAD
 <div class="wrap">
 <div class="eyebrow">Out in the community</div>
 <h2>Events Calendar</h2>
-
 <p class="intro">
-Public events and appearances may be listed here
-once confirmed. No live incident responses or
-real-time member movements are published.
+Public events and appearances may be listed here once confirmed.
+No live incident responses or real-time member movements are published.
 </p>
 
 <div class="card">
 <h3>Upcoming Events</h3>
-
 <div class="event">
 <div class="date">TO BE ANNOUNCED</div>
-<strong>
-Community events and public apparatus displays
-</strong>
-<p class="note">
-Check back for confirmed dates and details.
-</p>
+<strong>Community events and public apparatus displays</strong>
+<p class="note">Check back for confirmed dates and details.</p>
 </div>
 </div>
 </div>
@@ -1376,15 +1179,9 @@ border:2px solid #c51f2b;
 border-radius:14px;
 padding:35px 25px;
 text-align:center;
-box-shadow:0 0 25px rgba(197,31,43,.15);
-">
+box-shadow:0 0 25px rgba(197,31,43,.15)">
 
-<p style="
-color:#ff4b55;
-font-size:13px;
-font-weight:900;
-letter-spacing:3px;
-">
+<p style="color:#ff4b55;font-size:13px;font-weight:900;letter-spacing:3px">
 🚨 RECRUITMENT OPEN
 </p>
 
@@ -1392,25 +1189,13 @@ letter-spacing:3px;
 JOIN WNY <span style="color:#ed3440">3RD ALARM</span>
 </h2>
 
-<p style="
-max-width:650px;
-margin:15px auto;
-color:#ccc;
-">
-WNY 3RD ALARM FIRE BUFFS is looking for dedicated
-members across Western New York!
-Help us grow our photography community,
-document fire apparatus, and participate
-in community events.
+<p style="max-width:650px;margin:15px auto;color:#ccc">
+WNY 3RD ALARM FIRE BUFFS is looking for dedicated members
+across Western New York! Help us grow our photography community,
+document fire apparatus, and participate in community events.
 </p>
 
-<div style="
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:12px;
-margin:25px 0;
-">
+<div style="display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:25px 0">
 <span>📸 Photography</span>
 <span>🚒 Fire Buffing</span>
 <span>🤝 Teamwork</span>
@@ -1441,14 +1226,12 @@ Respect for emergency personnel and scene safety is required.
 <h2>Join Our Group</h2>
 
 <p class="intro">
-We welcome interest from people in Western New York
-who share an appreciation for fire apparatus photography
-and the fire-service community.
-Membership is subject to group review and expectations.
+We welcome interest from people in Western New York who share
+an appreciation for fire apparatus photography and the fire-service
+community. Membership is subject to group review and expectations.
 </p>
 
 <div class="grid">
-
 <article class="card">
 <h3>What we value</h3>
 <p>
@@ -1472,7 +1255,6 @@ Follow all official instructions.
 Fill out our official membership application
 to be considered for WNY 3RD ALARM FIRE BUFFS.
 </p>
-
 <p style="margin-top:18px">
 <a
 class="btn"
@@ -1483,7 +1265,6 @@ FILL OUT APPLICATION
 </a>
 </p>
 </article>
-
 </div>
 </div>
 </section>
@@ -1507,21 +1288,12 @@ enctype="text/plain">
 
 <div>
 <label for="name">Your name</label>
-<input
-id="name"
-name="Name"
-required
-autocomplete="name">
+<input id="name" name="Name" required autocomplete="name">
 </div>
 
 <div>
 <label for="email">Your email</label>
-<input
-id="email"
-name="Email"
-type="email"
-required
-autocomplete="email">
+<input id="email" name="Email" type="email" required autocomplete="email">
 </div>
 
 <div>
@@ -1536,21 +1308,15 @@ autocomplete="email">
 
 <div>
 <label for="message">Message</label>
-<textarea
-id="message"
-name="Message"
-required></textarea>
+<textarea id="message" name="Message" required></textarea>
 </div>
 
-<button type="submit">
-SEND MESSAGE
-</button>
+<button type="submit">SEND MESSAGE</button>
 
 <p class="note">
 This form opens your email app to send the message.
 It does not store submissions on this website.
 </p>
-
 </form>
 
 <p style="margin-top:24px">
@@ -1558,9 +1324,7 @@ It does not store submissions on this website.
 <a href="mailto:wny3rdalarm716@gmail.com">
 wny3rdalarm716@gmail.com
 </a>
-
 <br>
-
 <strong>TikTok:</strong>
 <a
 href="https://www.tiktok.com/@wnyfirebuffs716"
@@ -1577,13 +1341,8 @@ Follow Us on TikTok
 
 <footer>
 <div class="wrap foot">
-<span>
-© <span id="year">2026</span>
-WNY 3RD ALARM FIRE BUFFS
-</span>
-<span>
-Capturing the Call. Preserving the Tradition.
-</span>
+<span>© <span id="year">2026</span> WNY 3RD ALARM FIRE BUFFS</span>
+<span>Capturing the Call. Preserving the Tradition.</span>
 </div>
 </footer>
 
@@ -1781,7 +1540,7 @@ setInterval(refreshWeather,300000);
 })();
 </script>
 
-<!-- PUBLIC CAD JAVASCRIPT -->
+<!-- CORRECTED INCIDENT FEED JAVASCRIPT -->
 <script>
 (function(){
 
@@ -1790,99 +1549,120 @@ const status=document.getElementById("cad-status");
 
 if(!feed||!status)return;
 
-function make(tag,className,value){
+function addText(parent,tag,value,className){
 const element=document.createElement(tag);
-
-if(className){
-element.className=className;
-}
-
-if(value!==undefined){
+if(className)element.className=className;
 element.textContent=value;
-}
-
+parent.appendChild(element);
 return element;
 }
 
+function renderIncident(item){
+
+const card=document.createElement("article");
+card.className="cad-card";
+
+addText(
+card,
+"div",
+"🚨 INCIDENT ALERT",
+"cad-time"
+);
+
+addText(
+card,
+"h3",
+String(item.type||"Incident").slice(0,120)
+);
+
+const meta=document.createElement("div");
+meta.className="cad-meta";
+
+addText(
+meta,
+"div",
+"📍 "+String(item.area||"Western New York").slice(0,120)
+);
+
+const time=new Date(item.time);
+
+addText(
+meta,
+"div",
+"🕒 "+
+(
+Number.isNaN(time.getTime())
+?"Time unavailable"
+:time.toLocaleString()
+)
+);
+
+card.appendChild(meta);
+feed.appendChild(card);
+}
+
 async function loadCAD(){
+
 try{
+
 const response=await fetch(
-"public-cad.json?t="+Date.now(),
+"./incidents.json?t="+Date.now(),
 {cache:"no-store"}
 );
 
 if(!response.ok){
-throw new Error("Public feed unavailable");
+throw new Error("Incident feed unavailable");
 }
 
 const data=await response.json();
 
-if(!data||!Array.isArray(data.incidents)){
-throw new Error("Invalid public CAD feed format");
+if(!Array.isArray(data)){
+throw new Error("Invalid incident feed format");
 }
 
 feed.replaceChildren();
 
-const incidents=data.incidents
-.slice(0,15)
-.filter(item=>item&&typeof item==="object");
+const incidents=data
+.filter(item=>item&&typeof item==="object")
+.sort((a,b)=>new Date(b.time)-new Date(a.time))
+.slice(0,15);
 
-if(incidents.length===0){
-const card=make("div","card");
-card.style.borderLeft="4px solid var(--red)";
+if(!incidents.length){
 
-card.append(
-make("div","date","PUBLIC FEED STATUS"),
-make("h3","","Awaiting approved updates"),
-make("p","","No approved public updates have been posted.")
-);
+const card=document.createElement("div");
+card.className="cad-card";
 
-feed.appendChild(card);
-}
-
-for(const incident of incidents){
-const card=make("article","card");
-
-card.style.marginBottom="12px";
-card.style.borderLeft="4px solid var(--red)";
-
-const details=[
-incident.area,
-incident.status
-]
-.filter(Boolean)
-.map(value=>String(value).slice(0,100))
-.join(" | ");
-
-card.append(
-make(
-"div",
-"date",
-String(incident.time||"").slice(0,40)
-),
-make(
+addText(
+card,
 "h3",
-"",
-String(incident.type||"Group update").slice(0,80)
-),
-make("p","",details)
+"No incidents available."
 );
 
 feed.appendChild(card);
+
+}else{
+
+incidents.forEach(renderIncident);
+
 }
 
 status.textContent=
-"Public feed checked. Updates refresh approximately every 5 minutes while this page is open.";
+"Feed connected • Refreshes every 60 seconds • "+
+incidents.length+" recent calls displayed";
 
 }catch(error){
+
 status.textContent=
-"Public updates are temporarily unavailable.";
-console.error("Public CAD feed:",error);
+"Incident feed unavailable. Visit the full CAD page.";
+
+console.error("CAD feed:",error);
+
 }
+
 }
 
 loadCAD();
-setInterval(loadCAD,300000);
+setInterval(loadCAD,60000);
 
 })();
 </script>
@@ -1916,6 +1696,7 @@ let category="all";
 let previousFocus=null;
 
 function updateGallery(){
+
 let shown=0;
 const query=search.value.trim().toLocaleLowerCase();
 
@@ -1946,7 +1727,9 @@ figure.dataset.category===category)&&
 figure.dataset.photographer===photographer.value);
 
 figure.hidden=!visible;
+
 if(visible)shown++;
+
 });
 
 count.textContent=
@@ -1958,6 +1741,7 @@ clearSearch.disabled=!search.value;
 
 filters.forEach(button=>{
 button.addEventListener("click",()=>{
+
 category=button.dataset.category;
 
 filters.forEach(item=>{
@@ -1967,6 +1751,7 @@ item.setAttribute("aria-pressed",String(active));
 });
 
 updateGallery();
+
 });
 });
 
@@ -1982,6 +1767,7 @@ updateGallery();
 grid.querySelectorAll(".gallery-photo")
 .forEach(button=>{
 button.addEventListener("click",()=>{
+
 const img=button.querySelector("img");
 
 previousFocus=document.activeElement;
@@ -1997,10 +1783,12 @@ viewer.classList.add("open");
 viewer.setAttribute("aria-hidden","false");
 document.body.style.overflow="hidden";
 close.focus();
+
 });
 });
 
 function closeViewer(){
+
 viewer.classList.remove("open");
 viewer.setAttribute("aria-hidden","true");
 large.removeAttribute("src");
@@ -2018,6 +1806,7 @@ if(event.target===viewer)closeViewer();
 });
 
 document.addEventListener("keydown",event=>{
+
 if(!viewer.classList.contains("open"))return;
 
 if(event.key==="Escape"){
@@ -2028,6 +1817,7 @@ if(event.key==="Tab"){
 event.preventDefault();
 close.focus();
 }
+
 });
 
 updateGallery();
@@ -2069,7 +1859,7 @@ photo=>photo.dataset.category===category
 })();
 </script>
 
-<!-- MOBILE NAVIGATION JAVASCRIPT -->
+<!-- MOBILE MENU JAVASCRIPT -->
 <script>
 (function(){
 
@@ -2084,13 +1874,11 @@ if(!toggle||!nav)return;
 function closeMenu(){
 nav.classList.remove("is-open");
 toggle.setAttribute("aria-expanded","false");
-toggle.setAttribute(
-"aria-label",
-"Open navigation menu"
-);
+toggle.setAttribute("aria-label","Open navigation menu");
 }
 
 toggle.addEventListener("click",()=>{
+
 const opening=!nav.classList.contains("is-open");
 
 nav.classList.toggle("is-open",opening);
@@ -2098,10 +1886,9 @@ toggle.setAttribute("aria-expanded",String(opening));
 
 toggle.setAttribute(
 "aria-label",
-opening
-?"Close navigation menu"
-:"Open navigation menu"
+opening?"Close navigation menu":"Open navigation menu"
 );
+
 });
 
 nav.querySelectorAll("a").forEach(link=>{
@@ -2128,9 +1915,7 @@ closeMenu();
 });
 
 window.addEventListener("resize",()=>{
-if(window.innerWidth>900){
-closeMenu();
-}
+if(window.innerWidth>900)closeMenu();
 });
 
 })();
