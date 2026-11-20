@@ -1,5 +1,10 @@
 [
   {
+    "type": "lift Assist",
+    "area": "Western New York",
+    "time": "2026-11-20T15:15:26-05:00"
+  },
+  {
     "type": "Nose Bleed",
     "area": "Western New York",
     "time": "2026-11-20T14:31:12-05:00"
@@ -18,10 +23,5 @@
     "type": "FIRE ALARM ACTIVATION",
     "area": "Western New York",
     "time": "2026-11-19T23:28:21-05:00"
-  },
-  {
-    "type": "Chest Pain",
-    "area": "Western New York",
-    "time": "2026-11-19T19:42:51-05:00"
   }
 ]
