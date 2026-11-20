@@ -1,27 +1,27 @@
 [
   {
+    "type": "Lift Assist",
+    "area": "Western New York",
+    "time": "2026-11-20T18:28:41-05:00"
+  },
+  {
+    "type": "Vehicle Fire",
+    "area": "Western New York",
+    "time": "2026-11-20T18:19:03-05:00"
+  },
+  {
+    "type": "Head Injury",
+    "area": "Western New York",
+    "time": "2026-11-20T18:06:28-05:00"
+  },
+  {
+    "type": "BRUSH FIRE",
+    "area": "Western New York",
+    "time": "2026-11-20T17:55:09-05:00"
+  },
+  {
     "type": "Fall (lift assist)",
     "area": "Western New York",
     "time": "2026-11-20T17:09:41-05:00"
-  },
-  {
-    "type": "Flu",
-    "area": "Western New York",
-    "time": "2026-11-20T15:55:23-05:00"
-  },
-  {
-    "type": "Increased Weakness",
-    "area": "Western New York",
-    "time": "2026-11-20T15:45:25-05:00"
-  },
-  {
-    "type": "Possible Co Issue",
-    "area": "Western New York",
-    "time": "2026-11-20T15:38:25-05:00"
-  },
-  {
-    "type": "Dizzy",
-    "area": "Western New York",
-    "time": "2026-11-20T15:37:02-05:00"
   }
 ]
