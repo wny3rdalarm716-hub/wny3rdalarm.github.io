@@ -1,5 +1,10 @@
 [
   {
+    "type": "Vomiting",
+    "area": "Western New York",
+    "time": "2026-11-21T12:18:23-05:00"
+  },
+  {
     "type": "Possible Structure Fire",
     "area": "Western New York",
     "time": "2026-11-21T11:32:26-05:00"
@@ -18,10 +23,5 @@
     "type": "10-11",
     "area": "Western New York",
     "time": "2026-11-20T23:15:06-05:00"
-  },
-  {
-    "type": "Fall",
-    "area": "Western New York",
-    "time": "2026-11-20T23:07:21-05:00"
   }
 ]
