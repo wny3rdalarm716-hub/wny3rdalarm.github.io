@@ -1,5 +1,20 @@
 [
   {
+    "type": "Lift Assist",
+    "area": "Western New York",
+    "time": "2026-11-21T12:46:28-05:00"
+  },
+  {
+    "type": "Unable to Ambulate",
+    "area": "Western New York",
+    "time": "2026-11-21T12:43:14-05:00"
+  },
+  {
+    "type": "Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-21T12:39:59-05:00"
+  },
+  {
     "type": "Vomiting",
     "area": "Western New York",
     "time": "2026-11-21T12:18:23-05:00"
@@ -8,20 +23,5 @@
     "type": "Possible Structure Fire",
     "area": "Western New York",
     "time": "2026-11-21T11:32:26-05:00"
-  },
-  {
-    "type": "Medical Alarm",
-    "area": "Western New York",
-    "time": "2026-11-21T00:58:12-05:00"
-  },
-  {
-    "type": "Fall",
-    "area": "Western New York",
-    "time": "2026-11-20T23:55:13-05:00"
-  },
-  {
-    "type": "10-11",
-    "area": "Western New York",
-    "time": "2026-11-20T23:15:06-05:00"
   }
 ]
