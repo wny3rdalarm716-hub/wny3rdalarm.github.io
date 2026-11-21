@@ -1,5 +1,15 @@
 [
   {
+    "type": "10-11",
+    "area": "Western New York",
+    "time": "2026-11-20T23:15:06-05:00"
+  },
+  {
+    "type": "Fall",
+    "area": "Western New York",
+    "time": "2026-11-20T23:07:21-05:00"
+  },
+  {
     "type": "single Episode",
     "area": "Western New York",
     "time": "2026-11-20T21:37:28-05:00"
@@ -13,15 +23,5 @@
     "type": "Lift Assist",
     "area": "Western New York",
     "time": "2026-11-20T20:38:52-05:00"
-  },
-  {
-    "type": "test",
-    "area": "Western New York",
-    "time": "2026-11-20T20:25:39-05:00"
-  },
-  {
-    "type": "SMOKE INVESTIGATION",
-    "area": "Western New York",
-    "time": "2026-11-20T19:53:41-05:00"
   }
 ]
