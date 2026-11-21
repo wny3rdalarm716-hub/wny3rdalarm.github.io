@@ -1,5 +1,20 @@
 [
   {
+    "type": "test",
+    "area": "Western New York",
+    "time": "2026-11-20T19:09:51-05:00"
+  },
+  {
+    "type": "test",
+    "area": "Western New York",
+    "time": "2026-11-20T19:08:45-05:00"
+  },
+  {
+    "type": "IN SERVICE",
+    "area": "Western New York",
+    "time": "2026-11-20T19:05:04-05:00"
+  },
+  {
     "type": "Lift Assist",
     "area": "Western New York",
     "time": "2026-11-20T18:28:41-05:00"
@@ -8,20 +23,5 @@
     "type": "Vehicle Fire",
     "area": "Western New York",
     "time": "2026-11-20T18:19:03-05:00"
-  },
-  {
-    "type": "Head Injury",
-    "area": "Western New York",
-    "time": "2026-11-20T18:06:28-05:00"
-  },
-  {
-    "type": "BRUSH FIRE",
-    "area": "Western New York",
-    "time": "2026-11-20T17:55:09-05:00"
-  },
-  {
-    "type": "Fall (lift assist)",
-    "area": "Western New York",
-    "time": "2026-11-20T17:09:41-05:00"
   }
 ]
