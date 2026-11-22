@@ -1,5 +1,15 @@
 [
   {
+    "type": "Not Alert",
+    "area": "Western New York",
+    "time": "2026-11-21T19:13:27-05:00"
+  },
+  {
+    "type": "Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-21T18:40:26-05:00"
+  },
+  {
     "type": "Finger Laceration",
     "area": "Western New York",
     "time": "2026-11-21T18:14:59-05:00"
@@ -13,15 +23,5 @@
     "type": "MVA",
     "area": "Western New York",
     "time": "2026-11-21T17:51:40-05:00"
-  },
-  {
-    "type": "Seizure",
-    "area": "Western New York",
-    "time": "2026-11-21T17:23:30-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-21T17:05:18-05:00"
   }
 ]
