@@ -1,5 +1,10 @@
 [
   {
+    "type": "Evaluation",
+    "area": "Western New York",
+    "time": "2026-11-21T20:58:11-05:00"
+  },
+  {
     "type": "Possible Seizure",
     "area": "Western New York",
     "time": "2026-11-21T19:59:36-05:00"
@@ -18,10 +23,5 @@
     "type": "Fall",
     "area": "Western New York",
     "time": "2026-11-21T19:25:29-05:00"
-  },
-  {
-    "type": "Not Alert",
-    "area": "Western New York",
-    "time": "2026-11-21T19:13:27-05:00"
   }
 ]
