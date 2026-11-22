@@ -1,27 +1,27 @@
 [
   {
+    "type": "Possible Seizure",
+    "area": "Western New York",
+    "time": "2026-11-21T19:59:36-05:00"
+  },
+  {
+    "type": "Not Alert",
+    "area": "Western New York",
+    "time": "2026-11-21T19:34:15-05:00"
+  },
+  {
+    "type": "Abdominal Pain",
+    "area": "Western New York",
+    "time": "2026-11-21T19:32:27-05:00"
+  },
+  {
+    "type": "Fall",
+    "area": "Western New York",
+    "time": "2026-11-21T19:25:29-05:00"
+  },
+  {
     "type": "Not Alert",
     "area": "Western New York",
     "time": "2026-11-21T19:13:27-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-21T18:40:26-05:00"
-  },
-  {
-    "type": "Finger Laceration",
-    "area": "Western New York",
-    "time": "2026-11-21T18:14:59-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-21T18:02:39-05:00"
-  },
-  {
-    "type": "MVA",
-    "area": "Western New York",
-    "time": "2026-11-21T17:51:40-05:00"
   }
 ]
