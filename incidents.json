@@ -1,5 +1,15 @@
 [
   {
+    "type": "TRAFFIC ALERT",
+    "area": "Western New York",
+    "time": "2026-11-22T09:59:59-05:00"
+  },
+  {
+    "type": "test",
+    "area": "Western New York",
+    "time": "2026-11-22T09:59:57-05:00"
+  },
+  {
     "type": "Ill",
     "area": "Western New York",
     "time": "2026-11-22T02:54:37-05:00"
@@ -13,15 +23,5 @@
     "type": "Lift Assist",
     "area": "Western New York",
     "time": "2026-11-22T00:38:35-05:00"
-  },
-  {
-    "type": "2nd ALARM",
-    "area": "Western New York",
-    "time": "2026-11-22T00:13:57-05:00"
-  },
-  {
-    "type": "test for the computer",
-    "area": "Western New York",
-    "time": "2026-11-22T00:06:58-05:00"
   }
 ]
