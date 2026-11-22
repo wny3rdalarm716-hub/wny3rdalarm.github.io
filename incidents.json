@@ -1,5 +1,10 @@
 [
   {
+    "type": "Lift Assist",
+    "area": "Western New York",
+    "time": "2026-11-21T22:20:53-05:00"
+  },
+  {
     "type": "Co with illnesses",
     "area": "Western New York",
     "time": "2026-11-21T21:28:41-05:00"
@@ -18,10 +23,5 @@
     "type": "Not Alert",
     "area": "Western New York",
     "time": "2026-11-21T19:34:15-05:00"
-  },
-  {
-    "type": "Abdominal Pain",
-    "area": "Western New York",
-    "time": "2026-11-21T19:32:27-05:00"
   }
 ]
