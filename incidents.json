@@ -1,5 +1,10 @@
 [
   {
+    "type": "PAIN",
+    "area": "Western New York",
+    "time": "2026-11-22T10:39:42-05:00"
+  },
+  {
     "type": "TRAFFIC ALERT",
     "area": "Western New York",
     "time": "2026-11-22T09:59:59-05:00"
@@ -18,10 +23,5 @@
     "type": "Brush Fire",
     "area": "Western New York",
     "time": "2026-11-22T01:16:03-05:00"
-  },
-  {
-    "type": "Lift Assist",
-    "area": "Western New York",
-    "time": "2026-11-22T00:38:35-05:00"
   }
 ]
