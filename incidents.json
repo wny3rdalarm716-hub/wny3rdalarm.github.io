@@ -1,5 +1,20 @@
 [
   {
+    "type": "Near Syncope",
+    "area": "Western New York",
+    "time": "2026-11-22T22:20:03-05:00"
+  },
+  {
+    "type": "Nauseous",
+    "area": "Western New York",
+    "time": "2026-11-22T22:13:05-05:00"
+  },
+  {
+    "type": "Infected Hand",
+    "area": "Western New York",
+    "time": "2026-11-22T22:09:01-05:00"
+  },
+  {
     "type": "Dificulty Breathing",
     "area": "Western New York",
     "time": "2026-11-22T19:32:47-05:00"
@@ -8,20 +23,5 @@
     "type": "10-11",
     "area": "Western New York",
     "time": "2026-11-22T19:26:58-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-22T18:34:28-05:00"
-  },
-  {
-    "type": "Transport for Detox",
-    "area": "Western New York",
-    "time": "2026-11-22T18:04:45-05:00"
-  },
-  {
-    "type": "Chest Pain",
-    "area": "Western New York",
-    "time": "2026-11-22T17:32:18-05:00"
   }
 ]
