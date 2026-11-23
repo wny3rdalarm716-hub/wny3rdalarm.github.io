@@ -1,5 +1,20 @@
 [
   {
+    "type": "Chest Pain",
+    "area": "Western New York",
+    "time": "2026-11-23T16:21:20-05:00"
+  },
+  {
+    "type": "Vomiting",
+    "area": "Western New York",
+    "time": "2026-11-23T16:13:32-05:00"
+  },
+  {
+    "type": "Hypertensive",
+    "area": "Western New York",
+    "time": "2026-11-23T15:37:00-05:00"
+  },
+  {
     "type": "Respiratory Distress",
     "area": "Western New York",
     "time": "2026-11-23T15:14:12-05:00"
@@ -8,20 +23,5 @@
     "type": "Fall",
     "area": "Western New York",
     "time": "2026-11-22T22:35:27-05:00"
-  },
-  {
-    "type": "Near Syncope",
-    "area": "Western New York",
-    "time": "2026-11-22T22:20:03-05:00"
-  },
-  {
-    "type": "Nauseous",
-    "area": "Western New York",
-    "time": "2026-11-22T22:13:05-05:00"
-  },
-  {
-    "type": "Infected Hand",
-    "area": "Western New York",
-    "time": "2026-11-22T22:09:01-05:00"
   }
 ]
