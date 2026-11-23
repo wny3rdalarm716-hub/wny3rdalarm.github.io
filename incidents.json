@@ -1,5 +1,10 @@
 [
   {
+    "type": "Fall",
+    "area": "Western New York",
+    "time": "2026-11-22T22:35:27-05:00"
+  },
+  {
     "type": "Near Syncope",
     "area": "Western New York",
     "time": "2026-11-22T22:20:03-05:00"
@@ -18,10 +23,5 @@
     "type": "Dificulty Breathing",
     "area": "Western New York",
     "time": "2026-11-22T19:32:47-05:00"
-  },
-  {
-    "type": "10-11",
-    "area": "Western New York",
-    "time": "2026-11-22T19:26:58-05:00"
   }
 ]
