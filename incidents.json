@@ -1,5 +1,10 @@
 [
   {
+    "type": "POSSIBLE STRUCTURE FIRE",
+    "area": "Western New York",
+    "time": "2026-11-24T18:52:31-05:00"
+  },
+  {
     "type": "Possible UTI",
     "area": "Western New York",
     "time": "2026-11-24T16:36:33-05:00"
@@ -18,10 +23,5 @@
     "type": "Possible Stroke",
     "area": "Western New York",
     "time": "2026-11-24T14:47:17-05:00"
-  },
-  {
-    "type": "TEST - WNY 3RD ALARM",
-    "area": "Western New York",
-    "time": "2026-11-24T02:07:49-05:00"
   }
 ]
