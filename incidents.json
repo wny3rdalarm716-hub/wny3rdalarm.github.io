@@ -1,5 +1,10 @@
 [
   {
+    "type": "unable to Ambulate",
+    "area": "Western New York",
+    "time": "2026-11-23T21:06:25-05:00"
+  },
+  {
     "type": "Ordered in By a Doctor",
     "area": "Western New York",
     "time": "2026-11-23T20:54:22-05:00"
@@ -18,10 +23,5 @@
     "type": "MVA With Injuries",
     "area": "Western New York",
     "time": "2026-11-23T19:26:11-05:00"
-  },
-  {
-    "type": "detox",
-    "area": "Western New York",
-    "time": "2026-11-23T18:28:12-05:00"
   }
 ]
