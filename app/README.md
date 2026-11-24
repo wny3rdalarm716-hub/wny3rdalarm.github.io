@@ -1,4 +1,4 @@
-# WNY 3RD ALARM app V2.3.2
+# WNY 3RD ALARM app V2.3.3
 
 This standalone app lives under `/app/` and does not alter the existing website, Active911 integration, Firebase, or workflows. Paths are relative so it works under the GitHub Pages project path. The app icons reproduce the existing website's text wordmark.
 
@@ -34,3 +34,7 @@ V2.3.1: accepts Firebase Console notification payloads and data-only test pushes
 - The public reviewed feed is intentionally separate from the website's automatic feed. Only concluded, independently reviewed general summaries belong there. No automatic publication or remote incident/weather delivery is included.
 - Existing installations: Settings > Check for updates, then reload. Test on actual devices.
 - For a patch-only deployment, replace only the files included in the V2.3.2 patch ZIP under app/. Do not overwrite your existing reviewed-incidents.json, root website files or voting configuration.
+
+## V2.3.3 weather hotfix
+- If the latest station report lacks a recent numeric temperature or cannot be retrieved, search up to 24 station observations and show the newest valid measurement no older than three hours. Show its timestamp and identify fallback readings. If no valid measurement exists, report temperature unavailable; do not substitute a forecast high.
+- Replace the files in this patch under app/. The service worker cache version is bumped. No changes to reviewed feed, photos, Firebase settings, or root website.

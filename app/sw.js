@@ -1,9 +1,9 @@
 /* Cache only app-owned static assets; never store incident or weather data. */
-const APP_VERSION = '2.3.2';
-const CACHE = 'wny-app-static-v2.3.2';
+const APP_VERSION = '2.3.3';
+const CACHE = 'wny-app-static-v2.3.3';
 const STATIC_FILES = [
-  './offline.html', './app.css?v=2.3.2', './app.js?v=2.3.2',
-  './push.js?v=2.3.2', './manifest.webmanifest', './icons/icon-192.png',
+  './offline.html', './app.css?v=2.3.3', './app.js?v=2.3.3',
+  './push.js?v=2.3.3', './manifest.webmanifest', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-180.png'
 ];
 const scope = self.registration.scope;

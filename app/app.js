@@ -133,6 +133,26 @@
       return data;
     } finally { clearTimeout(timeout); }
   }
+  // NWS sometimes publishes an observation without a temperature. Use only
+  // a recent, timestamped measurement from the same station, never a forecast.
+  function validTemperatureObservation(p, now = Date.now()) {
+    if (!p || typeof p !== 'object' || !Number.isFinite(p.temperature?.value)) return false;
+    const time = Date.parse(p.timestamp);
+    return Number.isFinite(time) && time <= now + 300000 && time >= now - 3 * 3600000;
+  }
+  async function stationTemperatureObservation(api, station) {
+    const base = api + '/stations/' + station + '/observations';
+    let latest;
+    try { latest = (await getJSON(base + '/latest')).properties; } catch (_) { /* Try station history. */ }
+    if (validTemperatureObservation(latest)) return {properties: latest, previous: false};
+    const history = await getJSON(base + '?limit=24');
+    const now = Date.now();
+    const candidates = Array.isArray(history.features) ? history.features.map(f => f?.properties)
+      .filter(p => validTemperatureObservation(p, now))
+      .sort((a,b) => Date.parse(b.timestamp) - Date.parse(a.timestamp)) : [];
+    if (!candidates.length) throw new Error('No recent measured temperature');
+    return {properties: candidates[0], previous: true};
+  }
   async function loadWeather() {
     const request = ++weatherRequest;
     const api = 'https://api.weather.gov';
@@ -140,6 +160,7 @@
     const countyLabel = county.name.toUpperCase() + ' COUNTY';
     ['home-weather-location', 'weather-alerts-location', 'weather-forecast-location'].forEach(id => { $(id).textContent = countyLabel; });
     $('weather-observation-location').textContent = countyLabel + ' · NEARBY STATION ' + county.station;
+    $('weather-observation-kind').textContent = ' · STATION OBSERVATION';
     $('home-weather-icon').textContent = '◌';
     let observationDescription = '';
     let forecastDescription = '';
@@ -157,25 +178,23 @@
     $('home-weather-time').textContent = '';
 
     // Render each response independently so a slow forecast cannot block the preview.
-    const observation = getJSON(api + '/stations/' + county.station + '/observations/latest').then(data => {
+    const observation = stationTemperatureObservation(api, county.station).then(({properties: p, previous}) => {
       if (request !== weatherRequest) return;
-      const p = data.properties;
-      if (!p || typeof p !== 'object') throw new Error('Invalid observation');
-      const temp = p.temperature && p.temperature.value;
-      const degrees = Number.isFinite(temp) ? Math.round(temp * 9 / 5 + 32) + '°F' : 'Temperature unavailable';
+      const degrees = Math.round(p.temperature.value * 9 / 5 + 32) + '°F';
       observationDescription = typeof p.textDescription === 'string' ? p.textDescription.trim() : '';
-      const condition = observationDescription || 'Current condition unavailable';
-      const observed = p.timestamp && Number.isFinite(Date.parse(p.timestamp)) ? 'Observed ' + new Date(p.timestamp).toLocaleString() : 'Observation time unavailable';
+      const condition = observationDescription || 'Conditions not reported';
+      const observed = (previous ? 'Last valid reading · ' : 'Observed ') + new Date(p.timestamp).toLocaleString();
+      $('weather-observation-kind').textContent = previous ? ' · LAST VALID OBSERVATION' : ' · LATEST OBSERVATION';
       $('home-weather-temp').textContent = degrees;
       updateHomeCondition();
       $('home-weather-time').textContent = observed;
       $('weather-current').replaceChildren(text('div', degrees, 'temperature'), text('p', condition), text('small', observed));
     }).catch(error => {
       if (request === weatherRequest) {
-        $('home-weather-temp').textContent = 'Weather unavailable';
+        $('home-weather-temp').textContent = 'Temperature unavailable';
         updateHomeCondition();
         $('home-weather-time').textContent = '';
-        $('weather-current').textContent = 'Current conditions unavailable. Refresh or check NWS Buffalo.';
+        $('weather-current').textContent = 'No recent measured temperature from this station. See the forecast below or refresh.';
       }
       throw error;
     });
@@ -369,8 +388,8 @@
   }
   async function indicateWorker(worker) {
     const version = await checkWorkerVersion(worker);
-    if (version && version !== '2.3.2') showUpdate();
-    else if (version === '2.3.2' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.3.2.';
+    if (version && version !== '2.3.3') showUpdate();
+    else if (version === '2.3.3' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.3.3.';
     else if (!version) $('update-status').textContent = 'Could not verify service worker version.';
   }
   function showUpdate() {
