@@ -11,9 +11,9 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
-  <link rel="stylesheet" href="app.css?v=2.1">
+  <link rel="stylesheet" href="app.css?v=2.2">
   <title>WNY 3RD ALARM</title>
-  <script src="app.js?v=2.1" defer></script>
+  <script src="app.js?v=2.2" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -31,8 +31,8 @@
       <div class="section-heading"><div><p class="eyebrow">THE LATEST</p><h2>From the field</h2></div><a href="#incidents">See all <span aria-hidden="true">→</span></a></div>
       <div class="card feature-card"><div class="feature-icon" aria-hidden="true">◉</div><div><span class="card-label">PUBLIC INCIDENT FEED</span><h3>Incident updates</h3><p>Reviewed public summaries from around Western New York.</p></div><a class="arrow" href="#incidents" aria-label="View incident updates">↗</a></div>
       <a class="card weather-preview" href="#weather" aria-label="Open weather center">
-        <span class="weather-preview-icon" aria-hidden="true">☁</span>
-        <span aria-live="polite"><span class="card-label">BUFFALO WEATHER · NWS</span><strong id="home-weather-temp">Checking weather…</strong><span id="home-weather-condition">Loading current conditions…</span><small id="home-weather-time"></small></span>
+        <span id="home-weather-icon" class="weather-preview-icon" aria-hidden="true">☁</span>
+        <span aria-live="polite"><span class="card-label"><span id="home-weather-location">ERIE COUNTY</span> · NWS</span><strong id="home-weather-temp">Checking weather…</strong><span id="home-weather-condition">Loading current conditions…</span><small id="home-weather-time"></small></span>
         <span aria-hidden="true">↗</span>
       </a>
       <div class="quick-grid"><a class="card quick" href="#weather"><span class="quick-icon">☁</span><span><b>Weather</b><small>Official NWS updates</small></span><span>↗</span></a><a class="card quick" href="#gallery"><span class="quick-icon">▧</span><span><b>Gallery</b><small>Through our lens</small></span><span>↗</span></a></div>
@@ -46,34 +46,39 @@
     </section>
     <section id="weather" class="screen" hidden aria-labelledby="weather-title">
       <div class="page-heading"><p class="eyebrow">WESTERN NEW YORK</p><h1 id="weather-title">Weather center<span class="accent">.</span></h1><p>Official information from the National Weather Service.</p></div>
+      <label class="county-picker" for="weather-county">Weather county
+        <select id="weather-county"><option value="erie">Erie</option><option value="niagara">Niagara</option><option value="chautauqua">Chautauqua</option><option value="cattaraugus">Cattaraugus</option><option value="allegany">Allegany</option><option value="genesee">Genesee</option><option value="orleans">Orleans</option><option value="wyoming">Wyoming</option></select>
+      </label><p id="weather-preference-status" class="fine-print" role="status">Selection is saved on this device.</p>
       <div class="status-line"><span class="red-dot"></span><span id="weather-status" role="status">Checking NWS…</span><button class="text-button" id="refresh-weather" type="button">Refresh ↻</button></div>
-      <div class="card weather-card"><span class="card-label">BUFFALO · LATEST OBSERVATION</span><div id="weather-current">Loading current conditions…</div></div>
-      <div class="section-heading"><h2>Active alerts</h2><span>ERIE COUNTY</span></div><div id="weather-alerts" class="card weather-card">Loading alerts…</div>
-      <div class="section-heading"><h2>Forecast</h2><span>BUFFALO</span></div><div id="weather-forecast" class="card weather-card">Loading forecast…</div>
+      <div class="card weather-card"><span class="card-label"><span id="weather-observation-location">ERIE COUNTY</span> · LATEST OBSERVATION</span><div id="weather-current">Loading current conditions…</div></div>
+      <div class="section-heading"><h2>Active alerts</h2><span id="weather-alerts-location">ERIE COUNTY</span></div><div id="weather-alerts" class="card weather-card">Loading alerts…</div>
+      <div class="section-heading"><h2>Extended forecast</h2><span id="weather-forecast-location">ERIE COUNTY</span></div><div id="weather-forecast" class="card weather-card">Loading forecast…</div>
       <div class="notice">For safety-critical decisions, verify conditions and alerts directly with the <a href="https://www.weather.gov/buf/">National Weather Service</a>.</div>
     </section>
     <section id="gallery" class="screen" hidden aria-labelledby="gallery-title">
       <div class="page-heading"><p class="eyebrow">THROUGH OUR LENS</p><h1 id="gallery-title">In the field<span class="accent">.</span></h1><p>Fire and emergency services photography from our team.</p></div>
       <div class="photo-grid">
         <figure><button type="button" class="photo-open" aria-label="View Scranton Fire-Rescue Rescue 7 at sunset full screen"><img src="../images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 at sunset" loading="lazy"></button><figcaption><b>Rescue 7</b><span>PHOTO: TONY</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Emergency response scene full screen"><img src="../images/incident-scene-01.jpg" alt="Emergency response scene" loading="lazy"></button><figcaption><b>On the scene</b><span>PHOTO: QUINN</span></figcaption></figure>
+        <figure><button type="button" class="photo-open" aria-label="View Emergency response scene full screen"><img src="media/incident-scene-01.png" alt="Emergency response scene" loading="lazy"></button><figcaption><b>On the scene</b><span>PHOTO: QUINN</span></figcaption></figure>
         <figure><button type="button" class="photo-open" aria-label="View Fire station illuminated at night full screen"><img src="../images/fire-station-night.jpg" alt="Fire station illuminated at night" loading="lazy"></button><figcaption><b>After dark</b><span>PHOTO: TONY</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Engine 4 with emergency lights at sunset full screen"><img src="../images/lily-engine-4.jpg" alt="Engine 4 with emergency lights at sunset" loading="lazy"></button><figcaption><b>Engine 4</b><span>PHOTO: LILY</span></figcaption></figure>
+        <figure><button type="button" class="photo-open" aria-label="View Engine 4 with emergency lights at sunset full screen"><img src="media/lily-engine-4.png" alt="Engine 4 with emergency lights at sunset" loading="lazy"></button><figcaption><b>Engine 4</b><span>PHOTO: LILY</span></figcaption></figure>
         <figure><button type="button" class="photo-open" aria-label="View Fire rescue truck at night full screen"><img src="../images/rescue-truck-night.jpg" alt="Fire rescue truck at night" loading="lazy"></button><figcaption><b>Rescue truck</b><span>PHOTO: TONY</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Buffalo Police patrol SUV full screen"><img src="../images/lily-buffalo-police.jpg" alt="Buffalo Police patrol SUV" loading="lazy"></button><figcaption><b>Buffalo Police</b><span>PHOTO: LILY</span></figcaption></figure>
+        <figure><button type="button" class="photo-open" aria-label="View Buffalo Police patrol SUV full screen"><img src="media/lily-buffalo-police.png" alt="Buffalo Police patrol SUV" loading="lazy"></button><figcaption><b>Buffalo Police</b><span>PHOTO: LILY</span></figcaption></figure>
       </div><p class="fine-print">Photography belongs to the respective photographers. Please do not reproduce without permission.</p>
     </section>
     <section id="settings" class="screen" hidden aria-labelledby="settings-title">
       <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="settings-title">Settings<span class="accent">.</span></h1><p>Keep WNY 3RD ALARM close at hand.</p></div>
       <div id="install-card" class="card settings-card" hidden><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
-      <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Notifications</h2><p>Push notifications are not available yet. No notification permission is requested.</p></div>
+      <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Notification preferences</h2><p>Push delivery is not available yet. These choices are saved only on this device and do not send notifications or request permission.</p><label class="preference"><input type="checkbox" id="pref-incidents"> Incident updates</label><label class="preference"><input type="checkbox" id="pref-weather"> Weather alerts</label><p id="notification-status" class="help" role="status"></p></div>
+      <div class="card settings-card"><span class="card-label">VERSION 2.2</span><h2>What's new</h2><p>County weather and extended forecasts, improved gallery loading and swipe navigation, and a reviewed public incident feed.</p></div>
+      <div class="card settings-card"><span class="card-label">APP UPDATES</span><h2>Updates</h2><p id="update-status" role="status">Updates are checked when the app opens.</p><button type="button" id="check-update" class="button">CHECK FOR UPDATES <span aria-hidden="true">↻</span></button><button type="button" id="reload-update" class="button" hidden>RELOAD TO UPDATE <span aria-hidden="true">↻</span></button></div>
       <div class="card settings-card"><span class="card-label">SHARE WNY 3RD ALARM</span><h2>Spread the word.</h2><p>Share the app with your community.</p><button id="share-app" class="button" type="button">SHARE APP <span aria-hidden="true">↗</span></button><p id="share-status" class="help" role="status"></p><label id="share-fallback" hidden>App link <input id="share-url" type="url" readonly></label></div>
-      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.1</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.2</p></div>
     </section>
   </main>
   <dialog id="photo-viewer" class="photo-viewer" aria-labelledby="photo-caption">
     <div class="viewer-toolbar"><span>PHOTO GALLERY</span><button id="viewer-close" type="button" aria-label="Close photo viewer">✕</button></div>
-    <div class="viewer-image"><img id="viewer-photo" alt=""></div>
+    <div class="viewer-image"><img id="viewer-photo" alt="" draggable="false"><div id="viewer-load" class="image-message" role="status">Loading photo…</div><button id="viewer-retry" type="button" hidden>Retry photo</button></div>
     <div class="viewer-footer"><button id="viewer-prev" type="button" aria-label="Previous photo">←</button><p id="photo-caption"></p><button id="viewer-next" type="button" aria-label="Next photo">→</button></div>
   </dialog>
   <nav class="bottom-nav" aria-label="App navigation">

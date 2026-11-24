@@ -1,7 +1,8 @@
 /* Cache only app-owned static assets; never store incident or weather data. */
-const CACHE = 'wny-app-static-v2.1';
+const APP_VERSION = '2.2';
+const CACHE = 'wny-app-static-v2.2';
 const STATIC_FILES = [
-  './offline.html', './app.css?v=2.1', './app.js?v=2.1',
+  './offline.html', './app.css?v=2.2', './app.js?v=2.2',
   './manifest.webmanifest', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-180.png'
 ];
@@ -30,4 +31,8 @@ self.addEventListener('fetch', event => {
   } else if (staticURLs.has(url.href)) {
     event.respondWith(caches.open(CACHE).then(cache => cache.match(request)).then(response => response || fetch(request)));
   }
+});
+
+self.addEventListener('message', event => {
+  if (event.data === 'GET_VERSION' && event.ports[0]) event.ports[0].postMessage(APP_VERSION);
 });

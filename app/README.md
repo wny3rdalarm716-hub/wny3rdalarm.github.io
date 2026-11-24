@@ -1,25 +1,23 @@
-# WNY 3RD ALARM app V2.1
+# WNY 3RD ALARM app V2.2
 
-This standalone app lives under `/app/` and does not alter the existing website. Its paths are relative so it works under the GitHub Pages project path. The icons reproduce the existing website's text wordmark; no separate logo image is present in the repository.
+This standalone app lives under `/app/` and does not alter the existing website, Active911 integration, Firebase, or workflows. Paths are relative so it works under the GitHub Pages project path. The app icons reproduce the existing website's text wordmark.
 
 ## Manual deployment
 
-Extract the ZIP at the repository root so its `app/` directory replaces the previous standalone app files. Keep the existing root `images/` directory and `incidents.json`: the app references them without changing them. Commit the app changes for review before deploying. The service worker cache and CSS/JavaScript URLs are versioned. The new worker activates when its assets are ready, deletes older app caches, and retains the same app identity and scope, so V2.0 installations update without reinstalling. Reload an already open app page to run the new interface. Installation and native sharing should also be checked on real Android and iPhone devices over HTTPS.
+Extract the ZIP at the repository root to replace the previous `app/` files, review the changes, and deploy through the repository's established process. Keep the existing root `images/` directory: three gallery photos use those existing JPEGs. Three other photographs were PNG data with `.jpg` filenames in the repository; exact copies are included under `app/media/` with `.png` extensions so servers send the correct media type. Credits remain in the gallery.
 
-The install control is hidden in standalone mode and immediately after an installation event. A regular browser tab cannot always detect an installation made elsewhere. Sharing uses the native share sheet where available, then clipboard or a selectable link.
+CSS, JavaScript and service worker caches are versioned. The updated worker activates once its static assets are ready and removes older app caches without touching other caches. The app identity, scope and start URL remain unchanged, so an installation can update without reinstalling; reload an already open app after an update. Settings includes an update check. Test installation, swipe and sharing on real Android and iPhone devices over HTTPS.
 
-## Incident review
+The install control is hidden in standalone mode and after an installation event. Browsers do not always reveal an installation to an ordinary browser tab. Sharing uses the native share sheet where available, then clipboard or a selectable link.
 
-The app requests `../incidents.json` without browser or service-worker caching. The current Active911 workflow publishes automatically and does **not** mark items as reviewed. Accordingly, the app will show an empty state until a separate editorial process supplies `reviewed: true` on an item. A marker must only be added after a human has reviewed the item for public release. The app does not change the feed or establish such a process. It additionally requires a recent valid timestamp and an exact match to the small fire category allowlist in `app.js`. It renders only a fixed category label, the general region, and time; it never renders free-form titles, addresses or medical call details. Do not add a review marker automatically or treat publication in the existing feed as review.
+## Reviewed incident summaries
 
-## Weather
+The app reads only `app/reviewed-incidents.json`, which starts empty. It never reads the automatically published Active911 feed. It displays only explicitly marked records in the fixed general fire-category allowlist from the last 24 hours, with a fixed Western New York region and review time. No free-form notes are displayed. See [PUBLISHING.md](PUBLISHING.md) for the required manual review, safe local preparation, independent approval and repository access controls. A review marker alone is not proof of review; the app and helper cannot enforce GitHub permissions or prevent sensitive content committed directly to a public file. An administrator must configure branch protection and deploy restrictions before using this process. **Never commit private source material or unreviewed notes.**
 
-The home preview loads current NWS Buffalo observations independently of alerts and forecast. If the observation has no description, it can display the first forecast period, explicitly labeled as a forecast. If NWS is unavailable, retry or use the official NWS link. Weather and incidents are never stored in the app service worker cache.
+## Weather and preferences
 
-## Offline and installation
+Weather uses official NWS observations from a named nearby station, county alerts, and a representative point forecast; the station or forecast point may not represent every location in a county. The app displays up to ten forecast periods and labels a forecast used as a fallback for a missing observation description. County and notification preferences are saved locally when storage is available. Preferences do not activate push delivery or request notification permission. For safety-critical decisions, use official NWS sources directly. Weather and incident responses are never stored in the app's service-worker cache.
 
-The service worker's scope is limited to `/app/`. It caches only explicitly named static app assets and a standalone offline page; navigations always use the network and show the offline page if unavailable. Incident and weather requests are never cached by the service worker. iPhone users install from Safari's Share menu; Android browsers may present the install prompt or their install menu. HTTPS is required outside localhost. Test on real devices after deployment.
+## Offline and notifications
 
-## Future notifications
-
-No push subscription, notification permission, credentials, or push event handler is enabled. A future implementation should use a separately reviewed public notification feed and opt-in UI, a server-side subscription service and VAPID keys, an explicit retention policy, and service worker `push`/`notificationclick` handlers scoped to this app. Never put Active911 credentials or sensitive incident data in a push payload. Add these only after the publishing and privacy workflows are approved.
+The service worker is limited to `/app/`, caches only explicitly listed static assets, and shows a fallback page when navigation is offline. Gallery photos, incidents and weather require network access. Push subscription and delivery are not implemented. Any future delivery service must use explicit opt-in, separate credentials and a separately reviewed public payload; never include Active911 credentials or sensitive information in push messages.
