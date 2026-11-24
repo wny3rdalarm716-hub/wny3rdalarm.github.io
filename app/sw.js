@@ -1,6 +1,6 @@
 /* Only app-owned, static files are stored. Incident, weather, analytics and
    third-party requests are never intercepted or written to Cache Storage. */
-const CACHE = 'wny-app-static-v1';
+const CACHE = 'wny-app-static-v2';
 const STATIC_FILES = ['./offline.html', './app.css', './app.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-180.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(STATIC_FILES)));

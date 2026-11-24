@@ -1,6 +1,12 @@
-# WNY 3RD ALARM app
+# WNY 3RD ALARM app V2.0
 
 This standalone app lives under `/app/` and does not alter the existing website. Its paths are relative so it works under the GitHub Pages project path. The icons reproduce the existing website's text wordmark; no separate logo image is present in the repository.
+
+## Manual deployment
+
+Extract the ZIP at the repository root so its `app/` directory replaces the previous standalone app files. Keep the existing root `images/` directory and `incidents.json`: the app references them without changing them. Commit the app changes for review before deploying. The service worker cache is versioned; an existing installation picks up the updated worker after its older app tabs are closed. Installation and native sharing should also be checked on real Android and iPhone devices over HTTPS.
+
+The install control is hidden in standalone mode and immediately after an installation event. A regular browser tab cannot always detect an installation made elsewhere. Sharing uses the native share sheet where available, then clipboard or a selectable link.
 
 ## Incident review
 

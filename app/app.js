@@ -16,7 +16,7 @@
     });
     window.scrollTo(0, 0);
     if (page === 'incidents') loadIncidents();
-    if (page === 'weather') loadWeather();
+    if (page === 'home' || page === 'weather') loadWeather();
   }
   window.addEventListener('hashchange', navigate);
 
@@ -78,9 +78,26 @@
     $('weather-current').textContent = 'Loading current conditions…';
     $('weather-alerts').textContent = 'Loading alerts…';
     $('weather-forecast').textContent = 'Loading forecast…';
+    $('home-weather-temp').textContent = 'Checking weather…';
+    $('home-weather-condition').textContent = 'Loading current conditions…';
+    $('home-weather-time').textContent = '';
     const api = 'https://api.weather.gov';
+    const observation = getJSON(api + '/stations/KBUF/observations/latest');
+    observation.then(data => {
+      if (request !== weatherRequest) return;
+      const p = data.properties || {};
+      const temp = p.temperature && p.temperature.value;
+      $('home-weather-temp').textContent = Number.isFinite(temp) ? Math.round(temp * 9 / 5 + 32) + '°F' : 'Temperature unavailable';
+      $('home-weather-condition').textContent = p.textDescription || 'Condition unavailable';
+      $('home-weather-time').textContent = p.timestamp && Number.isFinite(Date.parse(p.timestamp)) ? 'Observed ' + new Date(p.timestamp).toLocaleString() : 'Observation time unavailable';
+    }, () => {
+      if (request !== weatherRequest) return;
+      $('home-weather-temp').textContent = 'Weather unavailable';
+      $('home-weather-condition').textContent = 'Check NWS Buffalo for current conditions.';
+      $('home-weather-time').textContent = '';
+    });
     const results = await Promise.allSettled([
-      getJSON(api + '/stations/KBUF/observations/latest'),
+      observation,
       getJSON(api + '/alerts/active?zone=NYC029'),
       getJSON(api + '/points/42.8864,-78.8784').then(point => {
         const forecast = new URL(point.properties.forecast);
@@ -117,15 +134,30 @@
     $('weather-status').textContent = results.every(r => r.status === 'fulfilled') ? 'NWS checked ' + new Date().toLocaleTimeString() : 'Some NWS information unavailable';
   }
   $('refresh-weather').addEventListener('click', loadWeather);
-  setInterval(() => { if (!$('weather').hidden) loadWeather(); }, 300000);
+  setInterval(() => { if (!$('weather').hidden || !$('home').hidden) loadWeather(); }, 300000);
   window.addEventListener('offline', () => {
     ++incidentRequest; ++weatherRequest;
     $('incident-status').textContent = 'Offline';
     emptyIncidents('Reconnect to check for current public summaries.');
     $('weather-status').textContent = 'Offline';
+    $('home-weather-temp').textContent = 'Weather unavailable';
+    $('home-weather-condition').textContent = 'Reconnect to see current NWS information.';
+    $('home-weather-time').textContent = '';
     ['weather-current', 'weather-alerts', 'weather-forecast'].forEach(id => { $(id).textContent = 'Reconnect to see current NWS information.'; });
   });
 
+  window.addEventListener('online', () => { if (!$('home').hidden || !$('weather').hidden) loadWeather(); });
+
+  // Standalone display mode (including iOS) and the install event are the
+  // signals browsers provide; another browser tab may not know an app exists.
+  const standalone = window.matchMedia('(display-mode: standalone)');
+  let installedThisSession = false;
+  function updateInstallVisibility() {
+    $('install-card').hidden = installedThisSession || standalone.matches || navigator.standalone === true;
+  }
+  if (standalone.addEventListener) standalone.addEventListener('change', updateInstallVisibility);
+  else if (standalone.addListener) standalone.addListener(updateInstallVisibility);
+  updateInstallVisibility();
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault(); installPrompt = event;
     $('install-help').textContent = 'Install the app on this device, or use your browser’s install menu.';
@@ -137,7 +169,60 @@
     }
     $('install-help').textContent = 'On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.';
   });
-  window.addEventListener('appinstalled', () => { installPrompt = null; $('install-help').textContent = 'App installed.'; });
+  window.addEventListener('appinstalled', () => { installPrompt = null; installedThisSession = true; updateInstallVisibility(); });
+
+  $('share-app').addEventListener('click', async () => {
+    const url = new URL('./', location.href).href;
+    const status = $('share-status');
+    const fallback = $('share-fallback');
+    status.textContent = '';
+    fallback.hidden = true;
+    if (navigator.share) {
+      try {
+        await navigator.share({title: 'WNY 3RD ALARM', text: 'Capturing the action. Supporting those who respond.', url});
+        return;
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+      }
+    }
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(url);
+      status.textContent = 'App link copied.';
+    } catch (_) {
+      $('share-url').value = url;
+      fallback.hidden = false;
+      status.textContent = 'Copy the app link below to share it.';
+      $('share-url').focus();
+      $('share-url').select();
+    }
+  });
+
+  const viewer = $('photo-viewer');
+  const photoButtons = Array.from(document.querySelectorAll('.photo-open'));
+  let photoIndex = 0;
+  function showPhoto(index) {
+    photoIndex = index;
+    const figure = photoButtons[index].closest('figure');
+    const image = figure.querySelector('img');
+    $('viewer-photo').src = image.src;
+    $('viewer-photo').alt = image.alt;
+    $('photo-caption').textContent = figure.querySelector('figcaption').innerText.replace(/\s+/g, ' ').trim() + ' · ' + (index + 1) + ' / ' + photoButtons.length;
+    $('viewer-prev').disabled = index === 0;
+    $('viewer-next').disabled = index === photoButtons.length - 1;
+  }
+  photoButtons.forEach((button, index) => button.addEventListener('click', () => {
+    showPhoto(index);
+    viewer.showModal();
+    $('viewer-close').focus();
+  }));
+  $('viewer-close').addEventListener('click', () => viewer.close());
+  $('viewer-prev').addEventListener('click', () => { if (photoIndex > 0) showPhoto(photoIndex - 1); });
+  $('viewer-next').addEventListener('click', () => { if (photoIndex < photoButtons.length - 1) showPhoto(photoIndex + 1); });
+  viewer.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' && photoIndex > 0) { event.preventDefault(); showPhoto(photoIndex - 1); }
+    if (event.key === 'ArrowRight' && photoIndex < photoButtons.length - 1) { event.preventDefault(); showPhoto(photoIndex + 1); }
+  });
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
   navigate();
 })();
