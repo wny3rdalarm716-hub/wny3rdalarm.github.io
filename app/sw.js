@@ -1,9 +1,9 @@
 /* Cache only app-owned static assets; never store incident or weather data. */
-const APP_VERSION = '2.3';
-const CACHE = 'wny-app-static-v2.3';
+const APP_VERSION = '2.3.1';
+const CACHE = 'wny-app-static-v2.3.1';
 const STATIC_FILES = [
-  './offline.html', './app.css?v=2.3', './app.js?v=2.3',
-  './manifest.webmanifest', './icons/icon-192.png',
+  './offline.html', './app.css?v=2.3.1', './app.js?v=2.3.1',
+  './push.js?v=2.3.1', './manifest.webmanifest', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-180.png'
 ];
 const scope = self.registration.scope;
@@ -37,13 +37,14 @@ self.addEventListener('message', event => {
   if (event.data === 'GET_VERSION' && event.ports[0]) event.ports[0].postMessage(APP_VERSION);
 });
 
-// Data-only test pushes; no private incident information or arbitrary links.
+// Accept authorized FCM console notification messages and data-only tests.
+// Display fixed test text rather than arbitrary payload content.
 self.addEventListener('push', event => {
   let payload;
   try { payload = event.data.json(); } catch (_) { return; }
-  if (payload?.data?.kind !== 'test' || payload.notification) return;
+  if (!payload?.notification && payload?.data?.kind !== 'test') return;
   event.waitUntil(self.registration.showNotification('WNY 3RD ALARM', {
-    body: 'Test notification received.', icon: './icons/icon-192.png', tag: 'wny-test'
+    body: 'Test notification received.', icon: new URL('./icons/icon-192.png', scope).href, tag: 'wny-test'
   }));
 });
 self.addEventListener('notificationclick', event => {

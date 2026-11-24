@@ -350,7 +350,7 @@
   }
   async function indicateWorker(worker) {
     const version = await checkWorkerVersion(worker);
-    if (version !== '2.3') showUpdate();
+    if (version !== '2.3.1') showUpdate();
     else if ($('reload-update').hidden) $('update-status').textContent = 'App is running V2.3.';
   }
   function showUpdate() {

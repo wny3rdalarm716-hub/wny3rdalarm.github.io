@@ -7,7 +7,7 @@ const status=t=>$('push-status').textContent=t;
 let messaging, token, registration;
 async function setup(){
  if(!await isSupported()) throw Error('Web push is not supported on this browser. On iPhone, install the app first.');
- if(!messaging){messaging=getMessaging(initializeApp(config));onMessage(messaging,()=>status('Test push received while the app was open.'));}
+ if(!messaging){messaging=getMessaging(initializeApp(config));onMessage(messaging,async()=>{status('Test push received while the app was open.');try{const reg=await navigator.serviceWorker.ready;await reg.showNotification('WNY 3RD ALARM',{body:'Test notification received.',icon:new URL('./icons/icon-192.png',reg.scope).href,tag:'wny-test'});}catch(e){status('Test push received; notification display failed: '+e.message);}});}
  registration=await navigator.serviceWorker.ready;
  if(!registration.scope.endsWith('/app/')) throw Error('Unexpected service worker scope.');
 }
