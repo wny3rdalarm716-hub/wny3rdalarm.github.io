@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0e12">
+  <meta name="description" content="WNY 3RD ALARM fire photography, public incident summaries and weather.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WNY 3RD ALARM">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="stylesheet" href="app.css">
+  <title>WNY 3RD ALARM</title>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="WNY 3RD ALARM home"><span>WNY <b>3RD ALARM</b></span><small>FIRE BUFFS</small></a>
+    <span class="header-label">WESTERN NEW YORK <span class="red-dot"></span></span>
+  </header>
+  <main id="main">
+    <section id="home" class="screen" aria-labelledby="home-title">
+      <div class="hero">
+        <p class="eyebrow"><span class="red-dot"></span> INDEPENDENT FIRE PHOTOGRAPHY</p>
+        <h1 id="home-title">Capturing the action.<br><em>Supporting those<br>who respond.</em></h1>
+        <p>Fire photography, community coverage and public safety awareness across Western New York.</p>
+        <a class="button" href="#incidents">VIEW INCIDENTS <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="section-heading"><div><p class="eyebrow">THE LATEST</p><h2>From the field</h2></div><a href="#incidents">See all <span aria-hidden="true">→</span></a></div>
+      <div class="card feature-card"><div class="feature-icon" aria-hidden="true">◉</div><div><span class="card-label">PUBLIC INCIDENT FEED</span><h3>Incident updates</h3><p>Reviewed public summaries from around Western New York.</p></div><a class="arrow" href="#incidents" aria-label="View incident updates">↗</a></div>
+      <div class="quick-grid"><a class="card quick" href="#weather"><span class="quick-icon">☁</span><span><b>Weather</b><small>Official NWS updates</small></span><span>↗</span></a><a class="card quick" href="#gallery"><span class="quick-icon">▧</span><span><b>Gallery</b><small>Through our lens</small></span><span>↗</span></a></div>
+      <div class="notice"><strong>For emergencies, call 911.</strong> WNY 3RD ALARM is an independent organization, not an emergency dispatch service.</div>
+    </section>
+    <section id="incidents" class="screen" hidden aria-labelledby="incidents-title">
+      <div class="page-heading"><p class="eyebrow">PUBLIC INFORMATION</p><h1 id="incidents-title">Incident updates<span class="accent">.</span></h1><p>Reviewed public summaries from across Western New York.</p></div>
+      <div class="status-line"><span class="red-dot"></span><span id="incident-status" role="status">Checking the public feed…</span><button class="text-button" id="refresh-incidents" type="button">Refresh ↻</button></div>
+      <div id="incident-list" aria-live="polite"></div>
+      <div class="notice"><strong>Unofficial information.</strong> Updates may be delayed and are not for emergency response. Call 911 in an emergency.</div>
+    </section>
+    <section id="weather" class="screen" hidden aria-labelledby="weather-title">
+      <div class="page-heading"><p class="eyebrow">WESTERN NEW YORK</p><h1 id="weather-title">Weather center<span class="accent">.</span></h1><p>Official information from the National Weather Service.</p></div>
+      <div class="status-line"><span class="red-dot"></span><span id="weather-status" role="status">Checking NWS…</span><button class="text-button" id="refresh-weather" type="button">Refresh ↻</button></div>
+      <div class="card weather-card"><span class="card-label">BUFFALO · LATEST OBSERVATION</span><div id="weather-current">Loading current conditions…</div></div>
+      <div class="section-heading"><h2>Active alerts</h2><span>ERIE COUNTY</span></div><div id="weather-alerts" class="card weather-card">Loading alerts…</div>
+      <div class="section-heading"><h2>Forecast</h2><span>BUFFALO</span></div><div id="weather-forecast" class="card weather-card">Loading forecast…</div>
+      <div class="notice">For safety-critical decisions, verify conditions and alerts directly with the <a href="https://www.weather.gov/buf/">National Weather Service</a>.</div>
+    </section>
+    <section id="gallery" class="screen" hidden aria-labelledby="gallery-title">
+      <div class="page-heading"><p class="eyebrow">THROUGH OUR LENS</p><h1 id="gallery-title">In the field<span class="accent">.</span></h1><p>Fire and emergency services photography from our team.</p></div>
+      <div class="photo-grid">
+        <figure><img src="../images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 at sunset" loading="lazy"><figcaption><b>Rescue 7</b><span>PHOTO: TONY</span></figcaption></figure>
+        <figure><img src="../images/incident-scene-01.jpg" alt="Emergency response scene" loading="lazy"><figcaption><b>On the scene</b><span>PHOTO: QUINN</span></figcaption></figure>
+        <figure><img src="../images/fire-station-night.jpg" alt="Fire station illuminated at night" loading="lazy"><figcaption><b>After dark</b><span>PHOTO: TONY</span></figcaption></figure>
+        <figure><img src="../images/lily-engine-4.jpg" alt="Engine 4 with emergency lights at sunset" loading="lazy"><figcaption><b>Engine 4</b><span>PHOTO: LILY</span></figcaption></figure>
+        <figure><img src="../images/rescue-truck-night.jpg" alt="Fire rescue truck at night" loading="lazy"><figcaption><b>Rescue truck</b><span>PHOTO: TONY</span></figcaption></figure>
+        <figure><img src="../images/lily-buffalo-police.jpg" alt="Buffalo Police patrol SUV" loading="lazy"><figcaption><b>Buffalo Police</b><span>PHOTO: LILY</span></figcaption></figure>
+      </div><p class="fine-print">Photography belongs to the respective photographers. Please do not reproduce without permission.</p>
+    </section>
+    <section id="settings" class="screen" hidden aria-labelledby="settings-title">
+      <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="settings-title">Settings<span class="accent">.</span></h1><p>Keep WNY 3RD ALARM close at hand.</p></div>
+      <div class="card settings-card"><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
+      <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Notifications</h2><p>Push notifications are not available yet. No notification permission is requested.</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><a class="inline-link" href="../">Visit our website ↗</a></div>
+    </section>
+  </main>
+  <nav class="bottom-nav" aria-label="App navigation">
+    <a href="#home" data-page="home" aria-current="page"><span aria-hidden="true">⌂</span>Home</a><a href="#incidents" data-page="incidents"><span aria-hidden="true">◉</span>Incidents</a><a href="#weather" data-page="weather"><span aria-hidden="true">☁</span>Weather</a><a href="#gallery" data-page="gallery"><span aria-hidden="true">▧</span>Gallery</a><a href="#settings" data-page="settings"><span aria-hidden="true">⚙</span>Settings</a>
+  </nav>
+</body>
+</html>

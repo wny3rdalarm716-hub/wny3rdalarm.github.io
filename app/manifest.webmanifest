@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "WNY 3RD ALARM Fire Buffs",
+  "short_name": "WNY 3RD ALARM",
+  "description": "Fire photography and community coverage across Western New York.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0d11",
+  "theme_color": "#0c0e12",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
