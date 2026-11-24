@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function verified() { return request.auth != null && request.auth.token.email_verified == true; }
+    function staff() { return verified() && exists(/databases/$(database)/documents/staffAccess/$(request.auth.uid)) && get(/databases/$(database)/documents/staffAccess/$(request.auth.uid)).data.active == true; }
+    function category(c) { return c in ['STRUCTURE FIRE','VEHICLE FIRE','BRUSH FIRE','OUTSIDE FIRE','FIRE']; }
+    function exact(d,fields) { return d.keys().hasAll(fields) && d.keys().hasOnly(fields); }
+    match /staffAccess/{uid} {
+      allow get: if verified() && request.auth.uid == uid;
+      allow list, write: if false; // Owner provisions/revokes through Firebase console only.
+    }
+    match /publicSettings/app {
+      allow get: if true;
+      allow create, update: if staff() && exact(request.resource.data,['announcement','hiddenPhotos']) && request.resource.data.announcement in ['none','update','photos','maintenance','thanks'] && request.resource.data.hiddenPhotos is list && request.resource.data.hiddenPhotos.size() <= 6 && request.resource.data.hiddenPhotos.hasOnly(['rescue7','scene','night','engine4','rescue','police']);
+    }
+    match /reviewDrafts/{id} {
+      allow read: if staff();
+      allow create: if staff() && exact(request.resource.data,['category','author','state','createdAt']) && category(request.resource.data.category) && request.resource.data.author == request.auth.uid && request.resource.data.state == 'pending' && request.resource.data.createdAt == request.time;
+      allow delete: if staff() && resource.data.state == 'pending';
+      allow update: if staff() && resource.data.state == 'pending' && resource.data.author != request.auth.uid && request.time >= resource.data.createdAt + duration.value(24,'h') && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['state','reviewer','reviewedAt']) && exact(request.resource.data,['category','author','state','createdAt','reviewer','reviewedAt']) && request.resource.data.state == 'published' && request.resource.data.reviewer == request.auth.uid && request.resource.data.reviewedAt == request.time && existsAfter(/databases/$(database)/documents/publicHistory/$(id)) && getAfter(/databases/$(database)/documents/publicHistory/$(id)).data.category == resource.data.category && getAfter(/databases/$(database)/documents/publicHistory/$(id)).data.publishedAt == request.time;
+    }
+    match /publicHistory/{id} {
+      allow read: if true;
+      allow create: if staff() && exact(request.resource.data,['category','publishedAt']) && category(request.resource.data.category) && request.resource.data.publishedAt == request.time && exists(/databases/$(database)/documents/reviewDrafts/$(id)) && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.state == 'pending' && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.author != request.auth.uid && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.category == request.resource.data.category && request.time >= get(/databases/$(database)/documents/reviewDrafts/$(id)).data.createdAt + duration.value(24,'h') && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.state == 'published' && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.reviewer == request.auth.uid && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.reviewedAt == request.time;
+      allow update: if false;
+      allow delete: if staff();
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

@@ -38,3 +38,6 @@ V2.3.1: accepts Firebase Console notification payloads and data-only test pushes
 ## V2.3.3 weather hotfix
 - If the latest station report lacks a recent numeric temperature or cannot be retrieved, search up to 24 station observations and show the newest valid measurement no older than three hours. Show its timestamp and identify fallback readings. If no valid measurement exists, report temperature unavailable; do not substitute a forecast high.
 - Replace the files in this patch under app/. The service worker cache version is bumped. No changes to reviewed feed, photos, Firebase settings, or root website.
+
+## V2.4 admin patch
+See ADMIN-SETUP.md. Admin Firebase project is separate from existing photo voting and messaging. The original reviewed JSON remains unchanged. Admin publications appear under Historical summaries; only broad categories after a 24-hour review hold and independent approval. The patch does not enable remote sending.

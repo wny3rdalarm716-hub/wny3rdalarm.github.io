@@ -312,7 +312,8 @@
 
   const viewer = $('photo-viewer');
   const viewerPhoto = $('viewer-photo');
-  const photoButtons = Array.from(document.querySelectorAll('.photo-open'));
+  const allPhotoButtons = Array.from(document.querySelectorAll('.photo-open'));
+  let photoButtons = [...allPhotoButtons];
   let photoIndex = 0;
   function retryURL(source) {
     const url = new URL(source, location.href);
@@ -348,9 +349,15 @@
     $('viewer-prev').disabled = index === 0;
     $('viewer-next').disabled = index === photoButtons.length - 1;
   }
-  photoButtons.forEach((button, index) => button.addEventListener('click', () => {
+  allPhotoButtons.forEach(button => button.addEventListener('click', () => {
+    const index = photoButtons.indexOf(button); if(index < 0) return;
     showPhoto(index); viewer.showModal(); $('viewer-close').focus();
   }));
+  document.addEventListener('wny-gallery-changed', () => {
+    const current = photoButtons[photoIndex];
+    photoButtons = allPhotoButtons.filter(button => !button.closest('figure').hidden);
+    if(viewer.open) { const index = photoButtons.indexOf(current); if(index < 0) viewer.close(); else showPhoto(index); }
+  });
   $('viewer-close').addEventListener('click', () => viewer.close());
   $('viewer-prev').addEventListener('click', () => { if (photoIndex > 0) showPhoto(photoIndex - 1); });
   $('viewer-next').addEventListener('click', () => { if (photoIndex < photoButtons.length - 1) showPhoto(photoIndex + 1); });
@@ -388,8 +395,8 @@
   }
   async function indicateWorker(worker) {
     const version = await checkWorkerVersion(worker);
-    if (version && version !== '2.3.3') showUpdate();
-    else if (version === '2.3.3' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.3.3.';
+    if (version && version !== '2.4') showUpdate();
+    else if (version === '2.4' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.4.';
     else if (!version) $('update-status').textContent = 'Could not verify service worker version.';
   }
   function showUpdate() {

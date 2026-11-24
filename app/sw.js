@@ -1,9 +1,9 @@
 /* Cache only app-owned static assets; never store incident or weather data. */
-const APP_VERSION = '2.3.3';
-const CACHE = 'wny-app-static-v2.3.3';
+const APP_VERSION = '2.4';
+const CACHE = 'wny-app-static-v2.4';
 const STATIC_FILES = [
-  './offline.html', './app.css?v=2.3.3', './app.js?v=2.3.3',
-  './push.js?v=2.3.3', './manifest.webmanifest', './icons/icon-192.png',
+  './offline.html', './app.css?v=2.4', './app.js?v=2.4',
+  './push.js?v=2.4', './manifest.webmanifest', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-180.png'
 ];
 const scope = self.registration.scope;
@@ -23,6 +23,8 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  // Staff pages and configuration are network-only, not cached by this worker.
+  if (url.pathname.startsWith(new URL('./admin/', scope).pathname) || url.pathname === new URL('./admin-config.js', scope).pathname || url.pathname === new URL('./public-admin.js', scope).pathname) return;
   if (request.mode === 'navigate' && url.pathname.startsWith(new URL(scope).pathname)) {
     event.respondWith(fetch(request, {cache: 'no-store'}).catch(async () => {
       const cache = await caches.open(CACHE);

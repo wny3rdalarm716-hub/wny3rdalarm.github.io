@@ -11,10 +11,11 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
-  <link rel="stylesheet" href="app.css?v=2.3.3">
+  <link rel="stylesheet" href="app.css?v=2.4">
   <title>WNY 3RD ALARM</title>
-  <script src="app.js?v=2.3.3" defer></script>
-  <script type="module" src="push.js?v=2.3.3"></script>
+  <script src="app.js?v=2.4" defer></script>
+  <script type="module" src="push.js?v=2.4"></script>
+  <script type="module" src="public-admin.js?v=2.4"></script>
 </head>
 <body>
   <header class="topbar">
@@ -29,6 +30,7 @@
         <p>Fire photography, community coverage and public safety awareness across Western New York.</p>
         <a class="button" href="#incidents">VIEW INCIDENTS <span aria-hidden="true">↗</span></a>
       </div>
+      <div id="staff-announcement" class="card settings-card" hidden><span class="card-label">ORGANIZATION ANNOUNCEMENT</span><p id="staff-announcement-text"></p></div>
       <div class="section-heading"><div><p class="eyebrow">THE LATEST</p><h2>From the field</h2></div><a href="#incidents">See all <span aria-hidden="true">→</span></a></div>
       <div class="card feature-card"><div class="feature-icon" aria-hidden="true">◉</div><div><span class="card-label">PUBLIC INCIDENT FEED</span><h3>Incident updates</h3><p>Reviewed public summaries from around Western New York.</p></div><a class="arrow" href="#incidents" aria-label="View incident updates">↗</a></div>
       <a class="card weather-preview" href="#weather" aria-label="Open weather center">
@@ -43,6 +45,7 @@
       <div class="page-heading"><p class="eyebrow">PUBLIC INFORMATION</p><h1 id="incidents-title">Incident updates<span class="accent">.</span></h1><p>Reviewed public summaries of concluded incidents from across Western New York. This feed is separate from the automated website feed.</p></div>
       <div class="status-line"><span class="red-dot"></span><span id="incident-status" role="status">Checking the public feed…</span><button class="text-button" id="refresh-incidents" type="button">Refresh ↻</button></div>
       <div id="incident-list" aria-live="polite"></div>
+      <section id="historical-history" hidden><div class="section-heading"><h2>Historical summaries</h2><span>INDEPENDENTLY REVIEWED</span></div><div id="historical-list"></div></section>
       <div class="notice"><strong>Unofficial information.</strong> Updates may be delayed and are not for emergency response. Call 911 in an emergency.</div>
     </section>
     <section id="weather" class="screen" hidden aria-labelledby="weather-title">
@@ -59,23 +62,24 @@
     <section id="gallery" class="screen" hidden aria-labelledby="gallery-title">
       <div class="page-heading"><p class="eyebrow">THROUGH OUR LENS</p><h1 id="gallery-title">In the field<span class="accent">.</span></h1><p>Fire and emergency services photography from our team.</p></div>
       <div class="photo-grid">
-        <figure><button type="button" class="photo-open" aria-label="View Scranton Fire-Rescue Rescue 7 at sunset full screen"><img src="../images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 at sunset" loading="lazy"></button><figcaption><b>Rescue 7</b><span>PHOTO: TONY</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Emergency response scene full screen"><img src="media/incident-scene-01.png" alt="Emergency response scene" loading="lazy"></button><figcaption><b>On the scene</b><span>PHOTO: QUINN</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Fire station illuminated at night full screen"><img src="../images/fire-station-night.jpg" alt="Fire station illuminated at night" loading="lazy"></button><figcaption><b>After dark</b><span>PHOTO: TONY</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Engine 4 with emergency lights at sunset full screen"><img src="media/lily-engine-4.png" alt="Engine 4 with emergency lights at sunset" loading="lazy"></button><figcaption><b>Engine 4</b><span>PHOTO: LILY</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Fire rescue truck at night full screen"><img src="../images/rescue-truck-night.jpg" alt="Fire rescue truck at night" loading="lazy"></button><figcaption><b>Rescue truck</b><span>PHOTO: TONY</span></figcaption></figure>
-        <figure><button type="button" class="photo-open" aria-label="View Buffalo Police patrol SUV full screen"><img src="media/lily-buffalo-police.png" alt="Buffalo Police patrol SUV" loading="lazy"></button><figcaption><b>Buffalo Police</b><span>PHOTO: LILY</span></figcaption></figure>
+        <figure data-photo-id="rescue7"><button type="button" class="photo-open" aria-label="View Scranton Fire-Rescue Rescue 7 at sunset full screen"><img src="../images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 at sunset" loading="lazy"></button><figcaption><b>Rescue 7</b><span>PHOTO: TONY</span></figcaption></figure>
+        <figure data-photo-id="scene"><button type="button" class="photo-open" aria-label="View Emergency response scene full screen"><img src="media/incident-scene-01.png" alt="Emergency response scene" loading="lazy"></button><figcaption><b>On the scene</b><span>PHOTO: QUINN</span></figcaption></figure>
+        <figure data-photo-id="night"><button type="button" class="photo-open" aria-label="View Fire station illuminated at night full screen"><img src="../images/fire-station-night.jpg" alt="Fire station illuminated at night" loading="lazy"></button><figcaption><b>After dark</b><span>PHOTO: TONY</span></figcaption></figure>
+        <figure data-photo-id="engine4"><button type="button" class="photo-open" aria-label="View Engine 4 with emergency lights at sunset full screen"><img src="media/lily-engine-4.png" alt="Engine 4 with emergency lights at sunset" loading="lazy"></button><figcaption><b>Engine 4</b><span>PHOTO: LILY</span></figcaption></figure>
+        <figure data-photo-id="rescue"><button type="button" class="photo-open" aria-label="View Fire rescue truck at night full screen"><img src="../images/rescue-truck-night.jpg" alt="Fire rescue truck at night" loading="lazy"></button><figcaption><b>Rescue truck</b><span>PHOTO: TONY</span></figcaption></figure>
+        <figure data-photo-id="police"><button type="button" class="photo-open" aria-label="View Buffalo Police patrol SUV full screen"><img src="media/lily-buffalo-police.png" alt="Buffalo Police patrol SUV" loading="lazy"></button><figcaption><b>Buffalo Police</b><span>PHOTO: LILY</span></figcaption></figure>
       </div><p class="fine-print">Photography belongs to the respective photographers. Please do not reproduce without permission.</p>
     </section>
     <section id="settings" class="screen" hidden aria-labelledby="settings-title">
       <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="settings-title">Settings<span class="accent">.</span></h1><p>Keep WNY 3RD ALARM close at hand.</p></div>
+      <div class="card settings-card"><span class="card-label">AUTHORIZED STAFF</span><h2>Staff portal</h2><p>Sign in to manage the public app with an authorized account.</p><a class="button" href="admin/">OPEN ADMIN PANEL <span aria-hidden="true">↗</span></a></div>
       <div id="install-card" class="card settings-card" hidden><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
       <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Push notifications</h2><p>Enable notifications to register this device for a test message. Automatic delivery of reviewed incident summaries and weather alerts is not configured yet.</p><label class="preference"><input type="checkbox" role="switch" id="pref-incidents"> Incident updates (saved preference)</label><label class="preference"><input type="checkbox" role="switch" id="pref-weather"> Weather alerts (saved preference)</label><button class="button" id="push-enable">Enable notifications</button> <button class="button" id="push-disable">Disable notifications</button> <button class="button" type="button" id="local-notification-test">Test on this device</button><p id="local-test-status" class="help" role="status">Device test only; does not verify remote Firebase delivery.</p><p id="notification-status" class="help" role="status"></p><p id="push-status" role="status" class="help">Checking notification availability…</p><button id="push-copy" hidden>Copy device test token</button><p class="help">Keep your device token private. Test delivery requires an authorized Firebase sender.</p></div>
-      <div class="card settings-card"><span class="card-label">VERSION 2.3.3</span><h2>What's new</h2><p>Weather now falls back to the most recent valid station temperature, with its observation time. Improved feed refresh, sample preview, and local notification testing remain available. Automatic alerts are not yet configured.</p></div>
+      <div class="card settings-card"><span class="card-label">VERSION 2.4</span><h2>What's new</h2><p>V2.4 adds the staff portal, public announcements, gallery controls and historical summary review after Firebase setup. Weather fallback and device notification testing remain unchanged. Automatic push alerts are not configured.</p></div>
       <div class="card settings-card"><span class="card-label">APP TESTING</span><h2>Incident preview</h2><p>See a fictional example of a reviewed summary. This is displayed only on this screen and never published or sent to other devices.</p><button class="button" id="preview-incident" type="button" aria-expanded="false" aria-controls="incident-preview">SHOW SAMPLE</button><div id="incident-preview" hidden></div></div>
       <div class="card settings-card"><span class="card-label">APP UPDATES</span><h2>Updates</h2><p id="update-status" role="status">Updates are checked when the app opens.</p><button type="button" id="check-update" class="button">CHECK FOR UPDATES <span aria-hidden="true">↻</span></button><button type="button" id="reload-update" class="button" hidden>RELOAD TO UPDATE <span aria-hidden="true">↻</span></button></div>
       <div class="card settings-card"><span class="card-label">SHARE WNY 3RD ALARM</span><h2>Spread the word.</h2><p>Share the app with your community.</p><button id="share-app" class="button" type="button">SHARE APP <span aria-hidden="true">↗</span></button><p id="share-status" class="help" role="status"></p><label id="share-fallback" hidden>App link <input id="share-url" type="url" readonly></label></div>
-      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.3.3</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.4</p></div>
     </section>
   </main>
   <dialog id="photo-viewer" class="photo-viewer" aria-labelledby="photo-caption">
