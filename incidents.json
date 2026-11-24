@@ -1,5 +1,10 @@
 [
   {
+    "type": "FIRE ALARM ACTIVATION",
+    "area": "Western New York",
+    "time": "2026-11-24T00:48:24-05:00"
+  },
+  {
     "type": "GENERAL WEAKNESS",
     "area": "Western New York",
     "time": "2026-11-24T00:36:26-05:00"
@@ -18,10 +23,5 @@
     "type": "NOT ALERT",
     "area": "Western New York",
     "time": "2026-11-23T22:59:46-05:00"
-  },
-  {
-    "type": "Not Alert",
-    "area": "Western New York",
-    "time": "2026-11-23T21:55:33-05:00"
   }
 ]
