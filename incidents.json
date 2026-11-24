@@ -1,5 +1,10 @@
 [
   {
+    "type": "GENERAL WEAKNESS",
+    "area": "Western New York",
+    "time": "2026-11-24T00:36:26-05:00"
+  },
+  {
     "type": "BLOOD SUGAR",
     "area": "Western New York",
     "time": "2026-11-23T23:19:10-05:00"
@@ -18,10 +23,5 @@
     "type": "Not Alert",
     "area": "Western New York",
     "time": "2026-11-23T21:55:33-05:00"
-  },
-  {
-    "type": "unable to Ambulate",
-    "area": "Western New York",
-    "time": "2026-11-23T21:06:25-05:00"
   }
 ]
