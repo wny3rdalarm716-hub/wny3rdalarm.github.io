@@ -31,7 +31,7 @@ def validate_existing(records, now):
 
 def main():
     print('Create a PUBLIC, general fire summary. This tool does not read dispatch feeds.')
-    print('Only proceed after reviewing the source for public release. Never enter names,')
+    print('Only proceed after the incident has concluded and been reviewed for public release. Never enter names,')
     print('addresses, medical details, dispatch notes, or other sensitive information.')
     for index, category in enumerate(CATEGORIES, 1):
         print(f'{index}. {category}')

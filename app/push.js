@@ -5,6 +5,7 @@ const vapidKey='BKpC3pDMub0BmFpxLvqZejgtr1_J8JCvvjsxyA_bkiHMHT4umFvyRFM-hFay7omQ
 const $=id=>document.getElementById(id);
 const status=t=>$('push-status').textContent=t;
 let messaging, token, registration;
+status(typeof Notification === 'undefined' ? 'Notifications unavailable in this browser.' : Notification.permission === 'granted' ? 'Browser permission granted. Enable notifications to verify Firebase registration.' : 'Enable notifications to register this device for remote testing.');
 async function setup(){
  if(!await isSupported()) throw Error('Web push is not supported on this browser. On iPhone, install the app first.');
  if(!messaging){messaging=getMessaging(initializeApp(config));onMessage(messaging,async()=>{status('Test push received while the app was open.');try{const reg=await navigator.serviceWorker.ready;await reg.showNotification('WNY 3RD ALARM',{body:'Test notification received.',icon:new URL('./icons/icon-192.png',reg.scope).href,tag:'wny-test'});}catch(e){status('Test push received; notification display failed: '+e.message);}});}

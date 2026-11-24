@@ -11,10 +11,10 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
-  <link rel="stylesheet" href="app.css?v=2.3.1">
+  <link rel="stylesheet" href="app.css?v=2.3.2">
   <title>WNY 3RD ALARM</title>
-  <script src="app.js?v=2.3.1" defer></script>
-  <script type="module" src="push.js?v=2.3.1"></script>
+  <script src="app.js?v=2.3.2" defer></script>
+  <script type="module" src="push.js?v=2.3.2"></script>
 </head>
 <body>
   <header class="topbar">
@@ -40,7 +40,7 @@
       <div class="notice"><strong>For emergencies, call 911.</strong> WNY 3RD ALARM is an independent organization, not an emergency dispatch service.</div>
     </section>
     <section id="incidents" class="screen" hidden aria-labelledby="incidents-title">
-      <div class="page-heading"><p class="eyebrow">PUBLIC INFORMATION</p><h1 id="incidents-title">Incident updates<span class="accent">.</span></h1><p>Reviewed public summaries from across Western New York.</p></div>
+      <div class="page-heading"><p class="eyebrow">PUBLIC INFORMATION</p><h1 id="incidents-title">Incident updates<span class="accent">.</span></h1><p>Reviewed public summaries of concluded incidents from across Western New York. This feed is separate from the automated website feed.</p></div>
       <div class="status-line"><span class="red-dot"></span><span id="incident-status" role="status">Checking the public feed…</span><button class="text-button" id="refresh-incidents" type="button">Refresh ↻</button></div>
       <div id="incident-list" aria-live="polite"></div>
       <div class="notice"><strong>Unofficial information.</strong> Updates may be delayed and are not for emergency response. Call 911 in an emergency.</div>
@@ -70,11 +70,12 @@
     <section id="settings" class="screen" hidden aria-labelledby="settings-title">
       <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="settings-title">Settings<span class="accent">.</span></h1><p>Keep WNY 3RD ALARM close at hand.</p></div>
       <div id="install-card" class="card settings-card" hidden><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
-      <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Push notifications</h2><p>Enable notifications to register this device for a test message. Automatic delivery of reviewed incident summaries and weather alerts is not configured yet.</p><label class="preference"><input type="checkbox" role="switch" id="pref-incidents"> Incident updates (saved preference)</label><label class="preference"><input type="checkbox" role="switch" id="pref-weather"> Weather alerts (saved preference)</label><button class="button" id="push-enable">Enable notifications</button> <button class="button" id="push-disable">Disable notifications</button><p id="notification-status" class="help" role="status"></p><p id="push-status" role="status" class="help">Notifications are not enabled in this session.</p><button id="push-copy" hidden>Copy device test token</button><p class="help">Keep your device token private. Test delivery requires an authorized Firebase sender.</p></div>
-      <div class="card settings-card"><span class="card-label">VERSION 2.3.1</span><h2>What's new</h2><p>Firebase push registration and device test support, plus all V2.2 features. Automatic alerts are not yet configured.</p></div>
+      <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Push notifications</h2><p>Enable notifications to register this device for a test message. Automatic delivery of reviewed incident summaries and weather alerts is not configured yet.</p><label class="preference"><input type="checkbox" role="switch" id="pref-incidents"> Incident updates (saved preference)</label><label class="preference"><input type="checkbox" role="switch" id="pref-weather"> Weather alerts (saved preference)</label><button class="button" id="push-enable">Enable notifications</button> <button class="button" id="push-disable">Disable notifications</button> <button class="button" type="button" id="local-notification-test">Test on this device</button><p id="local-test-status" class="help" role="status">Device test only; does not verify remote Firebase delivery.</p><p id="notification-status" class="help" role="status"></p><p id="push-status" role="status" class="help">Checking notification availability…</p><button id="push-copy" hidden>Copy device test token</button><p class="help">Keep your device token private. Test delivery requires an authorized Firebase sender.</p></div>
+      <div class="card settings-card"><span class="card-label">VERSION 2.3.2</span><h2>What's new</h2><p>Improved feed refresh and diagnostics, a private-on-device sample preview, and a separate local notification test. Automatic alerts are not yet configured.</p></div>
+      <div class="card settings-card"><span class="card-label">APP TESTING</span><h2>Incident preview</h2><p>See a fictional example of a reviewed summary. This is displayed only on this screen and never published or sent to other devices.</p><button class="button" id="preview-incident" type="button" aria-expanded="false" aria-controls="incident-preview">SHOW SAMPLE</button><div id="incident-preview" hidden></div></div>
       <div class="card settings-card"><span class="card-label">APP UPDATES</span><h2>Updates</h2><p id="update-status" role="status">Updates are checked when the app opens.</p><button type="button" id="check-update" class="button">CHECK FOR UPDATES <span aria-hidden="true">↻</span></button><button type="button" id="reload-update" class="button" hidden>RELOAD TO UPDATE <span aria-hidden="true">↻</span></button></div>
       <div class="card settings-card"><span class="card-label">SHARE WNY 3RD ALARM</span><h2>Spread the word.</h2><p>Share the app with your community.</p><button id="share-app" class="button" type="button">SHARE APP <span aria-hidden="true">↗</span></button><p id="share-status" class="help" role="status"></p><label id="share-fallback" hidden>App link <input id="share-url" type="url" readonly></label></div>
-      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.3.1</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.3.2</p></div>
     </section>
   </main>
   <dialog id="photo-viewer" class="photo-viewer" aria-labelledby="photo-caption">

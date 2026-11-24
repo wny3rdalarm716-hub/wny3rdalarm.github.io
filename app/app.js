@@ -38,31 +38,48 @@
     ['STRUCTURE FIRE', 'Structure fire'], ['VEHICLE FIRE', 'Vehicle fire'],
     ['BRUSH FIRE', 'Brush fire'], ['OUTSIDE FIRE', 'Outside fire'], ['FIRE', 'Fire']
   ]);
+  function incidentCard(label, title, detail) {
+    const card = document.createElement('article');
+    card.className = 'card incident-card';
+    card.append(text('span', label, 'card-label'), text('h2', title), text('p', detail));
+    return card;
+  }
+  const previewButton = $('preview-incident');
+  previewButton.addEventListener('click', () => {
+    const preview = $('incident-preview');
+    preview.hidden = !preview.hidden;
+    previewButton.setAttribute('aria-expanded', String(!preview.hidden));
+    previewButton.textContent = preview.hidden ? 'SHOW SAMPLE' : 'HIDE SAMPLE';
+    preview.replaceChildren();
+    if (!preview.hidden) preview.append(incidentCard('DEMO ONLY · NOT A REAL INCIDENT', 'Structure fire', 'Western New York · Fictional completed incident · Not published'));
+  });
+  let incidentController;
   async function loadIncidents() {
     const request = ++incidentRequest;
+    incidentController?.abort();
+    const controller = new AbortController();
+    incidentController = controller;
+    const timeout = setTimeout(() => controller.abort(), 12000);
     $('incident-status').textContent = 'Checking the public feed…';
     $('incident-list').replaceChildren();
     try {
-      const response = await fetch('./reviewed-incidents.json', {cache: 'no-store'});
+      const response = await fetch('./reviewed-incidents.json', {cache: 'no-store', signal: controller.signal});
       if (!response.ok) throw new Error('Feed unavailable');
       const data = await response.json();
       if (!Array.isArray(data)) throw new Error('Invalid feed');
       if (request !== incidentRequest) return;
       const now = Date.now();
       const entries = data.filter(item => item && item.reviewed === true && typeof item.type === 'string' && categories.has(item.type.trim().toUpperCase()) && typeof item.time === 'string' && Number.isFinite(Date.parse(item.time)) && Date.parse(item.time) <= now + 300000 && Date.parse(item.time) >= now - 86400000).sort((a,b) => Date.parse(b.time) - Date.parse(a.time)).slice(0, 15);
-      if (!entries.length) emptyIncidents('The feed has no recent, reviewed public summaries to display.');
+      if (!entries.length) emptyIncidents('No recent summaries have been published to the reviewed feed. Website updates do not appear here automatically.');
       else entries.forEach(item => {
-        const card = document.createElement('article');
-        card.className = 'card incident-card';
-        card.append(text('span', 'REVIEWED PUBLIC SUMMARY', 'card-label'), text('h2', categories.get(item.type.trim().toUpperCase())), text('p', 'Western New York · Reviewed ' + new Date(item.time).toLocaleString()));
-        $('incident-list').appendChild(card);
+        $('incident-list').append(incidentCard('REVIEWED PUBLIC SUMMARY', categories.get(item.type.trim().toUpperCase()), 'Western New York · Reviewed ' + new Date(item.time).toLocaleString()));
       });
-      $('incident-status').textContent = 'Feed checked ' + new Date().toLocaleTimeString();
+      $('incident-status').textContent = 'Feed checked ' + new Date().toLocaleTimeString() + ' · ' + entries.length + ' published summaries';
     } catch (_) {
       if (request !== incidentRequest) return;
       emptyIncidents('The feed could not be reached. Reconnect and try again.');
       $('incident-status').textContent = 'Public feed unavailable';
-    }
+    } finally { clearTimeout(timeout); }
   }
   $('refresh-incidents').addEventListener('click', loadIncidents);
   setInterval(() => { if (!$('incidents').hidden) loadIncidents(); }, 60000);
@@ -207,6 +224,7 @@
   setInterval(() => { if (!$('weather').hidden || !$('home').hidden) loadWeather(); }, 300000);
   window.addEventListener('offline', () => {
     ++incidentRequest; ++weatherRequest;
+    incidentController?.abort();
     $('incident-status').textContent = 'Offline';
     emptyIncidents('Reconnect to check for current public summaries.');
     $('weather-status').textContent = 'Offline';
@@ -216,7 +234,8 @@
     ['weather-current', 'weather-alerts', 'weather-forecast'].forEach(id => { $(id).textContent = 'Reconnect to see current NWS information.'; });
   });
 
-  window.addEventListener('online', () => { if (!$('home').hidden || !$('weather').hidden) loadWeather(); });
+  window.addEventListener('online', () => { if (!$('home').hidden || !$('weather').hidden) loadWeather(); if (!$('incidents').hidden) loadIncidents(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && !$('incidents').hidden) loadIncidents(); });
 
   // Browsers do not reliably expose installations to an ordinary browser tab.
   const appModes = ['standalone', 'fullscreen', 'minimal-ui', 'window-controls-overlay'].map(mode => window.matchMedia('(display-mode: ' + mode + ')'));
@@ -350,8 +369,9 @@
   }
   async function indicateWorker(worker) {
     const version = await checkWorkerVersion(worker);
-    if (version !== '2.3.1') showUpdate();
-    else if ($('reload-update').hidden) $('update-status').textContent = 'App is running V2.3.';
+    if (version && version !== '2.3.2') showUpdate();
+    else if (version === '2.3.2' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.3.2.';
+    else if (!version) $('update-status').textContent = 'Could not verify service worker version.';
   }
   function showUpdate() {
     $('update-status').textContent = 'An update is ready. Reload to use it.';
@@ -382,5 +402,19 @@
       reg.update().catch(() => {});
     }).catch(() => { $('update-status').textContent = 'Update checks are unavailable.'; });
   } else $('update-status').textContent = 'Update checks are unavailable in this browser.';
+  $('local-notification-test').addEventListener('click', async () => {
+    const status = $('local-test-status');
+    try {
+      if (!('Notification' in window) || !registration?.active) throw new Error('Open the installed app and allow its service worker to finish loading.');
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') throw new Error('Notification permission was not granted.');
+      await registration.showNotification('WNY 3RD ALARM · DEVICE TEST', {
+        body: 'Local notification test. No emergency or remote message.',
+        icon: new URL('./icons/icon-192.png', registration.scope).href,
+        tag: 'wny-local-test'
+      });
+      status.textContent = 'Local notification requested successfully. This does not test remote Firebase delivery.';
+    } catch (error) { status.textContent = error.message; }
+  });
   navigate();
 })();
