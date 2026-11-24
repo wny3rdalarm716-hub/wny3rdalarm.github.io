@@ -11,9 +11,10 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
-  <link rel="stylesheet" href="app.css?v=2.2">
+  <link rel="stylesheet" href="app.css?v=2.3">
   <title>WNY 3RD ALARM</title>
-  <script src="app.js?v=2.2" defer></script>
+  <script src="app.js?v=2.3" defer></script>
+  <script type="module" src="push.js?v=2.3"></script>
 </head>
 <body>
   <header class="topbar">
@@ -69,11 +70,11 @@
     <section id="settings" class="screen" hidden aria-labelledby="settings-title">
       <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="settings-title">Settings<span class="accent">.</span></h1><p>Keep WNY 3RD ALARM close at hand.</p></div>
       <div id="install-card" class="card settings-card" hidden><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
-      <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Notification preferences</h2><p>Push delivery is not available yet. These choices are saved only on this device and do not send notifications or request permission.</p><label class="preference"><input type="checkbox" id="pref-incidents"> Incident updates</label><label class="preference"><input type="checkbox" id="pref-weather"> Weather alerts</label><p id="notification-status" class="help" role="status"></p></div>
-      <div class="card settings-card"><span class="card-label">VERSION 2.2</span><h2>What's new</h2><p>County weather and extended forecasts, improved gallery loading and swipe navigation, and a reviewed public incident feed.</p></div>
+      <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Push notifications</h2><p>Enable notifications to register this device for a test message. Automatic delivery of reviewed incident summaries and weather alerts is not configured yet.</p><label class="preference"><input type="checkbox" role="switch" id="pref-incidents"> Incident updates (saved preference)</label><label class="preference"><input type="checkbox" role="switch" id="pref-weather"> Weather alerts (saved preference)</label><button class="button" id="push-enable">Enable notifications</button> <button class="button" id="push-disable">Disable notifications</button><p id="notification-status" class="help" role="status"></p><p id="push-status" role="status" class="help">Notifications are not enabled in this session.</p><button id="push-copy" hidden>Copy device test token</button><p class="help">Keep your device token private. Test delivery requires an authorized Firebase sender.</p></div>
+      <div class="card settings-card"><span class="card-label">VERSION 2.3</span><h2>What's new</h2><p>Firebase push registration and device test support, plus all V2.2 features. Automatic alerts are not yet configured.</p></div>
       <div class="card settings-card"><span class="card-label">APP UPDATES</span><h2>Updates</h2><p id="update-status" role="status">Updates are checked when the app opens.</p><button type="button" id="check-update" class="button">CHECK FOR UPDATES <span aria-hidden="true">↻</span></button><button type="button" id="reload-update" class="button" hidden>RELOAD TO UPDATE <span aria-hidden="true">↻</span></button></div>
       <div class="card settings-card"><span class="card-label">SHARE WNY 3RD ALARM</span><h2>Spread the word.</h2><p>Share the app with your community.</p><button id="share-app" class="button" type="button">SHARE APP <span aria-hidden="true">↗</span></button><p id="share-status" class="help" role="status"></p><label id="share-fallback" hidden>App link <input id="share-url" type="url" readonly></label></div>
-      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.2</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.3</p></div>
     </section>
   </main>
   <dialog id="photo-viewer" class="photo-viewer" aria-labelledby="photo-caption">

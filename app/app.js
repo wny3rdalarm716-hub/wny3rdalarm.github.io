@@ -91,7 +91,7 @@
     const checkbox = $('pref-' + kind), key = 'wny-app-notification-' + kind;
     checkbox.checked = readLocal(key, 'false') === 'true';
     checkbox.addEventListener('change', () => {
-      $('notification-status').textContent = writeLocal(key, String(checkbox.checked)) ? 'Preference saved on this device. Push delivery is not available.' : 'Preference could not be saved. Push delivery is not available.';
+      $('notification-status').textContent = writeLocal(key, String(checkbox.checked)) ? 'Preference saved on this device. Automatic category delivery is not configured.' : 'Preference could not be saved. Automatic category delivery is not configured.';
     });
   });
   function weatherIcon(description) {
@@ -350,8 +350,8 @@
   }
   async function indicateWorker(worker) {
     const version = await checkWorkerVersion(worker);
-    if (version !== '2.2') showUpdate();
-    else if ($('reload-update').hidden) $('update-status').textContent = 'App is running V2.2.';
+    if (version !== '2.3') showUpdate();
+    else if ($('reload-update').hidden) $('update-status').textContent = 'App is running V2.3.';
   }
   function showUpdate() {
     $('update-status').textContent = 'An update is ready. Reload to use it.';
