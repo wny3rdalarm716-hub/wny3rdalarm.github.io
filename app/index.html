@@ -11,9 +11,9 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
-  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="app.css?v=2.1">
   <title>WNY 3RD ALARM</title>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=2.1" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -32,7 +32,7 @@
       <div class="card feature-card"><div class="feature-icon" aria-hidden="true">◉</div><div><span class="card-label">PUBLIC INCIDENT FEED</span><h3>Incident updates</h3><p>Reviewed public summaries from around Western New York.</p></div><a class="arrow" href="#incidents" aria-label="View incident updates">↗</a></div>
       <a class="card weather-preview" href="#weather" aria-label="Open weather center">
         <span class="weather-preview-icon" aria-hidden="true">☁</span>
-        <span><span class="card-label">BUFFALO WEATHER · NWS</span><strong id="home-weather-temp">Checking weather…</strong><span id="home-weather-condition">Loading current conditions…</span><small id="home-weather-time"></small></span>
+        <span aria-live="polite"><span class="card-label">BUFFALO WEATHER · NWS</span><strong id="home-weather-temp">Checking weather…</strong><span id="home-weather-condition">Loading current conditions…</span><small id="home-weather-time"></small></span>
         <span aria-hidden="true">↗</span>
       </a>
       <div class="quick-grid"><a class="card quick" href="#weather"><span class="quick-icon">☁</span><span><b>Weather</b><small>Official NWS updates</small></span><span>↗</span></a><a class="card quick" href="#gallery"><span class="quick-icon">▧</span><span><b>Gallery</b><small>Through our lens</small></span><span>↗</span></a></div>
@@ -65,10 +65,10 @@
     </section>
     <section id="settings" class="screen" hidden aria-labelledby="settings-title">
       <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="settings-title">Settings<span class="accent">.</span></h1><p>Keep WNY 3RD ALARM close at hand.</p></div>
-      <div id="install-card" class="card settings-card"><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
+      <div id="install-card" class="card settings-card" hidden><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
       <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Notifications</h2><p>Push notifications are not available yet. No notification permission is requested.</p></div>
       <div class="card settings-card"><span class="card-label">SHARE WNY 3RD ALARM</span><h2>Spread the word.</h2><p>Share the app with your community.</p><button id="share-app" class="button" type="button">SHARE APP <span aria-hidden="true">↗</span></button><p id="share-status" class="help" role="status"></p><label id="share-fallback" hidden>App link <input id="share-url" type="url" readonly></label></div>
-      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.0</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.1</p></div>
     </section>
   </main>
   <dialog id="photo-viewer" class="photo-viewer" aria-labelledby="photo-caption">

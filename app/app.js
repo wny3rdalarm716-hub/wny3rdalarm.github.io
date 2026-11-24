@@ -68,70 +68,95 @@
   setInterval(() => { if (!$('incidents').hidden) loadIncidents(); }, 60000);
 
   async function getJSON(url) {
-    const response = await fetch(url, {cache: 'no-store', headers: {Accept: 'application/geo+json'}});
-    if (!response.ok) throw new Error('NWS unavailable');
-    return response.json();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+      const response = await fetch(url, {cache: 'no-store', headers: {Accept: 'application/geo+json'}, signal: controller.signal});
+      if (!response.ok) throw new Error('NWS unavailable');
+      const data = await response.json();
+      if (!data || typeof data !== 'object') throw new Error('Invalid NWS response');
+      return data;
+    } finally { clearTimeout(timeout); }
   }
   async function loadWeather() {
     const request = ++weatherRequest;
-    $('weather-status').textContent = 'Checking NWS…';
+    const api = 'https://api.weather.gov';
+    let observationDescription = '';
+    let forecastDescription = '';
+    function updateHomeCondition() {
+      if (request !== weatherRequest) return;
+      $('home-weather-condition').textContent = observationDescription || (forecastDescription ? 'Forecast: ' + forecastDescription : 'Current condition unavailable. Tap for details.');
+    }
+    $('weather-status').textContent = 'Loading current NWS information…';
     $('weather-current').textContent = 'Loading current conditions…';
     $('weather-alerts').textContent = 'Loading alerts…';
     $('weather-forecast').textContent = 'Loading forecast…';
     $('home-weather-temp').textContent = 'Checking weather…';
     $('home-weather-condition').textContent = 'Loading current conditions…';
     $('home-weather-time').textContent = '';
-    const api = 'https://api.weather.gov';
-    const observation = getJSON(api + '/stations/KBUF/observations/latest');
-    observation.then(data => {
+
+    // Render each response independently so a slow forecast cannot block the preview.
+    const observation = getJSON(api + '/stations/KBUF/observations/latest').then(data => {
       if (request !== weatherRequest) return;
-      const p = data.properties || {};
+      const p = data.properties;
+      if (!p || typeof p !== 'object') throw new Error('Invalid observation');
       const temp = p.temperature && p.temperature.value;
-      $('home-weather-temp').textContent = Number.isFinite(temp) ? Math.round(temp * 9 / 5 + 32) + '°F' : 'Temperature unavailable';
-      $('home-weather-condition').textContent = p.textDescription || 'Condition unavailable';
-      $('home-weather-time').textContent = p.timestamp && Number.isFinite(Date.parse(p.timestamp)) ? 'Observed ' + new Date(p.timestamp).toLocaleString() : 'Observation time unavailable';
-    }, () => {
-      if (request !== weatherRequest) return;
-      $('home-weather-temp').textContent = 'Weather unavailable';
-      $('home-weather-condition').textContent = 'Check NWS Buffalo for current conditions.';
-      $('home-weather-time').textContent = '';
+      const degrees = Number.isFinite(temp) ? Math.round(temp * 9 / 5 + 32) + '°F' : 'Temperature unavailable';
+      observationDescription = typeof p.textDescription === 'string' ? p.textDescription.trim() : '';
+      const condition = observationDescription || 'Current condition unavailable';
+      const observed = p.timestamp && Number.isFinite(Date.parse(p.timestamp)) ? 'Observed ' + new Date(p.timestamp).toLocaleString() : 'Observation time unavailable';
+      $('home-weather-temp').textContent = degrees;
+      updateHomeCondition();
+      $('home-weather-time').textContent = observed;
+      $('weather-current').replaceChildren(text('div', degrees, 'temperature'), text('p', condition), text('small', observed));
+    }).catch(error => {
+      if (request === weatherRequest) {
+        $('home-weather-temp').textContent = 'Weather unavailable';
+        updateHomeCondition();
+        $('home-weather-time').textContent = '';
+        $('weather-current').textContent = 'Current conditions unavailable. Refresh or check NWS Buffalo.';
+      }
+      throw error;
     });
-    const results = await Promise.allSettled([
-      observation,
-      getJSON(api + '/alerts/active?zone=NYC029'),
-      getJSON(api + '/points/42.8864,-78.8784').then(point => {
-        const forecast = new URL(point.properties.forecast);
-        if (forecast.origin !== api) throw new Error('Unexpected forecast source');
-        return getJSON(forecast.href);
-      })
-    ]);
-    if (request !== weatherRequest) return;
-    const [current, alerts, forecast] = results;
-    if (current.status === 'fulfilled') {
-      const p = current.value.properties || {};
-      const temp = p.temperature && p.temperature.value;
-      $('weather-current').replaceChildren(text('div', Number.isFinite(temp) ? Math.round(temp * 9 / 5 + 32) + '°F' : 'Temperature unavailable', 'temperature'), text('p', p.textDescription || 'Condition unavailable'), text('small', p.timestamp && Number.isFinite(Date.parse(p.timestamp)) ? 'Observed ' + new Date(p.timestamp).toLocaleString() : 'Observation time unavailable'));
-    } else $('weather-current').textContent = 'Current conditions unavailable. Check NWS Buffalo.';
-    if (alerts.status === 'fulfilled' && Array.isArray(alerts.value.features)) {
-      const items = alerts.value.features.slice(0, 12);
+    const alerts = getJSON(api + '/alerts/active?zone=NYC029').then(data => {
+      if (request !== weatherRequest) return;
+      if (!Array.isArray(data.features)) throw new Error('Invalid alerts');
+      const items = data.features.slice(0, 12);
       $('weather-alerts').replaceChildren();
       if (!items.length) $('weather-alerts').textContent = 'No active NWS alerts reported for Erie County.';
       items.forEach(item => {
-        const p = item.properties || {};
+        const p = item && item.properties || {};
         const card = document.createElement('div'); card.className = 'weather-item';
         card.append(text('strong', p.event || 'Weather alert'), text('p', p.headline || 'See NWS for details.'));
         $('weather-alerts').appendChild(card);
       });
-    } else $('weather-alerts').textContent = 'Alerts unavailable. Check NWS for official updates.';
-    if (forecast.status === 'fulfilled' && Array.isArray(forecast.value.properties?.periods) && forecast.value.properties.periods.length) {
+    }).catch(error => {
+      if (request === weatherRequest) $('weather-alerts').textContent = 'Alerts unavailable. Refresh or check NWS for official updates.';
+      throw error;
+    });
+    const forecast = getJSON(api + '/points/42.8864,-78.8784').then(point => {
+      const url = new URL(point.properties.forecast);
+      if (url.origin !== api) throw new Error('Unexpected forecast source');
+      return getJSON(url.href);
+    }).then(data => {
+      if (request !== weatherRequest) return;
+      const periods = data.properties && data.properties.periods;
+      if (!Array.isArray(periods) || !periods.length) throw new Error('Invalid forecast');
+      forecastDescription = typeof periods[0].shortForecast === 'string' ? periods[0].shortForecast.trim() : '';
+      updateHomeCondition();
       $('weather-forecast').replaceChildren();
-      forecast.value.properties.periods.slice(0, 4).forEach(period => {
+      periods.slice(0, 4).forEach(period => {
         const item = document.createElement('div'); item.className = 'weather-item';
         item.append(text('strong', (period.name || 'Forecast') + ' · ' + period.temperature + '°' + period.temperatureUnit), text('p', period.shortForecast || ''));
         $('weather-forecast').appendChild(item);
       });
-    } else $('weather-forecast').textContent = 'Forecast unavailable. Check NWS Buffalo.';
-    $('weather-status').textContent = results.every(r => r.status === 'fulfilled') ? 'NWS checked ' + new Date().toLocaleTimeString() : 'Some NWS information unavailable';
+    }).catch(error => {
+      if (request === weatherRequest) $('weather-forecast').textContent = 'Forecast unavailable. Refresh or check NWS Buffalo.';
+      throw error;
+    });
+    const results = await Promise.allSettled([observation, alerts, forecast]);
+    if (request !== weatherRequest) return;
+    $('weather-status').textContent = results.every(result => result.status === 'fulfilled') ? 'NWS checked ' + new Date().toLocaleTimeString() : 'Some NWS information unavailable. Try refreshing.';
   }
   $('refresh-weather').addEventListener('click', loadWeather);
   setInterval(() => { if (!$('weather').hidden || !$('home').hidden) loadWeather(); }, 300000);
@@ -148,18 +173,22 @@
 
   window.addEventListener('online', () => { if (!$('home').hidden || !$('weather').hidden) loadWeather(); });
 
-  // Standalone display mode (including iOS) and the install event are the
-  // signals browsers provide; another browser tab may not know an app exists.
-  const standalone = window.matchMedia('(display-mode: standalone)');
+  // Browsers do not reliably expose installations to an ordinary browser tab.
+  const appModes = ['standalone', 'fullscreen', 'minimal-ui', 'window-controls-overlay'].map(mode => window.matchMedia('(display-mode: ' + mode + ')'));
   let installedThisSession = false;
-  function updateInstallVisibility() {
-    $('install-card').hidden = installedThisSession || standalone.matches || navigator.standalone === true;
+  function isInstalledView() {
+    return installedThisSession || navigator.standalone === true || appModes.some(mode => mode.matches) || document.referrer.startsWith('android-app://');
   }
-  if (standalone.addEventListener) standalone.addEventListener('change', updateInstallVisibility);
-  else if (standalone.addListener) standalone.addListener(updateInstallVisibility);
+  function updateInstallVisibility() { $('install-card').hidden = isInstalledView(); }
+  appModes.forEach(mode => {
+    if (mode.addEventListener) mode.addEventListener('change', updateInstallVisibility);
+    else if (mode.addListener) mode.addListener(updateInstallVisibility);
+  });
   updateInstallVisibility();
   window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault(); installPrompt = event;
+    event.preventDefault();
+    if (isInstalledView()) return;
+    installPrompt = event;
     $('install-help').textContent = 'Install the app on this device, or use your browser’s install menu.';
   });
   $('install').addEventListener('click', async () => {
@@ -223,6 +252,9 @@
     if (event.key === 'ArrowLeft' && photoIndex > 0) { event.preventDefault(); showPhoto(photoIndex - 1); }
     if (event.key === 'ArrowRight' && photoIndex < photoButtons.length - 1) { event.preventDefault(); showPhoto(photoIndex + 1); }
   });
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js', {updateViaCache: 'none'})
+      .then(registration => registration.update().catch(() => {})).catch(() => {});
+  }
   navigate();
 })();

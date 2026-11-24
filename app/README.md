@@ -1,16 +1,20 @@
-# WNY 3RD ALARM app V2.0
+# WNY 3RD ALARM app V2.1
 
 This standalone app lives under `/app/` and does not alter the existing website. Its paths are relative so it works under the GitHub Pages project path. The icons reproduce the existing website's text wordmark; no separate logo image is present in the repository.
 
 ## Manual deployment
 
-Extract the ZIP at the repository root so its `app/` directory replaces the previous standalone app files. Keep the existing root `images/` directory and `incidents.json`: the app references them without changing them. Commit the app changes for review before deploying. The service worker cache is versioned; an existing installation picks up the updated worker after its older app tabs are closed. Installation and native sharing should also be checked on real Android and iPhone devices over HTTPS.
+Extract the ZIP at the repository root so its `app/` directory replaces the previous standalone app files. Keep the existing root `images/` directory and `incidents.json`: the app references them without changing them. Commit the app changes for review before deploying. The service worker cache and CSS/JavaScript URLs are versioned. The new worker activates when its assets are ready, deletes older app caches, and retains the same app identity and scope, so V2.0 installations update without reinstalling. Reload an already open app page to run the new interface. Installation and native sharing should also be checked on real Android and iPhone devices over HTTPS.
 
 The install control is hidden in standalone mode and immediately after an installation event. A regular browser tab cannot always detect an installation made elsewhere. Sharing uses the native share sheet where available, then clipboard or a selectable link.
 
 ## Incident review
 
 The app requests `../incidents.json` without browser or service-worker caching. The current Active911 workflow publishes automatically and does **not** mark items as reviewed. Accordingly, the app will show an empty state until a separate editorial process supplies `reviewed: true` on an item. A marker must only be added after a human has reviewed the item for public release. The app does not change the feed or establish such a process. It additionally requires a recent valid timestamp and an exact match to the small fire category allowlist in `app.js`. It renders only a fixed category label, the general region, and time; it never renders free-form titles, addresses or medical call details. Do not add a review marker automatically or treat publication in the existing feed as review.
+
+## Weather
+
+The home preview loads current NWS Buffalo observations independently of alerts and forecast. If the observation has no description, it can display the first forecast period, explicitly labeled as a forecast. If NWS is unavailable, retry or use the official NWS link. Weather and incidents are never stored in the app service worker cache.
 
 ## Offline and installation
 
