@@ -1,5 +1,20 @@
 [
   {
+    "type": "BLOOD SUGAR",
+    "area": "Western New York",
+    "time": "2026-11-23T23:19:10-05:00"
+  },
+  {
+    "type": "WEEKNESS",
+    "area": "Western New York",
+    "time": "2026-11-23T23:16:23-05:00"
+  },
+  {
+    "type": "NOT ALERT",
+    "area": "Western New York",
+    "time": "2026-11-23T22:59:46-05:00"
+  },
+  {
     "type": "Not Alert",
     "area": "Western New York",
     "time": "2026-11-23T21:55:33-05:00"
@@ -8,20 +23,5 @@
     "type": "unable to Ambulate",
     "area": "Western New York",
     "time": "2026-11-23T21:06:25-05:00"
-  },
-  {
-    "type": "Ordered in By a Doctor",
-    "area": "Western New York",
-    "time": "2026-11-23T20:54:22-05:00"
-  },
-  {
-    "type": "Chest Pain",
-    "area": "Western New York",
-    "time": "2026-11-23T20:34:16-05:00"
-  },
-  {
-    "type": "Mental Health Transport",
-    "area": "Western New York",
-    "time": "2026-11-23T19:36:45-05:00"
   }
 ]
