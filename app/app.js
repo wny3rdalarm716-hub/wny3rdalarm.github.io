@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const pages = ['home', 'incidents', 'weather', 'gallery', 'settings', 'notifications'];
+  const pages = ['home', 'incidents', 'weather', 'gallery', 'settings', 'notifications', 'community'];
   let installPrompt = null;
   let incidentRequest = 0;
   let weatherRequest = 0;
@@ -154,12 +154,34 @@
     if (!candidates.length) throw new Error('No recent measured temperature');
     return {properties: candidates[0], previous: true};
   }
+  async function loadAlertCoverage(api, county) {
+    const scope = $('weather').hidden ? 'local' : $('alert-scope').value;
+    const urls = scope === 'national' ? [api + '/alerts/active'] : (scope === 'regional' ? Object.values(counties) : [county]).map(c => api + '/alerts/active?zone=' + encodeURIComponent(c.zone));
+    const features = new Map(); let partial = false, successes = 0;
+    for (let i = 0; i < urls.length; i += 4) {
+      const results = await Promise.allSettled(urls.slice(i,i+4).map(getJSON));
+      for (const result of results) {
+        if (result.status !== 'fulfilled' || !Array.isArray(result.value.features)) {partial=true;continue;}
+        successes++;
+        if (result.value.pagination?.next) partial=true;
+        for (const item of result.value.features) {
+          const id = item?.id || item?.properties?.id;
+          if (typeof id !== 'string' || !item.properties) {partial=true;continue;}
+          features.set(id,item);
+        }
+      }
+    }
+    if (!successes) throw Error('NWS alerts unavailable');
+    return {features:[...features.values()].sort((a,b)=>(Date.parse(b.properties.sent)||0)-(Date.parse(a.properties.sent)||0)),partial};
+  }
+  $('alert-scope').addEventListener('change', loadWeather);
   async function loadWeather() {
     const request = ++weatherRequest;
     const api = 'https://api.weather.gov';
     const county = counties[$('weather-county').value] || counties.erie;
     const countyLabel = county.name.toUpperCase() + ' COUNTY';
     ['home-weather-location', 'weather-alerts-location', 'weather-forecast-location'].forEach(id => { $(id).textContent = countyLabel; });
+    $('weather-alerts-location').textContent = $('alert-scope').value === 'regional' ? 'WESTERN NEW YORK' : $('alert-scope').value === 'national' ? 'NATIONWIDE' : countyLabel;
     $('weather-observation-location').textContent = countyLabel + ' · NEARBY STATION ' + county.station;
     $('weather-observation-kind').textContent = ' · STATION OBSERVATION';
     $('home-weather-icon').textContent = '◌';
@@ -199,18 +221,20 @@
       }
       throw error;
     });
-    const alerts = getJSON(api + '/alerts/active?zone=' + county.zone).then(data => {
+    const alerts = loadAlertCoverage(api, county).then(data => {
       if (request !== weatherRequest) return;
       if (!Array.isArray(data.features)) throw new Error('Invalid alerts');
-      const items = data.features.slice(0, 12);
+      const items = data.features.slice(0, 60);
       $('weather-alerts').replaceChildren();
-      if (!items.length) $('weather-alerts').textContent = 'No active NWS alerts reported for ' + county.name + ' County.';
+      if (!items.length) $('weather-alerts').textContent = data.partial ? 'Coverage incomplete. No alerts returned by successful requests; check official NWS sources.' : 'No active NWS alerts returned for this coverage.';
+      if(data.partial || data.features.length > items.length) $('weather-alerts').append(text('p', data.partial ? 'Some alert data could not be verified. Check official NWS sources.' : 'Showing the first 60 alerts. See official NWS for the full list.', 'fine-print'));
       items.forEach(item => {
         const p = item && item.properties || {};
         const card = document.createElement('div'); card.className = 'weather-item';
-        card.append(text('strong', p.event || 'Weather alert'), text('p', p.headline || 'See NWS for details.'));
+        card.append(text('strong', p.event || 'Weather alert'), text('p', p.headline || 'See NWS for details.'), text('p', p.areaDesc || 'Affected area not reported.'), text('small', 'Expires: ' + (Number.isFinite(Date.parse(p.expires)) ? new Date(p.expires).toLocaleString() : 'Not reported')));
         $('weather-alerts').appendChild(card);
       });
+      if(data.partial) return 'partial';
     }).catch(error => {
       if (request === weatherRequest) $('weather-alerts').textContent = 'Alerts unavailable. Refresh or check NWS for official updates.';
       throw error;
@@ -238,7 +262,7 @@
     });
     const results = await Promise.allSettled([observation, alerts, forecast]);
     if (request !== weatherRequest) return;
-    $('weather-status').textContent = results.every(result => result.status === 'fulfilled') ? 'NWS checked ' + new Date().toLocaleTimeString() : 'Some NWS information unavailable. Try refreshing.';
+    $('weather-status').textContent = results.every(result => result.status === 'fulfilled' && result.value !== 'partial') ? 'NWS checked ' + new Date().toLocaleTimeString() : 'Some NWS information unavailable. Try refreshing.';
   }
   $('refresh-weather').addEventListener('click', loadWeather);
   setInterval(() => { if (!$('weather').hidden || !$('home').hidden) loadWeather(); }, 300000);
@@ -384,7 +408,7 @@
   viewerImage.addEventListener('touchcancel', () => { touchStart = null; });
 
   let registration = null;
-  const PAGE_VERSION = '2.5.1';
+  const PAGE_VERSION = '2.6';
   let workerCheck = 0;
   const watchedWorkers = new WeakSet();
   function checkWorkerVersion(worker) {
