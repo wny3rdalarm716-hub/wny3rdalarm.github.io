@@ -8,7 +8,7 @@ let messaging, token, registration;
 status(typeof Notification === 'undefined' ? 'Notifications unavailable in this browser.' : Notification.permission === 'granted' ? 'Browser permission granted. Enable notifications to verify Firebase registration.' : 'Enable notifications to register this device for remote testing.');
 async function setup(){
  if(!await isSupported()) throw Error('Web push is not supported on this browser. On iPhone, install the app first.');
- if(!messaging){messaging=getMessaging(initializeApp(config));onMessage(messaging,async()=>{status('Test push received while the app was open.');try{const reg=await navigator.serviceWorker.ready;await reg.showNotification('WNY 3RD ALARM',{body:'Test notification received.',icon:new URL('./icons/icon-192.png',reg.scope).href,tag:'wny-test'});await globalThis.wnyNotificationHistory?.record('remote').catch(()=>{});}catch(e){status('Test push received; notification display failed: '+e.message);}});}
+ if(!messaging){messaging=getMessaging(initializeApp(config));onMessage(messaging,async()=>{status('Test push received while the app was open.');try{const reg=await navigator.serviceWorker.ready;await reg.showNotification('WNY 3RD ALARM',{body:'Test notification received.',icon:new URL('./icons/icon-192.png',reg.scope).href,tag:'wny-test'});try{await globalThis.wnyNotificationHistory.record('remote');status('Remote test requested and recorded in Notification Center.');}catch(_){status('Remote test requested, but device history could not be saved.');}}catch(e){status('Test push received; notification display failed: '+e.message);}});}
  registration=await navigator.serviceWorker.ready;
  if(!registration.scope.endsWith('/app/')) throw Error('Unexpected service worker scope.');
 }

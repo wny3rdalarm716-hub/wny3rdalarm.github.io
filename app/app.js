@@ -384,49 +384,65 @@
   viewerImage.addEventListener('touchcancel', () => { touchStart = null; });
 
   let registration = null;
-  const hadController = 'serviceWorker' in navigator && !!navigator.serviceWorker.controller;
+  const PAGE_VERSION = '2.5.1';
+  let workerCheck = 0;
+  const watchedWorkers = new WeakSet();
   function checkWorkerVersion(worker) {
     if (!worker) return Promise.resolve(null);
     return new Promise(resolve => {
       const channel = new MessageChannel();
-      const timer = setTimeout(() => { channel.port1.close(); resolve(null); }, 1500);
-      channel.port1.onmessage = event => { clearTimeout(timer); channel.port1.close(); resolve(event.data); };
-      worker.postMessage('GET_VERSION', [channel.port2]);
+      let timer;
+      const finish = value => { clearTimeout(timer); channel.port1.close(); resolve(value); };
+      timer = setTimeout(() => finish(null), 2000);
+      channel.port1.onmessage = event => finish(typeof event.data === 'string' ? event.data : null);
+      try { worker.postMessage('GET_VERSION', [channel.port2]); } catch (_) { finish(null); }
     });
   }
-  async function indicateWorker(worker) {
-    const version = await checkWorkerVersion(worker);
-    if (version && version !== '2.5') showUpdate();
-    else if (version === '2.5' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.5.';
-    else if (!version) $('update-status').textContent = 'Could not verify service worker version.';
+  async function inspectWorkers() {
+    const run = ++workerCheck;
+    const controller = navigator.serviceWorker.controller;
+    const activeVersion = await checkWorkerVersion(controller);
+    if (run !== workerCheck) return;
+    const status = $('update-status'), reload = $('reload-update');
+    reload.hidden = true;
+    if (registration?.installing) {
+      status.textContent = 'An app update is being prepared…';
+    } else if (registration?.waiting) {
+      status.textContent = 'An update is waiting to activate. Close other app tabs and reopen.';
+    } else if (activeVersion && activeVersion !== PAGE_VERSION) {
+      status.textContent = 'Page V' + PAGE_VERSION + ' and worker V' + activeVersion + ' differ. Reload after deployment completes.';
+      reload.hidden = false;
+    } else if (activeVersion === PAGE_VERSION) {
+      status.textContent = 'App and service worker are running V' + PAGE_VERSION + '.';
+    } else {
+      status.textContent = 'Could not verify the active service worker. Reopen the app after deployment.';
+    }
   }
-  function showUpdate() {
-    $('update-status').textContent = 'An update is ready. Reload to use it.';
-    $('reload-update').hidden = false;
+  function watchWorker(worker) {
+    if (!worker || watchedWorkers.has(worker)) return;
+    watchedWorkers.add(worker);
+    worker.addEventListener('statechange', () => {
+      if (worker.state === 'redundant' && !registration?.installing && !registration?.waiting) {
+        ++workerCheck;
+        $('update-status').textContent = 'Update installation did not finish. Try checking again.';
+      } else inspectWorkers();
+    });
   }
   $('reload-update').addEventListener('click', () => location.reload());
   $('check-update').addEventListener('click', async () => {
     if (!registration) { $('update-status').textContent = 'Update checks are unavailable in this browser.'; return; }
     $('update-status').textContent = 'Checking for updates…';
-    try {
-      await registration.update();
-      if (registration.waiting) await indicateWorker(registration.waiting);
-      else if (registration.installing) $('update-status').textContent = 'An update is being prepared…';
-      else if ($('reload-update').hidden) $('update-status').textContent = 'Update check complete.';
-    } catch (_) { $('update-status').textContent = 'Could not check for updates. Check your connection and try again.'; }
+    try { await registration.update(); watchWorker(registration.installing); await inspectWorkers(); }
+    catch (_) { ++workerCheck; $('update-status').textContent = 'Update check failed. Check your connection and try again.'; }
   });
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController) indicateWorker(navigator.serviceWorker.controller); });
+    navigator.serviceWorker.addEventListener('controllerchange', inspectWorkers);
     navigator.serviceWorker.register('./sw.js', {updateViaCache: 'none'}).then(reg => {
       registration = reg;
-      if (reg.waiting && navigator.serviceWorker.controller) indicateWorker(reg.waiting);
-      reg.addEventListener('updatefound', () => {
-        if (!reg.installing) return;
-        reg.installing.addEventListener('statechange', event => {
-          if (event.target.state === 'installed' && navigator.serviceWorker.controller) indicateWorker(event.target);
-        });
-      });
-      reg.update().catch(() => {});
+      watchWorker(reg.installing); watchWorker(reg.waiting);
+      reg.addEventListener('updatefound', () => { watchWorker(reg.installing); inspectWorkers(); });
+      inspectWorkers();
+      reg.update().then(() => { watchWorker(reg.installing); inspectWorkers(); }).catch(() => {});
     }).catch(() => { $('update-status').textContent = 'Update checks are unavailable.'; });
   } else $('update-status').textContent = 'Update checks are unavailable in this browser.';
   $('local-notification-test').addEventListener('click', async () => {
@@ -440,8 +456,8 @@
         icon: new URL('./icons/icon-192.png', registration.scope).href,
         tag: 'wny-local-test'
       });
-      await globalThis.wnyNotificationHistory?.record('local').catch(() => {});
-      status.textContent = 'Local notification requested successfully. This does not test remote Firebase delivery.';
+      try { await globalThis.wnyNotificationHistory.record('local'); status.textContent = 'Local test requested and recorded. Check your notification shade and Notification Center.'; }
+      catch (_) { status.textContent = 'Local test requested, but device history could not be saved. Check your notification shade.'; }
     } catch (error) { status.textContent = error.message; }
   });
   navigate();

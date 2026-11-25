@@ -29,7 +29,9 @@
   };
   radar.onload=()=>{radar.hidden=false;$('radar-status').textContent='Radar image loaded '+new Date().toLocaleTimeString()+'. Check the embedded observation times.';};
   radar.onerror=()=>{radar.hidden=true;$('radar-status').textContent='Radar unavailable. Try the official NWS link.';};
+  let healthEpoch=0;
   function health(){
+    const run=++healthEpoch;
     $('health-online').textContent=navigator.onLine?'Browser reports online':'Browser reports offline';
     $('health-weather').textContent=$('weather-status').textContent;
     $('health-notify').textContent=typeof Notification==='undefined'?'Unsupported':Notification.permission;
@@ -37,9 +39,9 @@
     const worker=navigator.serviceWorker?.controller;
     if(!worker){$('health-worker').textContent='No active controller on this page';return;}
     const channel=new MessageChannel();
-    const timeout=setTimeout(()=>{channel.port1.close();$('health-worker').textContent='Version unavailable';},2000);
-    channel.port1.onmessage=e=>{clearTimeout(timeout);channel.port1.close();$('health-worker').textContent='V'+String(e.data)+(e.data==='2.5'?' · matching':' · reload after update');};
-    try{worker.postMessage('GET_VERSION',[channel.port2]);}catch(_){clearTimeout(timeout);channel.port1.close();$('health-worker').textContent='Version unavailable';}
+    const timeout=setTimeout(()=>{channel.port1.close();if(run===healthEpoch)$('health-worker').textContent='Version unavailable';},2000);
+    channel.port1.onmessage=e=>{clearTimeout(timeout);channel.port1.close();if(run!==healthEpoch)return;$('health-worker').textContent='V'+String(e.data)+(e.data==='2.5.1'?' · matching':' · reload after update');};
+    try{worker.postMessage('GET_VERSION',[channel.port2]);}catch(_){clearTimeout(timeout);channel.port1.close();if(run===healthEpoch)$('health-worker').textContent='Version unavailable';}
   }
   $('health-refresh').onclick=health;
   window.addEventListener('hashchange',()=>{if(location.hash==='#settings')health();});
