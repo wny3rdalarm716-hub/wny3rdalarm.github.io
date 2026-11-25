@@ -1,9 +1,10 @@
 /* Cache only app-owned static assets; never store incident or weather data. */
-const APP_VERSION = '2.4';
-const CACHE = 'wny-app-static-v2.4';
+importScripts('./notification-history.js?v=2.5');
+const APP_VERSION = '2.5';
+const CACHE = 'wny-app-static-v2.5';
 const STATIC_FILES = [
-  './offline.html', './app.css?v=2.4', './app.js?v=2.4',
-  './push.js?v=2.4', './manifest.webmanifest', './icons/icon-192.png',
+  './offline.html', './app.css?v=2.4', './app.js?v=2.5',
+  './push.js?v=2.5', './connectivity.css?v=2.5', './connectivity.js?v=2.5', './notification-history.js?v=2.5', './manifest.webmanifest', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-180.png'
 ];
 const scope = self.registration.scope;
@@ -47,7 +48,7 @@ self.addEventListener('push', event => {
   if (!payload?.notification && payload?.data?.kind !== 'test') return;
   event.waitUntil(self.registration.showNotification('WNY 3RD ALARM', {
     body: 'Test notification received.', icon: new URL('./icons/icon-192.png', scope).href, tag: 'wny-test'
-  }));
+  }).then(() => self.wnyNotificationHistory.record('remote').catch(() => {})));
 });
 self.addEventListener('notificationclick', event => {
   event.notification.close();

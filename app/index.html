@@ -13,8 +13,11 @@
   <link rel="icon" type="image/png" href="icons/icon-192.png">
   <link rel="stylesheet" href="app.css?v=2.4">
   <title>WNY 3RD ALARM</title>
-  <script src="app.js?v=2.4" defer></script>
-  <script type="module" src="push.js?v=2.4"></script>
+  <link rel="stylesheet" href="connectivity.css?v=2.5">
+  <script src="notification-history.js?v=2.5" defer></script>
+  <script src="app.js?v=2.5" defer></script>
+  <script src="connectivity.js?v=2.5" defer></script>
+  <script type="module" src="push.js?v=2.5"></script>
   <script type="module" src="public-admin.js?v=2.4"></script>
 </head>
 <body>
@@ -39,6 +42,8 @@
         <span aria-hidden="true">↗</span>
       </a>
       <div class="quick-grid"><a class="card quick" href="#weather"><span class="quick-icon">☁</span><span><b>Weather</b><small>Official NWS updates</small></span><span>↗</span></a><a class="card quick" href="#gallery"><span class="quick-icon">▧</span><span><b>Gallery</b><small>Through our lens</small></span><span>↗</span></a></div>
+      <div class="section-heading"><h2>Stay connected</h2><span>V2.5</span></div>
+      <div class="quick-grid"><a class="card quick" href="#notifications"><span class="quick-icon" aria-hidden="true">♢</span><span><b>Notifications</b><small>Device history</small></span><span>↗</span></a><a class="card quick" href="vote/"><span class="quick-icon" aria-hidden="true">▧</span><span><b>Photo voting</b><small>Community choice</small></span><span>↗</span></a></div>
       <div class="notice"><strong>For emergencies, call 911.</strong> WNY 3RD ALARM is an independent organization, not an emergency dispatch service.</div>
     </section>
     <section id="incidents" class="screen" hidden aria-labelledby="incidents-title">
@@ -57,10 +62,13 @@
       <div class="card weather-card"><span class="card-label"><span id="weather-observation-location">ERIE COUNTY</span><span id="weather-observation-kind"> · STATION OBSERVATION</span></span><div id="weather-current">Loading current conditions…</div></div>
       <div class="section-heading"><h2>Active alerts</h2><span id="weather-alerts-location">ERIE COUNTY</span></div><div id="weather-alerts" class="card weather-card">Loading alerts…</div>
       <div class="section-heading"><h2>Extended forecast</h2><span id="weather-forecast-location">ERIE COUNTY</span></div><div id="weather-forecast" class="card weather-card">Loading forecast…</div>
+      <div class="section-heading"><h2>Buffalo weather radar</h2><span>NWS · KBUF</span></div>
+      <div class="card weather-card"><p>Regional precipitation radar. Check the timestamps on the image; it may be delayed.</p><button id="radar-load" class="button" type="button">LOAD RADAR ↻</button><p id="radar-status" role="status" class="fine-print">Radar loads on request.</p><img id="radar-image" class="radar-image" alt="NWS Buffalo radar animation with timestamps" hidden><p><a href="https://radar.weather.gov/">Open official interactive NWS radar ↗</a></p></div>
       <div class="notice">For safety-critical decisions, verify conditions and alerts directly with the <a href="https://www.weather.gov/buf/">National Weather Service</a>.</div>
     </section>
     <section id="gallery" class="screen" hidden aria-labelledby="gallery-title">
       <div class="page-heading"><p class="eyebrow">THROUGH OUR LENS</p><h1 id="gallery-title">In the field<span class="accent">.</span></h1><p>Fire and emergency services photography from our team.</p></div>
+      <a class="button vote-entry" href="vote/">PHOTO OF THE WEEK VOTING ↗</a>
       <div class="photo-grid">
         <figure data-photo-id="rescue7"><button type="button" class="photo-open" aria-label="View Scranton Fire-Rescue Rescue 7 at sunset full screen"><img src="../images/scranton-rescue-7.jpg" alt="Scranton Fire-Rescue Rescue 7 at sunset" loading="lazy"></button><figcaption><b>Rescue 7</b><span>PHOTO: TONY</span></figcaption></figure>
         <figure data-photo-id="scene"><button type="button" class="photo-open" aria-label="View Emergency response scene full screen"><img src="media/incident-scene-01.png" alt="Emergency response scene" loading="lazy"></button><figcaption><b>On the scene</b><span>PHOTO: QUINN</span></figcaption></figure>
@@ -70,16 +78,22 @@
         <figure data-photo-id="police"><button type="button" class="photo-open" aria-label="View Buffalo Police patrol SUV full screen"><img src="media/lily-buffalo-police.png" alt="Buffalo Police patrol SUV" loading="lazy"></button><figcaption><b>Buffalo Police</b><span>PHOTO: LILY</span></figcaption></figure>
       </div><p class="fine-print">Photography belongs to the respective photographers. Please do not reproduce without permission.</p>
     </section>
+    <section id="notifications" class="screen" hidden aria-labelledby="notifications-title">
+      <div class="page-heading"><p class="eyebrow">STAY CONNECTED</p><h1 id="notifications-title">Notification center<span class="accent">.</span></h1><p>Recent test notifications recorded on this device. No incident details or device tokens are saved.</p></div>
+      <div class="card settings-card"><div class="status-line"><span id="history-status" role="status">Checking history…</span><button id="history-refresh" class="text-button" type="button">Refresh ↻</button></div><div id="notification-history"></div><button class="button" id="history-clear" type="button">CLEAR DEVICE HISTORY</button></div>
+      <p class="notice">This is not an emergency alert service. Automatic incident or weather push delivery is not connected. Test history is local and may not include every OS notification.</p><a href="#settings" class="inline-link">Notification settings ↗</a>
+    </section>
     <section id="settings" class="screen" hidden aria-labelledby="settings-title">
       <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="settings-title">Settings<span class="accent">.</span></h1><p>Keep WNY 3RD ALARM close at hand.</p></div>
       <div class="card settings-card"><span class="card-label">AUTHORIZED STAFF</span><h2>Staff portal</h2><p>Sign in to manage the public app with an authorized account.</p><a class="button" href="admin/">OPEN ADMIN PANEL <span aria-hidden="true">↗</span></a></div>
       <div id="install-card" class="card settings-card" hidden><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
       <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Push notifications</h2><p>Enable notifications to register this device for a test message. Automatic delivery of reviewed incident summaries and weather alerts is not configured yet.</p><label class="preference"><input type="checkbox" role="switch" id="pref-incidents"> Incident updates (saved preference)</label><label class="preference"><input type="checkbox" role="switch" id="pref-weather"> Weather alerts (saved preference)</label><button class="button" id="push-enable">Enable notifications</button> <button class="button" id="push-disable">Disable notifications</button> <button class="button" type="button" id="local-notification-test">Test on this device</button><p id="local-test-status" class="help" role="status">Device test only; does not verify remote Firebase delivery.</p><p id="notification-status" class="help" role="status"></p><p id="push-status" role="status" class="help">Checking notification availability…</p><button id="push-copy" hidden>Copy device test token</button><p class="help">Keep your device token private. Test delivery requires an authorized Firebase sender.</p></div>
-      <div class="card settings-card"><span class="card-label">VERSION 2.4</span><h2>What's new</h2><p>V2.4 adds the staff portal, public announcements, gallery controls and historical summary review after Firebase setup. Weather fallback and device notification testing remain unchanged. Automatic push alerts are not configured.</p></div>
+      <div class="card settings-card"><span class="card-label">VERSION 2.5</span><h2>What's new</h2><p>Notification history, Buffalo radar, Photo of the Week voting, system status, and a staff-only team message board. The existing staff portal, reviewed summaries and weather fallback are unchanged.</p><a class="inline-link" href="#notifications">Open notification center ↗</a></div>
+      <div class="card settings-card"><span class="card-label">SYSTEM STATUS</span><h2>App health</h2><dl class="health-list"><dt>Installed page</dt><dd>V2.5</dd><dt>Browser connection</dt><dd id="health-online">Checking…</dd><dt>Service worker</dt><dd id="health-worker">Checking…</dd><dt>Weather feed</dt><dd id="health-weather">Not checked</dd><dt>Notification permission</dt><dd id="health-notify">Checking…</dd><dt>Automatic push delivery</dt><dd>Not configured</dd></dl><p class="help">Device-side diagnostics, not a monitored uptime service. Weather status reflects the last app request.</p><button id="health-refresh" class="button" type="button">REFRESH STATUS</button></div>
       <div class="card settings-card"><span class="card-label">APP TESTING</span><h2>Incident preview</h2><p>See a fictional example of a reviewed summary. This is displayed only on this screen and never published or sent to other devices.</p><button class="button" id="preview-incident" type="button" aria-expanded="false" aria-controls="incident-preview">SHOW SAMPLE</button><div id="incident-preview" hidden></div></div>
       <div class="card settings-card"><span class="card-label">APP UPDATES</span><h2>Updates</h2><p id="update-status" role="status">Updates are checked when the app opens.</p><button type="button" id="check-update" class="button">CHECK FOR UPDATES <span aria-hidden="true">↻</span></button><button type="button" id="reload-update" class="button" hidden>RELOAD TO UPDATE <span aria-hidden="true">↻</span></button></div>
       <div class="card settings-card"><span class="card-label">SHARE WNY 3RD ALARM</span><h2>Spread the word.</h2><p>Share the app with your community.</p><button id="share-app" class="button" type="button">SHARE APP <span aria-hidden="true">↗</span></button><p id="share-status" class="help" role="status"></p><label id="share-fallback" hidden>App link <input id="share-url" type="url" readonly></label></div>
-      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.4</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.5</p></div>
     </section>
   </main>
   <dialog id="photo-viewer" class="photo-viewer" aria-labelledby="photo-caption">

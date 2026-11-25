@@ -25,6 +25,14 @@ service cloud.firestore {
       allow update: if false;
       allow delete: if staff();
     }
+    // V2.5 private team board: routine editorial and technical messages only.
+    match /teamBoard/{id} {
+      allow get: if staff();
+      allow list: if staff() && request.query.limit <= 30;
+      allow create: if staff() && exact(request.resource.data,['kind','author','createdAt']) && request.resource.data.author == request.auth.uid && request.resource.data.createdAt == request.time && request.resource.data.kind in ['photo_review','gallery_ready','website_review','app_test','maintenance_done','meeting_plan','thanks'];
+      allow update: if false;
+      allow delete: if staff() && resource.data.author == request.auth.uid;
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

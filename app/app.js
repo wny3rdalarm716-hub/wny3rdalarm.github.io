@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const pages = ['home', 'incidents', 'weather', 'gallery', 'settings'];
+  const pages = ['home', 'incidents', 'weather', 'gallery', 'settings', 'notifications'];
   let installPrompt = null;
   let incidentRequest = 0;
   let weatherRequest = 0;
@@ -15,6 +15,7 @@
       else link.removeAttribute('aria-current');
     });
     window.scrollTo(0, 0);
+    if (page === 'notifications') document.dispatchEvent(new Event('wny-history-refresh'));
     if (page === 'incidents') loadIncidents();
     if (page === 'home' || page === 'weather') loadWeather();
   }
@@ -395,8 +396,8 @@
   }
   async function indicateWorker(worker) {
     const version = await checkWorkerVersion(worker);
-    if (version && version !== '2.4') showUpdate();
-    else if (version === '2.4' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.4.';
+    if (version && version !== '2.5') showUpdate();
+    else if (version === '2.5' && $('reload-update').hidden) $('update-status').textContent = 'App is running V2.5.';
     else if (!version) $('update-status').textContent = 'Could not verify service worker version.';
   }
   function showUpdate() {
@@ -439,6 +440,7 @@
         icon: new URL('./icons/icon-192.png', registration.scope).href,
         tag: 'wny-local-test'
       });
+      await globalThis.wnyNotificationHistory?.record('local').catch(() => {});
       status.textContent = 'Local notification requested successfully. This does not test remote Firebase delivery.';
     } catch (error) { status.textContent = error.message; }
   });
