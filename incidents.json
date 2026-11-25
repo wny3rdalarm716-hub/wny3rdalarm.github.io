@@ -1,5 +1,10 @@
 [
   {
+    "type": "Smoke Investigation",
+    "area": "Western New York",
+    "time": "2026-11-24T21:09:54-05:00"
+  },
+  {
     "type": "SMOKE ALARM ACTIVATION",
     "area": "Western New York",
     "time": "2026-11-24T19:43:16-05:00"
@@ -18,10 +23,5 @@
     "type": "Medical Alarm",
     "area": "Western New York",
     "time": "2026-11-24T15:59:26-05:00"
-  },
-  {
-    "type": "Fall with Dificulty Breathing",
-    "area": "Western New York",
-    "time": "2026-11-24T15:14:53-05:00"
   }
 ]
