@@ -33,6 +33,19 @@ service cloud.firestore {
       allow update: if false;
       allow delete: if staff() && resource.data.author == request.auth.uid;
     }
+    // V2.7: personal workspace only; no role grants or access to other profiles.
+    match /staffWorkspace/{uid} {
+      allow get: if staff() && request.auth.uid == uid;
+      allow list, delete: if false;
+      allow create, update: if staff() && request.auth.uid == uid
+        && exact(request.resource.data,['focus','release','checks','updatedAt'])
+        && request.resource.data.focus in ['general','technology','photography','editorial','organization']
+        && request.resource.data.release == '2.7'
+        && request.resource.data.checks is list
+        && request.resource.data.checks.size() <= 6
+        && request.resource.data.checks.hasOnly(['login','weather','gallery','voting','board','updates'])
+        && request.resource.data.updatedAt == request.time;
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

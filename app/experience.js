@@ -28,7 +28,7 @@
   // Wait for public gallery preferences before showing a feature. If they cannot be read, leave the feature unavailable.
   document.addEventListener('wny-gallery-changed',dailyPhoto);
   $('daily-photo-status').textContent='Featured photo appears after gallery preferences load.';
-  $('feedback-open').onclick=()=>{const type=$('feedback-type').value;const allowed=['Bug report','Feature suggestion','Accessibility feedback'];if(!allowed.includes(type))return;const subject='WNY 3RD ALARM App V2.6 — '+type;const body='Please describe your feedback here. Avoid personal details, incident locations and credentials.\n\n';$('feedback-status').textContent='Your email app will open if configured. Review the message before sending.';location.href='mailto:wny3rdalarm716@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);};
+  $('feedback-open').onclick=()=>{const type=$('feedback-type').value;const allowed=['Bug report','Feature suggestion','Accessibility feedback'];if(!allowed.includes(type))return;const subject='WNY 3RD ALARM App V2.7 — '+type;const body='Please describe your feedback here. Avoid personal details, incident locations and credentials.\n\n';$('feedback-status').textContent='Your email app will open if configured. Review the message before sending.';location.href='mailto:wny3rdalarm716@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);};
   const opt=$('announcement-optin');opt.checked=get('news-optin')==='true';
   const newsStatus=$('announcement-notify-status');
   const newsText=$('staff-announcement-text');

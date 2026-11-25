@@ -408,7 +408,7 @@
   viewerImage.addEventListener('touchcancel', () => { touchStart = null; });
 
   let registration = null;
-  const PAGE_VERSION = '2.6';
+  const PAGE_VERSION = '2.7';
   let workerCheck = 0;
   const watchedWorkers = new WeakSet();
   function checkWorkerVersion(worker) {
