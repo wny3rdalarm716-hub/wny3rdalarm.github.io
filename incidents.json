@@ -1,5 +1,15 @@
 [
   {
+    "type": "Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-25T15:57:30-05:00"
+  },
+  {
+    "type": "Fire Alrm",
+    "area": "Western New York",
+    "time": "2026-11-25T15:39:39-05:00"
+  },
+  {
     "type": "Dificulty Breathing",
     "area": "Western New York",
     "time": "2026-11-25T15:28:00-05:00"
@@ -13,15 +23,5 @@
     "type": "Leg Pain",
     "area": "Western New York",
     "time": "2026-11-25T14:49:51-05:00"
-  },
-  {
-    "type": "Trouble Swollowing",
-    "area": "Western New York",
-    "time": "2026-11-25T14:45:54-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-25T14:40:28-05:00"
   }
 ]
