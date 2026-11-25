@@ -2,6 +2,11 @@
   {
     "type": "Fire Alarm",
     "area": "Western New York",
+    "time": "2026-11-25T14:40:28-05:00"
+  },
+  {
+    "type": "Fire Alarm",
+    "area": "Western New York",
     "time": "2026-11-25T13:41:45-05:00"
   },
   {
@@ -18,10 +23,5 @@
     "type": "Dificulty Breathing",
     "area": "Western New York",
     "time": "2026-11-25T11:56:21-05:00"
-  },
-  {
-    "type": "Fall",
-    "area": "Western New York",
-    "time": "2026-11-25T00:30:14-05:00"
   }
 ]
