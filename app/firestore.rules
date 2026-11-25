@@ -1,51 +1,132 @@
+
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function verified() { return request.auth != null && request.auth.token.email_verified == true; }
-    function staff() { return verified() && exists(/databases/$(database)/documents/staffAccess/$(request.auth.uid)) && get(/databases/$(database)/documents/staffAccess/$(request.auth.uid)).data.active == true; }
-    function category(c) { return c in ['STRUCTURE FIRE','VEHICLE FIRE','BRUSH FIRE','OUTSIDE FIRE','FIRE']; }
-    function exact(d,fields) { return d.keys().hasAll(fields) && d.keys().hasOnly(fields); }
-    match /staffAccess/{uid} {
-      allow get: if verified() && request.auth.uid == uid;
-      allow list, write: if false; // Owner provisions/revokes through Firebase console only.
+
+    function verified() {
+      return request.auth != null
+        && request.auth.token.email_verified == true;
     }
+
+    function staff() {
+      return verified()
+        && exists(/databases/$(database)/documents/staffAccess/$(request.auth.uid))
+        && get(/databases/$(database)/documents/staffAccess/$(request.auth.uid)).data.active == true;
+    }
+
+    function category(c) {
+      return c in [
+        'STRUCTURE FIRE',
+        'VEHICLE FIRE',
+        'BRUSH FIRE',
+        'OUTSIDE FIRE',
+        'FIRE'
+      ];
+    }
+
+    function exact(d, fields) {
+      return d.keys().hasAll(fields)
+        && d.keys().hasOnly(fields);
+    }
+
+    match /staffAccess/{uid} {
+      allow get: if verified()
+        && request.auth.uid == uid;
+      allow list, write: if false;
+    }
+
     match /publicSettings/app {
       allow get: if true;
-      allow create, update: if staff() && exact(request.resource.data,['announcement','hiddenPhotos']) && request.resource.data.announcement in ['none','update','photos','maintenance','thanks'] && request.resource.data.hiddenPhotos is list && request.resource.data.hiddenPhotos.size() <= 6 && request.resource.data.hiddenPhotos.hasOnly(['rescue7','scene','night','engine4','rescue','police']);
+      allow create, update: if staff()
+        && exact(request.resource.data, ['announcement', 'hiddenPhotos'])
+        && request.resource.data.announcement in ['none', 'update', 'photos', 'maintenance', 'thanks']
+        && request.resource.data.hiddenPhotos is list
+        && request.resource.data.hiddenPhotos.size() <= 6
+        && request.resource.data.hiddenPhotos.hasOnly(['rescue7', 'scene', 'night', 'engine4', 'rescue', 'police']);
     }
+
     match /reviewDrafts/{id} {
       allow read: if staff();
-      allow create: if staff() && exact(request.resource.data,['category','author','state','createdAt']) && category(request.resource.data.category) && request.resource.data.author == request.auth.uid && request.resource.data.state == 'pending' && request.resource.data.createdAt == request.time;
-      allow delete: if staff() && resource.data.state == 'pending';
-      allow update: if staff() && resource.data.state == 'pending' && resource.data.author != request.auth.uid && request.time >= resource.data.createdAt + duration.value(24,'h') && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['state','reviewer','reviewedAt']) && exact(request.resource.data,['category','author','state','createdAt','reviewer','reviewedAt']) && request.resource.data.state == 'published' && request.resource.data.reviewer == request.auth.uid && request.resource.data.reviewedAt == request.time && existsAfter(/databases/$(database)/documents/publicHistory/$(id)) && getAfter(/databases/$(database)/documents/publicHistory/$(id)).data.category == resource.data.category && getAfter(/databases/$(database)/documents/publicHistory/$(id)).data.publishedAt == request.time;
+
+      allow create: if staff()
+        && exact(request.resource.data, ['category', 'author', 'state', 'createdAt'])
+        && category(request.resource.data.category)
+        && request.resource.data.author == request.auth.uid
+        && request.resource.data.state == 'pending'
+        && request.resource.data.createdAt == request.time;
+
+      allow delete: if staff()
+        && resource.data.state == 'pending';
+
+      allow update: if staff()
+        && resource.data.state == 'pending'
+        && resource.data.author != request.auth.uid
+        && request.time >= resource.data.createdAt + duration.value(24, 'h')
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['state', 'reviewer', 'reviewedAt'])
+        && exact(request.resource.data, ['category', 'author', 'state', 'createdAt', 'reviewer', 'reviewedAt'])
+        && request.resource.data.state == 'published'
+        && request.resource.data.reviewer == request.auth.uid
+        && request.resource.data.reviewedAt == request.time
+        && existsAfter(/databases/$(database)/documents/publicHistory/$(id))
+        && getAfter(/databases/$(database)/documents/publicHistory/$(id)).data.category == resource.data.category
+        && getAfter(/databases/$(database)/documents/publicHistory/$(id)).data.publishedAt == request.time;
     }
+
     match /publicHistory/{id} {
       allow read: if true;
-      allow create: if staff() && exact(request.resource.data,['category','publishedAt']) && category(request.resource.data.category) && request.resource.data.publishedAt == request.time && exists(/databases/$(database)/documents/reviewDrafts/$(id)) && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.state == 'pending' && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.author != request.auth.uid && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.category == request.resource.data.category && request.time >= get(/databases/$(database)/documents/reviewDrafts/$(id)).data.createdAt + duration.value(24,'h') && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.state == 'published' && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.reviewer == request.auth.uid && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.reviewedAt == request.time;
+
+      allow create: if staff()
+        && exact(request.resource.data, ['category', 'publishedAt'])
+        && category(request.resource.data.category)
+        && request.resource.data.publishedAt == request.time
+        && exists(/databases/$(database)/documents/reviewDrafts/$(id))
+        && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.state == 'pending'
+        && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.author != request.auth.uid
+        && get(/databases/$(database)/documents/reviewDrafts/$(id)).data.category == request.resource.data.category
+        && request.time >= get(/databases/$(database)/documents/reviewDrafts/$(id)).data.createdAt + duration.value(24, 'h')
+        && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.state == 'published'
+        && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.reviewer == request.auth.uid
+        && getAfter(/databases/$(database)/documents/reviewDrafts/$(id)).data.reviewedAt == request.time;
+
       allow update: if false;
       allow delete: if staff();
     }
-    // V2.5 private team board: routine editorial and technical messages only.
+
     match /teamBoard/{id} {
       allow get: if staff();
-      allow list: if staff() && request.query.limit <= 30;
-      allow create: if staff() && exact(request.resource.data,['kind','author','createdAt']) && request.resource.data.author == request.auth.uid && request.resource.data.createdAt == request.time && request.resource.data.kind in ['photo_review','gallery_ready','website_review','app_test','maintenance_done','meeting_plan','thanks'];
+      allow list: if staff()
+        && request.query.limit <= 30;
+
+      allow create: if staff()
+        && exact(request.resource.data, ['kind', 'author', 'createdAt'])
+        && request.resource.data.author == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.kind in ['photo_review', 'gallery_ready', 'website_review', 'app_test', 'maintenance_done', 'meeting_plan', 'thanks'];
+
       allow update: if false;
-      allow delete: if staff() && resource.data.author == request.auth.uid;
+      allow delete: if staff()
+        && resource.data.author == request.auth.uid;
     }
-    // V2.7: personal workspace only; no role grants or access to other profiles.
+
     match /staffWorkspace/{uid} {
-      allow get: if staff() && request.auth.uid == uid;
+      allow get: if staff()
+        && request.auth.uid == uid;
+
       allow list, delete: if false;
-      allow create, update: if staff() && request.auth.uid == uid
-        && exact(request.resource.data,['focus','release','checks','updatedAt'])
-        && request.resource.data.focus in ['general','technology','photography','editorial','organization']
+
+      allow create, update: if staff()
+        && request.auth.uid == uid
+        && exact(request.resource.data, ['focus', 'release', 'checks', 'updatedAt'])
+        && request.resource.data.focus in ['general', 'technology', 'photography', 'editorial', 'organization']
         && request.resource.data.release == '2.7'
         && request.resource.data.checks is list
         && request.resource.data.checks.size() <= 6
-        && request.resource.data.checks.hasOnly(['login','weather','gallery','voting','board','updates'])
+        && request.resource.data.checks.hasOnly(['login', 'weather', 'gallery', 'voting', 'board', 'updates'])
         && request.resource.data.updatedAt == request.time;
     }
-    match /{document=**} { allow read, write: if false; }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
   }
 }
