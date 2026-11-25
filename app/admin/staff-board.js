@@ -4,7 +4,7 @@ import {getFirestore,doc,collection,getDocFromServer,getDocsFromServer,query,ord
 const $=id=>document.getElementById(id);
 const presets=Object.freeze({photo_review:'Photos ready for editorial review.',gallery_ready:'Gallery content is ready.',website_review:'Website changes ready for review.',app_test:'App update ready for testing.',maintenance_done:'Routine maintenance complete.',meeting_plan:'Please check our usual group planning channel.',thanks:'Thanks for helping with the project!'});
 for(const [kind,label] of Object.entries(presets)){const o=document.createElement('option');o.value=kind;o.textContent=label;$('board-choice').append(o);}
-let auth,db,epoch=0,posting=false;
+let auth,db,epoch=0,posting=false,lastRefresh=0;
 const status=t=>$('board-status').textContent=t;
 const txt=(tag,value)=>{const e=document.createElement(tag);e.textContent=value;return e;};
 async function grant(){
@@ -19,7 +19,7 @@ async function grant(){
 async function refresh(){
   const gen=++epoch;$('board-send').disabled=true;
   if($('dashboard').hidden){$('staff-board').hidden=true;$('board-list').replaceChildren();return;}
-  $('staff-board').hidden=false;status('Checking staff access…');
+  $('staff-board').hidden=false;lastRefresh=Date.now();status('Checking staff access…');
   try{
     const uid=await grant();
     const result=await getDocsFromServer(query(collection(db,'teamBoard'),orderBy('createdAt','desc'),limit(30)));
@@ -31,11 +31,11 @@ async function refresh(){
     }
     if(!list.childElementCount)list.append(txt('p','No team messages yet.'));
     status('Last checked '+new Date().toLocaleTimeString());$('board-send').disabled=posting;
-  }catch(e){if(gen!==epoch)return;$('board-list').replaceChildren();status(e.code==='permission-denied'?'Board access denied. Confirm V2.5 rules are published in the admin project.':'Team board unavailable. Check staff access and network.');}
+  }catch(e){if(gen!==epoch)return;$('board-list').replaceChildren();status(e.code==='permission-denied'?'Board access denied. Verify your staff access and that the teamBoard rules are published in the admin project.':e.code==='unavailable'||!navigator.onLine?'Team board offline or Firebase unavailable. Reconnect and press Refresh.':'Team board unavailable. Sign in again or press Refresh.');}
 }
-$('board-form').onsubmit=async e=>{e.preventDefault();if(posting)return;posting=true;$('board-send').disabled=true;try{const uid=await grant();const kind=$('board-choice').value;if(!Object.hasOwn(presets,kind))throw Error('Invalid message');await addDoc(collection(db,'teamBoard'),{kind,author:uid,createdAt:serverTimestamp()});}catch(_){status('Message not sent. Check permissions and connection.');posting=false;$('board-send').disabled=false;return;}posting=false;await refresh();};
+$('board-form').onsubmit=async e=>{e.preventDefault();if(posting)return;posting=true;$('board-send').disabled=true;try{const uid=await grant();const kind=$('board-choice').value;if(!Object.hasOwn(presets,kind))throw Error('Invalid message');await addDoc(collection(db,'teamBoard'),{kind,author:uid,createdAt:serverTimestamp()});}catch(_){posting=false;$('board-send').disabled=true;status('Message not sent. Check permissions and connection, then press Refresh before retrying.');return;}posting=false;await refresh();};
 $('board-refresh').onclick=refresh;
 new MutationObserver(refresh).observe($('dashboard'),{attributes:true,attributeFilter:['hidden']});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
-setInterval(()=>{if(!document.hidden&&!$('dashboard').hidden&&!posting)refresh();},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!$('dashboard').hidden&&!posting&&Date.now()-lastRefresh>=60000)refresh();});
+window.addEventListener('online',()=>{if(!$('dashboard').hidden&&!posting)refresh();});
 refresh();
