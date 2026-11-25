@@ -1,5 +1,10 @@
 [
   {
+    "type": "Head Injury",
+    "area": "Western New York",
+    "time": "2026-11-24T22:09:07-05:00"
+  },
+  {
     "type": "Smoke Investigation",
     "area": "Western New York",
     "time": "2026-11-24T21:09:54-05:00"
@@ -18,10 +23,5 @@
     "type": "Possible UTI",
     "area": "Western New York",
     "time": "2026-11-24T16:36:33-05:00"
-  },
-  {
-    "type": "Medical Alarm",
-    "area": "Western New York",
-    "time": "2026-11-24T15:59:26-05:00"
   }
 ]
