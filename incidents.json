@@ -1,27 +1,27 @@
 [
   {
+    "type": "Dificulty Breathing",
+    "area": "Western New York",
+    "time": "2026-11-25T15:28:00-05:00"
+  },
+  {
+    "type": "Oder of Something Burning",
+    "area": "Western New York",
+    "time": "2026-11-25T15:17:20-05:00"
+  },
+  {
+    "type": "Leg Pain",
+    "area": "Western New York",
+    "time": "2026-11-25T14:49:51-05:00"
+  },
+  {
+    "type": "Trouble Swollowing",
+    "area": "Western New York",
+    "time": "2026-11-25T14:45:54-05:00"
+  },
+  {
     "type": "Fire Alarm",
     "area": "Western New York",
     "time": "2026-11-25T14:40:28-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-25T13:41:45-05:00"
-  },
-  {
-    "type": "Prolapse Rectum",
-    "area": "Western New York",
-    "time": "2026-11-25T12:41:58-05:00"
-  },
-  {
-    "type": "AFib",
-    "area": "Western New York",
-    "time": "2026-11-25T12:18:09-05:00"
-  },
-  {
-    "type": "Dificulty Breathing",
-    "area": "Western New York",
-    "time": "2026-11-25T11:56:21-05:00"
   }
 ]
