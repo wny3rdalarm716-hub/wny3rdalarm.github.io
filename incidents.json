@@ -1,5 +1,10 @@
 [
   {
+    "type": "FIRE ALARM ACTIVATION",
+    "area": "Western New York",
+    "time": "2026-11-26T02:10:03-05:00"
+  },
+  {
     "type": "Co Detector",
     "area": "Western New York",
     "time": "2026-11-25T21:27:13-05:00"
@@ -18,10 +23,5 @@
     "type": "NAURAL GAS SMELL",
     "area": "Western New York",
     "time": "2026-11-25T18:21:18-05:00"
-  },
-  {
-    "type": "Fire Alarm",
-    "area": "Western New York",
-    "time": "2026-11-25T15:57:30-05:00"
   }
 ]
