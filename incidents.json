@@ -1,5 +1,20 @@
 [
   {
+    "type": "Infected Abdominal",
+    "area": "Western New York",
+    "time": "2026-11-26T11:16:35-05:00"
+  },
+  {
+    "type": "Abdominal Pain",
+    "area": "Western New York",
+    "time": "2026-11-26T11:04:37-05:00"
+  },
+  {
+    "type": "Fire Alarm",
+    "area": "Western New York",
+    "time": "2026-11-26T10:58:09-05:00"
+  },
+  {
     "type": "FIRE ALARM ACTIVATION",
     "area": "Western New York",
     "time": "2026-11-26T02:10:03-05:00"
@@ -8,20 +23,5 @@
     "type": "Co Detector",
     "area": "Western New York",
     "time": "2026-11-25T21:27:13-05:00"
-  },
-  {
-    "type": "Multiple Falls",
-    "area": "Western New York",
-    "time": "2026-11-25T20:35:00-05:00"
-  },
-  {
-    "type": "MVA",
-    "area": "Western New York",
-    "time": "2026-11-25T18:28:29-05:00"
-  },
-  {
-    "type": "NAURAL GAS SMELL",
-    "area": "Western New York",
-    "time": "2026-11-25T18:21:18-05:00"
   }
 ]
