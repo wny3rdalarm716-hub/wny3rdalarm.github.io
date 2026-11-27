@@ -1,5 +1,10 @@
 [
   {
+    "type": "MVA",
+    "area": "Western New York",
+    "time": "2026-11-27T00:50:28-05:00"
+  },
+  {
     "type": "Unknown Problem",
     "area": "Western New York",
     "time": "2026-11-27T00:41:08-05:00"
@@ -18,10 +23,5 @@
     "type": "TREE ON WIRES",
     "area": "Western New York",
     "time": "2026-11-26T22:16:59-05:00"
-  },
-  {
-    "type": "LOW HANGING WIRES",
-    "area": "Western New York",
-    "time": "2026-11-26T22:12:37-05:00"
   }
 ]
