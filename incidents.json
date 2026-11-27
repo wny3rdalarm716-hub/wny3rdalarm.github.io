@@ -1,5 +1,20 @@
 [
   {
+    "type": "CO NEG ILLNESS",
+    "area": "Western New York",
+    "time": "2026-11-26T22:22:33-05:00"
+  },
+  {
+    "type": "TREE ON WIRES",
+    "area": "Western New York",
+    "time": "2026-11-26T22:16:59-05:00"
+  },
+  {
+    "type": "LOW HANGING WIRES",
+    "area": "Western New York",
+    "time": "2026-11-26T22:12:37-05:00"
+  },
+  {
     "type": "Tree Down",
     "area": "Western New York",
     "time": "2026-11-26T21:38:28-05:00"
@@ -8,20 +23,5 @@
     "type": "Tree Down",
     "area": "Western New York",
     "time": "2026-11-26T21:05:30-05:00"
-  },
-  {
-    "type": "Fall",
-    "area": "Western New York",
-    "time": "2026-11-26T19:07:24-05:00"
-  },
-  {
-    "type": "ILL",
-    "area": "Western New York",
-    "time": "2026-11-26T19:01:51-05:00"
-  },
-  {
-    "type": "chest Pain",
-    "area": "Western New York",
-    "time": "2026-11-26T18:19:16-05:00"
   }
 ]
