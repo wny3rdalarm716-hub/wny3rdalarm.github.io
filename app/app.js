@@ -340,6 +340,33 @@
   const allPhotoButtons = Array.from(document.querySelectorAll('.photo-open'));
   let photoButtons = [...allPhotoButtons];
   let photoIndex = 0;
+  let favorites = new Set();
+  try { const saved = JSON.parse(readLocal('wny-photo-favorites','[]')); if(Array.isArray(saved)) favorites = new Set(saved.filter(id=>allPhotoButtons.some(b=>b.closest('figure').dataset.photoId===id))); } catch (_) {}
+  const figures = allPhotoButtons.map(b=>b.closest('figure'));
+  const photoId = b=>b.closest('figure').dataset.photoId;
+  let staffOrder=figures.map(f=>f.dataset.photoId);
+  let galleryConfirmed=false;
+  let pendingPhoto = new URL(location.href).searchParams.get('photo');
+  function updateFavoriteButtons(){
+    for(const b of document.querySelectorAll('[data-favorite-id]')) { const on=favorites.has(b.dataset.favoriteId); b.textContent=on?'♥ Saved':'♡ Save'; b.setAttribute('aria-pressed',String(on)); }
+    const current=photoButtons[photoIndex]; const on=!!current&&favorites.has(photoId(current)); $('viewer-favorite').textContent=on?'♥':'♡'; $('viewer-favorite').setAttribute('aria-pressed',String(on)); $('viewer-favorite').setAttribute('aria-label',on?'Remove favorite':'Save favorite');
+  }
+  function toggleFavorite(id){ if(favorites.has(id))favorites.delete(id);else favorites.add(id); const ok=writeLocal('wny-photo-favorites',JSON.stringify([...favorites])); $('photo-action-status').textContent=ok?'Favorites updated on this device.':'Favorites updated for this session only.'; applyPhotoFilters(); }
+  function applyPhotoFilters(){
+    const current=photoButtons[photoIndex];const q=$('photo-search').value.toLowerCase().trim().split(/\s+/).filter(Boolean);const by=$('photo-filter').value;const sort=$('photo-sort').value;
+    const grid=document.querySelector('#gallery .photo-grid'); const sorted=[...figures].sort((a,b)=>{const title=f=>f.querySelector('figcaption b').textContent;const credit=f=>f.querySelector('figcaption span').textContent;return sort==='title'?title(a).localeCompare(title(b)):sort==='photographer'?credit(a).localeCompare(credit(b))||title(a).localeCompare(title(b)):staffOrder.indexOf(a.dataset.photoId)-staffOrder.indexOf(b.dataset.photoId);});
+    for(const f of sorted){const caption=f.querySelector('figcaption');const hay=(caption.textContent+' '+f.querySelector('img').alt).toLowerCase(); const credit=caption.querySelector('span').textContent.replace('PHOTO: ',''); const pass=q.every(t=>hay.includes(t))&&(by==='all'||credit===by)&&(!$('photo-favorites-only').checked||favorites.has(f.dataset.photoId)); f.dataset.filtered=String(!pass); grid.append(f);}
+    photoButtons=sorted.filter(f=>!f.hidden&&f.dataset.filtered!=='true').map(f=>f.querySelector('.photo-open'));
+    $('photo-results').textContent=photoButtons.length+' photograph'+(photoButtons.length===1?'':'s')+(photoButtons.length?'':' — try clearing your filters');
+    if(viewer.open){const i=photoButtons.indexOf(current);if(i<0)viewer.close();else showPhoto(i);}
+    updateFavoriteButtons();
+  }
+  for(const f of figures){const b=document.createElement('button');b.type='button';b.className='photo-favorite';b.dataset.favoriteId=f.dataset.photoId;b.onclick=()=>toggleFavorite(f.dataset.photoId);f.append(b);}
+  $('photo-search').addEventListener('input',applyPhotoFilters);
+  for(const id of ['photo-filter','photo-sort','photo-favorites-only'])$(id).addEventListener('change',applyPhotoFilters);
+  $('viewer-favorite').onclick=()=>{if(photoButtons[photoIndex])toggleFavorite(photoId(photoButtons[photoIndex]));};
+  $('viewer-share').onclick=async()=>{const b=photoButtons[photoIndex];if(!b||b.closest('figure').hidden)return;const url=new URL('./',location.href);url.searchParams.set('photo',photoId(b));url.hash='gallery';const title=b.closest('figure').querySelector('figcaption b').textContent;try{if(navigator.share){await navigator.share({title:'WNY 3RD ALARM — '+title,url:url.href});}else if(navigator.clipboard){await navigator.clipboard.writeText(url.href);$('photo-action-status').textContent='Photo link copied.';viewer.close();}else throw Error('Sharing unavailable');}catch(e){if(e.name==='AbortError')return;viewer.close();$('photo-action-status').textContent='Copy this photo link: '+url.href;}};
+  document.addEventListener('wny-gallery-order',e=>{const order=e.detail?.order;if(Array.isArray(order)&&order.length===figures.length&&new Set(order).size===figures.length&&figures.every(f=>order.includes(f.dataset.photoId)))staffOrder=[...order];applyPhotoFilters();});
   function retryURL(source) {
     const url = new URL(source, location.href);
     url.searchParams.set('retry', String(Date.now()));
@@ -373,16 +400,17 @@
     $('photo-caption').textContent = figure.querySelector('figcaption').innerText.replace(/\s+/g, ' ').trim() + ' · ' + (index + 1) + ' / ' + photoButtons.length;
     $('viewer-prev').disabled = index === 0;
     $('viewer-next').disabled = index === photoButtons.length - 1;
+    updateFavoriteButtons();
   }
   allPhotoButtons.forEach(button => button.addEventListener('click', () => {
     const index = photoButtons.indexOf(button); if(index < 0) return;
     showPhoto(index); viewer.showModal(); $('viewer-close').focus();
   }));
   document.addEventListener('wny-gallery-changed', () => {
-    const current = photoButtons[photoIndex];
-    photoButtons = allPhotoButtons.filter(button => !button.closest('figure').hidden);
-    if(viewer.open) { const index = photoButtons.indexOf(current); if(index < 0) viewer.close(); else showPhoto(index); }
+    galleryConfirmed=true;applyPhotoFilters();
+    if(pendingPhoto&&galleryConfirmed){const id=pendingPhoto;pendingPhoto=null;const b=photoButtons.find(b=>photoId(b)===id);if(b&&location.hash==='#gallery'&&!viewer.open){showPhoto(photoButtons.indexOf(b));viewer.showModal();$('viewer-close').focus();}}
   });
+  applyPhotoFilters();
   $('viewer-close').addEventListener('click', () => viewer.close());
   $('viewer-prev').addEventListener('click', () => { if (photoIndex > 0) showPhoto(photoIndex - 1); });
   $('viewer-next').addEventListener('click', () => { if (photoIndex < photoButtons.length - 1) showPhoto(photoIndex + 1); });
@@ -408,7 +436,7 @@
   viewerImage.addEventListener('touchcancel', () => { touchStart = null; });
 
   let registration = null;
-  const PAGE_VERSION = '2.7';
+  const PAGE_VERSION = '2.8';
   let workerCheck = 0;
   const watchedWorkers = new WeakSet();
   function checkWorkerVersion(worker) {

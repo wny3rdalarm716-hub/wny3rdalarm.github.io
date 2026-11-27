@@ -1,10 +1,10 @@
 /* Cache only app-owned static assets; never store incident or weather data. */
-importScripts('./notification-history.js?v=2.7');
-const APP_VERSION = '2.7';
-const CACHE = 'wny-app-static-v2.7';
+importScripts('./notification-history.js?v=2.8');
+const APP_VERSION = '2.8';
+const CACHE = 'wny-app-static-v2.8';
 const STATIC_FILES = [
-  './offline.html', './experience.css?v=2.7', './experience.js?v=2.7', './app.css?v=2.4', './app.js?v=2.7',
-  './push.js?v=2.7', './connectivity.css?v=2.7', './connectivity.js?v=2.7', './notification-history.js?v=2.7', './manifest.webmanifest', './icons/icon-192.png',
+  './offline.html', './photography.css?v=2.8', './experience.css?v=2.8', './experience.js?v=2.8', './app.css?v=2.4', './app.js?v=2.8',
+  './push.js?v=2.8', './connectivity.css?v=2.8', './connectivity.js?v=2.8', './notification-history.js?v=2.8', './manifest.webmanifest', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-180.png'
 ];
 const scope = self.registration.scope;

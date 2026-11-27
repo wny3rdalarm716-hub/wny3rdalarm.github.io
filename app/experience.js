@@ -13,22 +13,25 @@
   $('welcome-card').hidden=get('welcome')==='seen';
   $('welcome-dismiss').onclick=()=>{$('welcome-card').hidden=true;set('welcome','seen');};
   $('welcome-show').onclick=()=>{$('welcome-card').hidden=false;location.hash='home';requestAnimationFrame(()=>$('welcome-card').scrollIntoView({block:'center'}));};
+  let galleryReady=false,preferredPhoto=null,featuredOrder=['rescue7','scene','night','engine4','rescue','police'];
   function dailyPhoto(){
-    const list=[...document.querySelectorAll('#gallery figure[data-photo-id]')].filter(f=>!f.hidden&&f.querySelector('img'));
+    if(!galleryReady)return;
+    const list=[...document.querySelectorAll('#gallery figure[data-photo-id]')].filter(f=>!f.hidden&&f.querySelector('img')).sort((a,b)=>featuredOrder.indexOf(a.dataset.photoId)-featuredOrder.indexOf(b.dataset.photoId));
     $('daily-photo').hidden=true;
     $('daily-photo-status').hidden=false;
     if(!list.length){$('daily-photo-status').textContent='No featured photo is available.';return;}
     const now=new Date();const day=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/86400000);
-    const figure=list[day%list.length],image=figure.querySelector('img'), target=$('daily-photo-img');
+    const figure=list.find(f=>f.dataset.photoId===preferredPhoto)||list[day%list.length],image=figure.querySelector('img'), target=$('daily-photo-img');
     $('daily-photo-title').textContent=figure.querySelector('figcaption b')?.textContent||'Featured photograph';
     $('daily-photo-credit').textContent=figure.querySelector('figcaption span')?.textContent||'WNY 3RD ALARM';
     target.alt=image.alt;target.src=image.dataset.source||image.getAttribute('src');$('daily-photo').hidden=false;$('daily-photo-status').hidden=true;
   }
   $('daily-photo-img').onerror=()=>{$('daily-photo').hidden=true;$('daily-photo-status').hidden=false;$('daily-photo-status').textContent='Featured photograph unavailable. Explore the gallery instead.';};
   // Wait for public gallery preferences before showing a feature. If they cannot be read, leave the feature unavailable.
-  document.addEventListener('wny-gallery-changed',dailyPhoto);
+  document.addEventListener('wny-gallery-changed',()=>{galleryReady=true;dailyPhoto();});
+  document.addEventListener('wny-gallery-order',e=>{preferredPhoto=e.detail?.featured||null;if(Array.isArray(e.detail?.order))featuredOrder=[...e.detail.order];dailyPhoto();});
   $('daily-photo-status').textContent='Featured photo appears after gallery preferences load.';
-  $('feedback-open').onclick=()=>{const type=$('feedback-type').value;const allowed=['Bug report','Feature suggestion','Accessibility feedback'];if(!allowed.includes(type))return;const subject='WNY 3RD ALARM App V2.7 — '+type;const body='Please describe your feedback here. Avoid personal details, incident locations and credentials.\n\n';$('feedback-status').textContent='Your email app will open if configured. Review the message before sending.';location.href='mailto:wny3rdalarm716@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);};
+  $('feedback-open').onclick=()=>{const type=$('feedback-type').value;const allowed=['Bug report','Feature suggestion','Accessibility feedback'];if(!allowed.includes(type))return;const subject='WNY 3RD ALARM App V2.8 — '+type;const body='Please describe your feedback here. Avoid personal details, incident locations and credentials.\n\n';$('feedback-status').textContent='Your email app will open if configured. Review the message before sending.';location.href='mailto:wny3rdalarm716@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);};
   const opt=$('announcement-optin');opt.checked=get('news-optin')==='true';
   const newsStatus=$('announcement-notify-status');
   const newsText=$('staff-announcement-text');

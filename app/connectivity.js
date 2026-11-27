@@ -40,7 +40,7 @@
     if(!worker){$('health-worker').textContent='No active controller on this page';return;}
     const channel=new MessageChannel();
     const timeout=setTimeout(()=>{channel.port1.close();if(run===healthEpoch)$('health-worker').textContent='Version unavailable';},2000);
-    channel.port1.onmessage=e=>{clearTimeout(timeout);channel.port1.close();if(run!==healthEpoch)return;$('health-worker').textContent='V'+String(e.data)+(e.data==='2.7'?' · matching':' · reload after update');};
+    channel.port1.onmessage=e=>{clearTimeout(timeout);channel.port1.close();if(run!==healthEpoch)return;$('health-worker').textContent='V'+String(e.data)+(e.data==='2.8'?' · matching':' · reload after update');};
     try{worker.postMessage('GET_VERSION',[channel.port2]);}catch(_){clearTimeout(timeout);channel.port1.close();if(run===healthEpoch)$('health-worker').textContent='Version unavailable';}
   }
   $('health-refresh').onclick=health;
