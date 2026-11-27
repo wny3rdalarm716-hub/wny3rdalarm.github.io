@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const pages = ['home', 'incidents', 'weather', 'gallery', 'settings', 'notifications', 'community'];
+  const pages = ['home', 'incidents', 'weather', 'gallery', 'settings', 'notifications', 'community', 'explore', 'studio', 'release'];
   let installPrompt = null;
   let incidentRequest = 0;
   let weatherRequest = 0;
@@ -11,7 +11,7 @@
     const page = pages.includes(name) ? name : 'home';
     pages.forEach(id => { $(id).hidden = id !== page; });
     document.querySelectorAll('.bottom-nav a').forEach(link => {
-      if (link.dataset.page === page) link.setAttribute('aria-current', 'page');
+      if (link.dataset.page === page || (link.dataset.page === 'explore' && ['studio','release','community','notifications'].includes(page))) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     });
     window.scrollTo(0, 0);
@@ -456,7 +456,7 @@
   viewerImage.addEventListener('touchcancel', () => { touchStart = null; });
 
   let registration = null;
-  const PAGE_VERSION = '2.9';
+  const PAGE_VERSION = '3.0';
   let workerCheck = 0;
   const watchedWorkers = new WeakSet();
   function checkWorkerVersion(worker) {
