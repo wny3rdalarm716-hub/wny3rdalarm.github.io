@@ -12,17 +12,19 @@
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
   <link rel="stylesheet" href="app.css?v=2.4">
+  <link rel="preconnect" href="https://api.weather.gov">
   <title>WNY 3RD ALARM</title>
-  <link rel="stylesheet" href="experience.css?v=2.8">
-  <link rel="stylesheet" href="photography.css?v=2.8">
-  <script type="module" src="gallery-settings.js?v=2.8"></script>
+  <link rel="stylesheet" href="experience.css?v=2.9">
+  <link rel="stylesheet" href="photography.css?v=2.9">
+  <link rel="stylesheet" href="performance.css?v=2.9">
+  <script type="module" src="gallery-settings.js?v=2.9"></script>
 
-  <link rel="stylesheet" href="connectivity.css?v=2.8">
-  <script src="notification-history.js?v=2.8" defer></script>
-  <script src="app.js?v=2.8" defer></script>
-  <script src="connectivity.js?v=2.8" defer></script>
-  <script src="experience.js?v=2.8" defer></script>
-  <script type="module" src="push.js?v=2.8"></script>
+  <link rel="stylesheet" href="connectivity.css?v=2.9">
+  <script src="notification-history.js?v=2.9" defer></script>
+  <script src="app.js?v=2.9" defer></script>
+  <script src="connectivity.js?v=2.9" defer></script>
+  <script src="experience.js?v=2.9" defer></script>
+  <script type="module" src="push.js?v=2.9"></script>
   <script type="module" src="public-admin.js?v=2.4"></script>
 </head>
 <body>
@@ -48,7 +50,7 @@
         <span aria-hidden="true">↗</span>
       </a>
       <div class="quick-grid"><a class="card quick" href="#weather"><span class="quick-icon">☁</span><span><b>Weather</b><small>Official NWS updates</small></span><span>↗</span></a><a class="card quick" href="#gallery"><span class="quick-icon">▧</span><span><b>Gallery</b><small>Through our lens</small></span><span>↗</span></a></div>
-      <div class="section-heading"><h2>Stay connected</h2><span>V2.8</span></div>
+      <div class="section-heading"><h2>Stay connected</h2><span>V2.9</span></div>
       <div class="quick-grid"><a class="card quick" href="#notifications"><span class="quick-icon" aria-hidden="true">♢</span><span><b>Notifications</b><small>Device history</small></span><span>↗</span></a><a class="card quick" href="vote/"><span class="quick-icon" aria-hidden="true">▧</span><span><b>Photo voting</b><small>Community choice</small></span><span>↗</span></a></div>
       <div class="section-heading"><h2>Photo of the day</h2><span>FROM OUR GALLERY</span></div>
       <article id="daily-photo" class="card experience-card" hidden><a href="#gallery"><img id="daily-photo-img" alt="" loading="lazy"></a><div class="daily-caption"><strong id="daily-photo-title"></strong><small id="daily-photo-credit"></small><a class="inline-link" href="#gallery">Explore gallery ↗</a></div></article>
@@ -106,12 +108,12 @@
       <div class="card settings-card"><span class="card-label">AUTHORIZED STAFF</span><h2>Staff portal</h2><p>Sign in to manage the public app with an authorized account.</p><a class="button" href="admin/">OPEN ADMIN PANEL <span aria-hidden="true">↗</span></a></div>
       <div id="install-card" class="card settings-card" hidden><span class="card-label">INSTALL THE APP</span><h2>Take us with you.</h2><p>Add the app to your home screen for quick access.</p><button id="install" class="button" type="button">INSTALL APP <span aria-hidden="true">↓</span></button><p id="install-help" class="help" aria-live="polite">On iPhone: open in Safari, tap Share, then Add to Home Screen. On Android: use your browser’s Install app or Add to Home screen menu.</p></div>
       <div class="card settings-card"><span class="card-label">STAY CONNECTED</span><h2>Push notifications</h2><p>Enable notifications to register this device for a test message. Automatic delivery of reviewed incident summaries and weather alerts is not configured yet.</p><label class="preference"><input type="checkbox" role="switch" id="pref-incidents"> Incident updates (saved preference)</label><label class="preference"><input type="checkbox" role="switch" id="pref-weather"> Weather alerts (saved preference)</label><button class="button" id="push-enable">Enable notifications</button> <button class="button" id="push-disable">Disable notifications</button> <button class="button" type="button" id="local-notification-test">Test on this device</button><p id="local-test-status" class="help" role="status">Device test only; does not verify remote Firebase delivery.</p><p id="notification-status" class="help" role="status"></p><p id="push-status" role="status" class="help">Checking notification availability…</p><button id="push-copy" hidden>Copy device test token</button><p class="help">Keep your device token private. Test delivery requires an authorized Firebase sender.</p></div>
-      <div class="card settings-card"><span class="card-label">VERSION 2.8</span><h2>What's new</h2><p>V2.8 adds gallery search, photographer filters, device favorites, photo links and staff-managed gallery ordering. Existing staff management, weather and voting remain available.</p><a class="inline-link" href="#notifications">Open notification center ↗</a></div>
-      <div class="card settings-card"><span class="card-label">SYSTEM STATUS</span><h2>App health</h2><dl class="health-list"><dt>Installed page</dt><dd>V2.8</dd><dt>Browser connection</dt><dd id="health-online">Checking…</dd><dt>Service worker</dt><dd id="health-worker">Checking…</dd><dt>Weather feed</dt><dd id="health-weather">Not checked</dd><dt>Notification permission</dt><dd id="health-notify">Checking…</dd><dt>Automatic push delivery</dt><dd>Not configured</dd></dl><p class="help">Device-side diagnostics, not a monitored uptime service. Weather status reflects the last app request.</p><button id="health-refresh" class="button" type="button">REFRESH STATUS</button></div>
+      <div class="card settings-card"><span class="card-label">VERSION 2.9</span><h2>What's new</h2><p>V2.9 improves weather request efficiency, static caching, gallery rendering and small-screen controls. Existing staff permissions and gallery features are unchanged.</p><a class="inline-link" href="#notifications">Open notification center ↗</a></div>
+      <div class="card settings-card"><span class="card-label">SYSTEM STATUS</span><h2>App health</h2><dl class="health-list"><dt>Installed page</dt><dd>V2.9</dd><dt>Browser connection</dt><dd id="health-online">Checking…</dd><dt>Service worker</dt><dd id="health-worker">Checking…</dd><dt>Weather feed</dt><dd id="health-weather">Not checked</dd><dt>Notification permission</dt><dd id="health-notify">Checking…</dd><dt>Automatic push delivery</dt><dd>Not configured</dd></dl><p class="help">Device-side diagnostics, not a monitored uptime service. Weather status reflects the last app request.</p><button id="health-refresh" class="button" type="button">REFRESH STATUS</button></div>
       <div class="card settings-card"><span class="card-label">APP TESTING</span><h2>Incident preview</h2><p>See a fictional example of a reviewed summary. This is displayed only on this screen and never published or sent to other devices.</p><button class="button" id="preview-incident" type="button" aria-expanded="false" aria-controls="incident-preview">SHOW SAMPLE</button><div id="incident-preview" hidden></div></div>
       <div class="card settings-card"><span class="card-label">APP UPDATES</span><h2>Updates</h2><p id="update-status" role="status">Updates are checked when the app opens.</p><button type="button" id="check-update" class="button">CHECK FOR UPDATES <span aria-hidden="true">↻</span></button><button type="button" id="reload-update" class="button" hidden>RELOAD TO UPDATE <span aria-hidden="true">↻</span></button></div>
       <div class="card settings-card"><span class="card-label">SHARE WNY 3RD ALARM</span><h2>Spread the word.</h2><p>Share the app with your community.</p><button id="share-app" class="button" type="button">SHARE APP <span aria-hidden="true">↗</span></button><p id="share-status" class="help" role="status"></p><label id="share-fallback" hidden>App link <input id="share-url" type="url" readonly></label></div>
-      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.8</p></div>
+      <div class="card settings-card"><span class="card-label">ABOUT</span><h2>WNY 3RD ALARM</h2><p>Independent fire photography and community coverage in Western New York.</p><div class="settings-links"><a class="inline-link" href="https://www.tiktok.com/@wnyfirebuffs716">TikTok ↗</a><a class="inline-link" href="../">Visit our website ↗</a></div><p class="version">App version V2.9</p></div>
     </section>
   </main>
   <dialog id="photo-viewer" class="photo-viewer" aria-labelledby="photo-caption">

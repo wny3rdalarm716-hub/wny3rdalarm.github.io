@@ -1,0 +1,9 @@
+/* V2.9: mobile controls and safe wrapping without modifying base styles. */
+[hidden]{display:none!important}
+.photo-tools input,.photo-tools select,.gallery-order-row span,.viewer-footer p{min-width:0;overflow-wrap:anywhere}
+.viewer-toolbar{flex-wrap:wrap;gap:8px}
+.viewer-actions{flex-wrap:wrap;min-width:0}
+.viewer-actions button,.gallery-order-row button,.photo-favorite{min-height:44px}
+.health-list dd,.settings-links,.status-line{overflow-wrap:anywhere;min-width:0}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #60a5fa;outline-offset:3px}
+@media(max-width:380px){.photo-filters{grid-template-columns:minmax(0,1fr)}.viewer-toolbar>span{flex-basis:100%}.viewer-footer p{font-size:12px}.gallery-order-row{flex-wrap:wrap}.status-line{flex-wrap:wrap}}

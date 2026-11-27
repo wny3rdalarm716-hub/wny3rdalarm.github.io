@@ -31,7 +31,7 @@
   document.addEventListener('wny-gallery-changed',()=>{galleryReady=true;dailyPhoto();});
   document.addEventListener('wny-gallery-order',e=>{preferredPhoto=e.detail?.featured||null;if(Array.isArray(e.detail?.order))featuredOrder=[...e.detail.order];dailyPhoto();});
   $('daily-photo-status').textContent='Featured photo appears after gallery preferences load.';
-  $('feedback-open').onclick=()=>{const type=$('feedback-type').value;const allowed=['Bug report','Feature suggestion','Accessibility feedback'];if(!allowed.includes(type))return;const subject='WNY 3RD ALARM App V2.8 — '+type;const body='Please describe your feedback here. Avoid personal details, incident locations and credentials.\n\n';$('feedback-status').textContent='Your email app will open if configured. Review the message before sending.';location.href='mailto:wny3rdalarm716@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);};
+  $('feedback-open').onclick=()=>{const type=$('feedback-type').value;const allowed=['Bug report','Feature suggestion','Accessibility feedback'];if(!allowed.includes(type))return;const subject='WNY 3RD ALARM App V2.9 — '+type;const body='Please describe your feedback here. Avoid personal details, incident locations and credentials.\n\n';$('feedback-status').textContent='Your email app will open if configured. Review the message before sending.';location.href='mailto:wny3rdalarm716@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);};
   const opt=$('announcement-optin');opt.checked=get('news-optin')==='true';
   const newsStatus=$('announcement-notify-status');
   const newsText=$('staff-announcement-text');

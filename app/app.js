@@ -83,7 +83,7 @@
     } finally { clearTimeout(timeout); }
   }
   $('refresh-incidents').addEventListener('click', loadIncidents);
-  setInterval(() => { if (!$('incidents').hidden) loadIncidents(); }, 60000);
+  setInterval(() => { if (!document.hidden && navigator.onLine && !$('incidents').hidden) loadIncidents(); }, 60000);
 
 
   const counties = {
@@ -123,11 +123,21 @@
     return '◌';
   }
 
-  async function getJSON(url) {
+  const pendingWeather = new Map();
+  function getJSON(url) {
+    const parsed = new URL(url);
+    if (parsed.origin !== 'https://api.weather.gov') return Promise.reject(new Error('Unexpected NWS source'));
+    const key = parsed.href;
+    if (pendingWeather.has(key)) return pendingWeather.get(key);
+    const promise = fetchWeatherJSON(key).finally(() => pendingWeather.delete(key));
+    pendingWeather.set(key, promise);
+    return promise;
+  }
+  async function fetchWeatherJSON(url) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
     try {
-      const response = await fetch(url, {cache: 'no-store', headers: {Accept: 'application/geo+json'}, signal: controller.signal});
+      const response = await fetch(url, {cache: 'no-store', credentials: 'omit', redirect: 'error', headers: {Accept: 'application/geo+json'}, signal: controller.signal});
       if (!response.ok) throw new Error('NWS unavailable');
       const data = await response.json();
       if (!data || typeof data !== 'object') throw new Error('Invalid NWS response');
@@ -177,11 +187,19 @@
   $('alert-scope').addEventListener('change', loadWeather);
   async function loadWeather() {
     const request = ++weatherRequest;
+    if (!navigator.onLine) {
+      $('weather-status').textContent = 'Offline — reconnect for current weather.';
+      $('home-weather-temp').textContent = 'Weather unavailable';
+      $('home-weather-condition').textContent = 'Reconnect for current NWS information.';
+      $('home-weather-time').textContent = '';
+      ['weather-current','weather-alerts','weather-forecast'].forEach(id => { $(id).textContent = 'Reconnect for current NWS information.'; });
+      return;
+    }
     const api = 'https://api.weather.gov';
     const county = counties[$('weather-county').value] || counties.erie;
     const countyLabel = county.name.toUpperCase() + ' COUNTY';
     ['home-weather-location', 'weather-alerts-location', 'weather-forecast-location'].forEach(id => { $(id).textContent = countyLabel; });
-    $('weather-alerts-location').textContent = $('alert-scope').value === 'regional' ? 'WESTERN NEW YORK' : $('alert-scope').value === 'national' ? 'NATIONWIDE' : countyLabel;
+    $('weather-alerts-location').textContent = !$('weather').hidden && $('alert-scope').value === 'regional' ? 'WESTERN NEW YORK' : !$('weather').hidden && $('alert-scope').value === 'national' ? 'NATIONWIDE' : countyLabel;
     $('weather-observation-location').textContent = countyLabel + ' · NEARBY STATION ' + county.station;
     $('weather-observation-kind').textContent = ' · STATION OBSERVATION';
     $('home-weather-icon').textContent = '◌';
@@ -265,7 +283,7 @@
     $('weather-status').textContent = results.every(result => result.status === 'fulfilled' && result.value !== 'partial') ? 'NWS checked ' + new Date().toLocaleTimeString() : 'Some NWS information unavailable. Try refreshing.';
   }
   $('refresh-weather').addEventListener('click', loadWeather);
-  setInterval(() => { if (!$('weather').hidden || !$('home').hidden) loadWeather(); }, 300000);
+  setInterval(() => { if (!document.hidden && navigator.onLine && (!$('weather').hidden || !$('home').hidden)) loadWeather(); }, 300000);
   window.addEventListener('offline', () => {
     ++incidentRequest; ++weatherRequest;
     incidentController?.abort();
@@ -279,7 +297,7 @@
   });
 
   window.addEventListener('online', () => { if (!$('home').hidden || !$('weather').hidden) loadWeather(); if (!$('incidents').hidden) loadIncidents(); });
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && !$('incidents').hidden) loadIncidents(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && navigator.onLine) { if (!$('incidents').hidden) loadIncidents(); if (!$('home').hidden || !$('weather').hidden) loadWeather(); } });
 
   // Browsers do not reliably expose installations to an ordinary browser tab.
   const appModes = ['standalone', 'fullscreen', 'minimal-ui', 'window-controls-overlay'].map(mode => window.matchMedia('(display-mode: ' + mode + ')'));
@@ -355,14 +373,16 @@
   function applyPhotoFilters(){
     const current=photoButtons[photoIndex];const q=$('photo-search').value.toLowerCase().trim().split(/\s+/).filter(Boolean);const by=$('photo-filter').value;const sort=$('photo-sort').value;
     const grid=document.querySelector('#gallery .photo-grid'); const sorted=[...figures].sort((a,b)=>{const title=f=>f.querySelector('figcaption b').textContent;const credit=f=>f.querySelector('figcaption span').textContent;return sort==='title'?title(a).localeCompare(title(b)):sort==='photographer'?credit(a).localeCompare(credit(b))||title(a).localeCompare(title(b)):staffOrder.indexOf(a.dataset.photoId)-staffOrder.indexOf(b.dataset.photoId);});
-    for(const f of sorted){const caption=f.querySelector('figcaption');const hay=(caption.textContent+' '+f.querySelector('img').alt).toLowerCase(); const credit=caption.querySelector('span').textContent.replace('PHOTO: ',''); const pass=q.every(t=>hay.includes(t))&&(by==='all'||credit===by)&&(!$('photo-favorites-only').checked||favorites.has(f.dataset.photoId)); f.dataset.filtered=String(!pass); grid.append(f);}
+    for(const f of sorted){const caption=f.querySelector('figcaption');const hay=(caption.textContent+' '+f.querySelector('img').alt).toLowerCase(); const credit=caption.querySelector('span').textContent.replace('PHOTO: ',''); const pass=q.every(t=>hay.includes(t))&&(by==='all'||credit===by)&&(!$('photo-favorites-only').checked||favorites.has(f.dataset.photoId)); f.dataset.filtered=String(!pass);}
+    if (sorted.some((f,i)=>grid.children[i]!==f)) for(const f of sorted) grid.append(f);
     photoButtons=sorted.filter(f=>!f.hidden&&f.dataset.filtered!=='true').map(f=>f.querySelector('.photo-open'));
     $('photo-results').textContent=photoButtons.length+' photograph'+(photoButtons.length===1?'':'s')+(photoButtons.length?'':' — try clearing your filters');
     if(viewer.open){const i=photoButtons.indexOf(current);if(i<0)viewer.close();else showPhoto(i);}
     updateFavoriteButtons();
   }
   for(const f of figures){const b=document.createElement('button');b.type='button';b.className='photo-favorite';b.dataset.favoriteId=f.dataset.photoId;b.onclick=()=>toggleFavorite(f.dataset.photoId);f.append(b);}
-  $('photo-search').addEventListener('input',applyPhotoFilters);
+  let searchTimer;
+  $('photo-search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(applyPhotoFilters,120);});
   for(const id of ['photo-filter','photo-sort','photo-favorites-only'])$(id).addEventListener('change',applyPhotoFilters);
   $('viewer-favorite').onclick=()=>{if(photoButtons[photoIndex])toggleFavorite(photoId(photoButtons[photoIndex]));};
   $('viewer-share').onclick=async()=>{const b=photoButtons[photoIndex];if(!b||b.closest('figure').hidden)return;const url=new URL('./',location.href);url.searchParams.set('photo',photoId(b));url.hash='gallery';const title=b.closest('figure').querySelector('figcaption b').textContent;try{if(navigator.share){await navigator.share({title:'WNY 3RD ALARM — '+title,url:url.href});}else if(navigator.clipboard){await navigator.clipboard.writeText(url.href);$('photo-action-status').textContent='Photo link copied.';viewer.close();}else throw Error('Sharing unavailable');}catch(e){if(e.name==='AbortError')return;viewer.close();$('photo-action-status').textContent='Copy this photo link: '+url.href;}};
@@ -395,7 +415,7 @@
     photoIndex = index;
     const figure = photoButtons[index].closest('figure');
     const image = figure.querySelector('img');
-    viewerLoading(); viewerPhoto.src = image.src; viewerPhoto.alt = image.alt;
+    if (viewerPhoto.src !== image.src || !viewerPhoto.naturalWidth) { viewerLoading(); viewerPhoto.src = image.src; } viewerPhoto.alt = image.alt;
     if (viewerPhoto.complete && viewerPhoto.naturalWidth) $('viewer-load').hidden = true;
     $('photo-caption').textContent = figure.querySelector('figcaption').innerText.replace(/\s+/g, ' ').trim() + ' · ' + (index + 1) + ' / ' + photoButtons.length;
     $('viewer-prev').disabled = index === 0;
@@ -436,7 +456,7 @@
   viewerImage.addEventListener('touchcancel', () => { touchStart = null; });
 
   let registration = null;
-  const PAGE_VERSION = '2.8';
+  const PAGE_VERSION = '2.9';
   let workerCheck = 0;
   const watchedWorkers = new WeakSet();
   function checkWorkerVersion(worker) {

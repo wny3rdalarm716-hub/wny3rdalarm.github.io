@@ -1,10 +1,10 @@
 /* Cache only app-owned static assets; never store incident or weather data. */
-importScripts('./notification-history.js?v=2.8');
-const APP_VERSION = '2.8';
-const CACHE = 'wny-app-static-v2.8';
+importScripts('./notification-history.js?v=2.9');
+const APP_VERSION = '2.9';
+const CACHE = 'wny-app-static-v2.9';
 const STATIC_FILES = [
-  './offline.html', './photography.css?v=2.8', './experience.css?v=2.8', './experience.js?v=2.8', './app.css?v=2.4', './app.js?v=2.8',
-  './push.js?v=2.8', './connectivity.css?v=2.8', './connectivity.js?v=2.8', './notification-history.js?v=2.8', './manifest.webmanifest', './icons/icon-192.png',
+  './offline.html', './performance.css?v=2.9', './photography.css?v=2.9', './experience.css?v=2.9', './experience.js?v=2.9', './app.css?v=2.4', './app.js?v=2.9',
+  './push.js?v=2.9', './connectivity.css?v=2.9', './connectivity.js?v=2.9', './notification-history.js?v=2.9', './manifest.webmanifest', './icons/icon-192.png',
   './icons/icon-512.png', './icons/icon-180.png'
 ];
 const scope = self.registration.scope;
@@ -12,8 +12,16 @@ const staticURLs = new Set(STATIC_FILES.map(path => new URL(path, scope).href));
 
 self.addEventListener('install', event => {
   // Bypass the HTTP cache so an update cannot populate its cache with old files.
-  const requests = STATIC_FILES.map(path => new Request(new URL(path, scope), {cache: 'reload'}));
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(requests)).then(() => self.skipWaiting()));
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    // Require all core files. A missing optional icon must not strand an update.
+    const core = STATIC_FILES.filter(path => !path.startsWith('./icons/'));
+    await cache.addAll(core.map(path => new Request(new URL(path, scope), {cache: 'reload'})));
+    await Promise.allSettled(STATIC_FILES.filter(path => path.startsWith('./icons/')).map(async path => {
+      await cache.add(new Request(new URL(path, scope), {cache: 'reload'}));
+    }));
+    await self.skipWaiting();
+  })());
 });
 self.addEventListener('activate', event => {
   event.waitUntil(caches.keys()
@@ -32,7 +40,7 @@ self.addEventListener('fetch', event => {
       return (await cache.match(new URL('./offline.html', scope))) || Response.error();
     }));
   } else if (staticURLs.has(url.href)) {
-    event.respondWith(caches.open(CACHE).then(cache => cache.match(request)).then(response => response || fetch(request)));
+    event.respondWith(caches.open(CACHE).then(cache => cache.match(request)).then(response => response || fetch(request, {cache: 'reload'})));
   }
 });
 
