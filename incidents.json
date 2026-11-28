@@ -1,5 +1,10 @@
 [
   {
+    "type": "extinguish oven fire",
+    "area": "Western New York",
+    "time": "2026-11-27T21:59:14-05:00"
+  },
+  {
     "type": "Co Detector",
     "area": "Western New York",
     "time": "2026-11-27T15:05:18-05:00"
@@ -18,10 +23,5 @@
     "type": "Head Injury",
     "area": "Western New York",
     "time": "2026-11-27T14:23:34-05:00"
-  },
-  {
-    "type": "Chest Pain",
-    "area": "Western New York",
-    "time": "2026-11-27T14:03:49-05:00"
   }
 ]
